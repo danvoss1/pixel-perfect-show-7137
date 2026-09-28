@@ -66,7 +66,7 @@ export function CodeInput({
         <div className="mt-4 grid grid-cols-3 gap-2">
           {["1", "2", "3", "4", "5", "6", "7", "8", "9", "CLR", "0", "DEL"].map((k) => (
             <button
-              key={k === "CLR" ? "LÖSCHEN" : k}
+              key={k === "CLR" ? "LEER" : k}
               onClick={() => {
                 if (k === "CLR") setValue("");
                 else if (k === "DEL") setValue((v) => v.slice(0, -1));
@@ -74,7 +74,7 @@ export function CodeInput({
               }}
               className="min-h-[52px] rounded-md border border-border bg-background/40 font-display text-lg font-semibold transition-colors hover:bg-accent"
             >
-              {k === "CLR" ? "LÖSCHEN" : k}
+              {k === "CLR" ? "LEER" : k}
             </button>
           ))}
         </div>

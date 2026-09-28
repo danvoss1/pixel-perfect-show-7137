@@ -57,8 +57,8 @@ export const adventure: Adventure = {
       title: "Entschlüsselung",
       kind: "Worträtsel",
       intro:
-        "Die Tagebuchseiten sind vom Wasser beschädigt. Nur ein Wort ist erhalten geblieben – es hat elf Buchstaben.",
-      objective: "Entschlüsselung the word from the journal.",
+        "Die Tagebuchseiten sind vom Wasser beschädigt. Nur ein Wort ist erhalten geblieben – es hat zwölf Buchstaben.",
+      objective: "Entschlüssele das Wort aus dem Tagebuch.",
       requiredItem: "Zerrissenes Foto",
       puzzleId: "p-wordle",
       rewardItemId: "i4",
@@ -199,10 +199,10 @@ export const puzzles: Puzzle[] = [
     stageId: "s4",
     hints: [
       { id: "h1", label: "Hinweis 1", text: "Ein Ort, an dem Wege verschwinden." },
-      { id: "h2", label: "Hinweis 2", text: "Es ist ein zusammengesetztes Wort mit elf Buchstaben." },
+      { id: "h2", label: "Hinweis 2", text: "Es ist ein zusammengesetztes Wort mit zwölf Buchstaben." },
       { id: "h3", label: "Letzter Hinweis", text: "Es endet auf -HAUS." },
     ],
-    config: { word: "WÄCHTERHAUS", maxAttempts: 8, clue: "Ein Ort, an dem Wege verschwinden." },
+    config: { word: "WAECHTERHAUS", maxAttempts: 8, clue: "Ein Ort, an dem Wege verschwinden." },
   },
   {
     id: "p-sliding",
@@ -250,7 +250,7 @@ export const puzzles: Puzzle[] = [
       { id: "h3", label: "Letzter Hinweis", text: "Man kann hindurchgehen." },
     ],
     config: {
-      table: { "△": "T", "○": "O", "◇": "R", "□": "E" },
+      table: { "△": "T", "○": "O", "◇": "R" },
       encoded: "△ ○ ◇",
       answer: "TOR",
     },
@@ -258,7 +258,7 @@ export const puzzles: Puzzle[] = [
   {
     id: "p-room",
     type: "room",
-    title: "Search Der Raum",
+    title: "Durchsuche den Raum",
     tagline: "Etwas gehört hier nicht hin.",
     stageId: "s7",
     hints: [

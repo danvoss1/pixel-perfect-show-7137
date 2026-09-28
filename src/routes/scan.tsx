@@ -67,7 +67,7 @@ function ScanPage() {
             {status === "found" ? (
               <div className="absolute inset-0 grid place-items-center">
                 <p className="font-display text-sm uppercase tracking-[0.2em] text-success">
-                  Etappe wird geöffnet: {String(stage?.number ?? 1).padStart(2, "0")}...
+                  Etappe {String(stage?.number ?? 1).padStart(2, "0")} wird geöffnet ...
                 </p>
               </div>
             ) : null}
