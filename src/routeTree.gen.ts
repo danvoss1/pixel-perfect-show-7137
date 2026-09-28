@@ -20,9 +20,12 @@ import { Route as PuzzlesRouteImport } from './routes/puzzles'
 import { Route as RoomRouteImport } from './routes/room'
 import { Route as ScanRouteImport } from './routes/scan'
 import { Route as AdminIndexRouteImport } from './routes/admin.index'
+import { Route as AdminAdventuresRouteImport } from './routes/admin.adventures'
+import { Route as AdminStagesRouteImport } from './routes/admin.stages'
 import { Route as ItemIdRouteImport } from './routes/item.$id'
 import { Route as PuzzleIdRouteImport } from './routes/puzzle.$id'
 import { Route as StageIdRouteImport } from './routes/stage.$id'
+import { Route as AdminAdventureIdRouteImport } from './routes/admin.adventure.$id'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -79,6 +82,16 @@ const AdminIndexRoute = AdminIndexRouteImport.update({
   path: '/',
   getParentRoute: () => AdminRoute,
 } as any)
+const AdminAdventuresRoute = AdminAdventuresRouteImport.update({
+  id: '/adventures',
+  path: '/adventures',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminStagesRoute = AdminStagesRouteImport.update({
+  id: '/stages',
+  path: '/stages',
+  getParentRoute: () => AdminRoute,
+} as any)
 const ItemIdRoute = ItemIdRouteImport.update({
   id: '/item/$id',
   path: '/item/$id',
@@ -94,6 +107,11 @@ const StageIdRoute = StageIdRouteImport.update({
   path: '/stage/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminAdventureIdRoute = AdminAdventureIdRouteImport.update({
+  id: '/adventure/$id',
+  path: '/adventure/$id',
+  getParentRoute: () => AdminRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -106,10 +124,13 @@ export interface FileRoutesByFullPath {
   '/puzzles': typeof PuzzlesRoute
   '/room': typeof RoomRoute
   '/scan': typeof ScanRoute
+  '/admin/adventures': typeof AdminAdventuresRoute
+  '/admin/stages': typeof AdminStagesRoute
   '/item/$id': typeof ItemIdRoute
   '/puzzle/$id': typeof PuzzleIdRoute
   '/stage/$id': typeof StageIdRoute
   '/admin/': typeof AdminIndexRoute
+  '/admin/adventure/$id': typeof AdminAdventureIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -121,10 +142,13 @@ export interface FileRoutesByTo {
   '/puzzles': typeof PuzzlesRoute
   '/room': typeof RoomRoute
   '/scan': typeof ScanRoute
+  '/admin/adventures': typeof AdminAdventuresRoute
+  '/admin/stages': typeof AdminStagesRoute
   '/item/$id': typeof ItemIdRoute
   '/puzzle/$id': typeof PuzzleIdRoute
   '/stage/$id': typeof StageIdRoute
   '/admin': typeof AdminIndexRoute
+  '/admin/adventure/$id': typeof AdminAdventureIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -138,10 +162,13 @@ export interface FileRoutesById {
   '/puzzles': typeof PuzzlesRoute
   '/room': typeof RoomRoute
   '/scan': typeof ScanRoute
+  '/admin/adventures': typeof AdminAdventuresRoute
+  '/admin/stages': typeof AdminStagesRoute
   '/item/$id': typeof ItemIdRoute
   '/puzzle/$id': typeof PuzzleIdRoute
   '/stage/$id': typeof StageIdRoute
   '/admin/': typeof AdminIndexRoute
+  '/admin/adventure/$id': typeof AdminAdventureIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -156,10 +183,13 @@ export interface FileRouteTypes {
     | '/puzzles'
     | '/room'
     | '/scan'
+    | '/admin/adventures'
+    | '/admin/stages'
     | '/item/$id'
     | '/puzzle/$id'
     | '/stage/$id'
     | '/admin/'
+    | '/admin/adventure/$id'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -171,10 +201,13 @@ export interface FileRouteTypes {
     | '/puzzles'
     | '/room'
     | '/scan'
+    | '/admin/adventures'
+    | '/admin/stages'
     | '/item/$id'
     | '/puzzle/$id'
     | '/stage/$id'
     | '/admin'
+    | '/admin/adventure/$id'
   id:
     | '__root__'
     | '/'
@@ -187,10 +220,13 @@ export interface FileRouteTypes {
     | '/puzzles'
     | '/room'
     | '/scan'
+    | '/admin/adventures'
+    | '/admin/stages'
     | '/item/$id'
     | '/puzzle/$id'
     | '/stage/$id'
     | '/admin/'
+    | '/admin/adventure/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -288,6 +324,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminIndexRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/admin/adventures': {
+      id: '/admin/adventures'
+      path: '/adventures'
+      fullPath: '/admin/adventures'
+      preLoaderRoute: typeof AdminAdventuresRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/stages': {
+      id: '/admin/stages'
+      path: '/stages'
+      fullPath: '/admin/stages'
+      preLoaderRoute: typeof AdminStagesRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/item/$id': {
       id: '/item/$id'
       path: '/item/$id'
@@ -309,15 +359,28 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof StageIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/adventure/$id': {
+      id: '/admin/adventure/$id'
+      path: '/adventure/$id'
+      fullPath: '/admin/adventure/$id'
+      preLoaderRoute: typeof AdminAdventureIdRouteImport
+      parentRoute: typeof AdminRoute
+    }
   }
 }
 
 interface AdminRouteChildren {
+  AdminAdventuresRoute: typeof AdminAdventuresRoute
+  AdminStagesRoute: typeof AdminStagesRoute
   AdminIndexRoute: typeof AdminIndexRoute
+  AdminAdventureIdRoute: typeof AdminAdventureIdRoute
 }
 
 const AdminRouteChildren: AdminRouteChildren = {
+  AdminAdventuresRoute: AdminAdventuresRoute,
+  AdminStagesRoute: AdminStagesRoute,
   AdminIndexRoute: AdminIndexRoute,
+  AdminAdventureIdRoute: AdminAdventureIdRoute,
 }
 
 const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
