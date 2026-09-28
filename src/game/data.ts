@@ -202,7 +202,7 @@ export const puzzles: Puzzle[] = [
       { id: "h2", label: "Hint 2", text: "It is a compound word, twelve letters long." },
       { id: "h3", label: "Final hint", text: "It ends in -HOUSE." },
     ],
-    config: { word: "WATCHTHOUSE".padEnd(11, ""), maxAttempts: 8, clue: "A place where paths disappear." },
+    config: { word: "WATCHERHOUSE", maxAttempts: 8, clue: "A place where paths disappear." },
   },
   {
     id: "p-sliding",
