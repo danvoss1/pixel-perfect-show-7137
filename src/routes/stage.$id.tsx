@@ -19,11 +19,11 @@ export const Route = createFileRoute("/stage/$id")({
     const stage = stageById(params.id);
     const title = stage
       ? `Etappe ${String(stage.number).padStart(2, "0")} — ${stage.title}`
-      : "Etappe — The Hidden Path";
-    const description = stage?.objective ?? "Eine Etappe der Expedition „The Hidden Path“.";
+      : "Etappe — Der verborgene Pfad";
+    const description = stage?.objective ?? "Eine Etappe der Expedition „Der verborgene Pfad“.";
     return {
       meta: [
-        { title: `${title} — The Hidden Path` },
+        { title: `${title} — Der verborgene Pfad` },
         { name: "description", content: description },
         { property: "og:title", content: title },
         { property: "og:description", content: description },

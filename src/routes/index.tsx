@@ -7,13 +7,13 @@ import hero from "@/assets/hero-path.jpg";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "The Hidden Path — Eine Stadtexpedition durch Köln" },
+      { title: "Der verborgene Pfad — Eine Stadtexpedition durch Köln" },
       {
         name: "description",
         content:
           "Eine Schnitzeljagd durch Köln mit versteckten Umschlägen, geheimnisvollen Orten und Rätseln in acht Etappen.",
       },
-      { property: "og:title", content: "The Hidden Path — Eine Stadtexpedition" },
+      { property: "og:title", content: "Der verborgene Pfad — Eine Stadtexpedition" },
       {
         property: "og:description",
         content: "Acht Etappen, versteckte Umschläge und Rätsel in Köln. Das Abenteuer beginnt jenseits des Bildschirms.",
@@ -62,9 +62,9 @@ function Landing() {
         >
           <span className="label-mono">Expedition 01 · {adventure.city}</span>
           <h1 className="mt-4 font-display text-[clamp(2.75rem,11vw,5.5rem)] font-bold uppercase leading-[0.92]">
-            The Hidden
+            Der verborgene
             <br />
-            Path
+            Pfad
           </h1>
           <p className="mt-5 max-w-md text-base text-muted-foreground">
             Ein Abenteuer wartet jenseits des Bildschirms. Acht Etappen, echte Umschläge in der

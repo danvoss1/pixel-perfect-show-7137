@@ -38,9 +38,9 @@ export function GameShell({
         <Link to="/" className="mb-8 block">
           <span className="label-mono">50.9375 N / 6.9603 E</span>
           <span className="mt-1 block font-display text-lg font-bold uppercase leading-tight">
-            The Hidden
+            Der verborgene
             <br />
-            Path
+            Pfad
           </span>
         </Link>
         <nav className="flex flex-1 flex-col gap-1">

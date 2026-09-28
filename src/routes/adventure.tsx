@@ -8,12 +8,12 @@ import { usePlayer } from "@/game/store";
 export const Route = createFileRoute("/adventure")({
   head: () => ({
     meta: [
-      { title: "Abenteuer — The Hidden Path" },
+      { title: "Abenteuer — Der verborgene Pfad" },
       {
         name: "description",
         content: "Deine Expedition: aktuelles Ziel, Etappenübersicht und Fortschritt auf dem verborgenen Pfad.",
       },
-      { property: "og:title", content: "Abenteuer — The Hidden Path" },
+      { property: "og:title", content: "Abenteuer — Der verborgene Pfad" },
       { property: "og:description", content: "Aktuelles Ziel, Etappenübersicht und Expeditionsfortschritt." },
     ],
   }),

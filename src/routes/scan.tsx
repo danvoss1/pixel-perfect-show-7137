@@ -8,9 +8,9 @@ import { adventure, envelopes } from "@/game/data";
 export const Route = createFileRoute("/scan")({
   head: () => ({
     meta: [
-      { title: "Markierung scannen — The Hidden Path" },
+      { title: "Markierung scannen — Der verborgene Pfad" },
       { name: "description", content: "Scanne eine QR-Markierung oder gib einen Umschlagcode ein, um die nächste Etappe freizuschalten." },
-      { property: "og:title", content: "Markierung scannen — The Hidden Path" },
+      { property: "og:title", content: "Markierung scannen — Der verborgene Pfad" },
       { property: "og:description", content: "Scanne eine Markierung oder gib einen Umschlagcode ein." },
     ],
   }),

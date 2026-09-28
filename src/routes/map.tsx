@@ -11,12 +11,12 @@ import type { GameLocation, MarkerState } from "@/game/types";
 export const Route = createFileRoute("/map")({
   head: () => ({
     meta: [
-      { title: "Expeditionskarte — The Hidden Path" },
+      { title: "Expeditionskarte — Der verborgene Pfad" },
       {
         name: "description",
         content: "Entdecke Orte, Kontrollpunkte und Hinweismarkierungen in der Stadt.",
       },
-      { property: "og:title", content: "Expeditionskarte — The Hidden Path" },
+      { property: "og:title", content: "Expeditionskarte — Der verborgene Pfad" },
       { property: "og:description", content: "Entdeckte Orte, Kontrollpunkte und Hinweismarkierungen." },
     ],
   }),

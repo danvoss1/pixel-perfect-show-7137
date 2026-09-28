@@ -14,7 +14,7 @@ export const Route = createFileRoute("/item/$id")({
     const description = item?.description ?? "Ein während der Expedition gefundener Gegenstand.";
     return {
       meta: [
-        { title: `${title} — The Hidden Path` },
+        { title: `${title} — Der verborgene Pfad` },
         { name: "description", content: description },
         { property: "og:title", content: title },
         { property: "og:description", content: description },

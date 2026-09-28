@@ -8,12 +8,12 @@ import { puzzleTypeLabel } from "@/game/labels";
 export const Route = createFileRoute("/puzzles")({
   head: () => ({
     meta: [
-      { title: "Hinweise & Rätsel — The Hidden Path" },
+      { title: "Hinweise & Rätsel — Der verborgene Pfad" },
       {
         name: "description",
         content: "Alle Chiffren, Codes und Herausforderungen der Expedition: aktiv, gelöst oder noch versiegelt.",
       },
-      { property: "og:title", content: "Hinweise & Rätsel — The Hidden Path" },
+      { property: "og:title", content: "Hinweise & Rätsel — Der verborgene Pfad" },
       { property: "og:description", content: "Aktive, gelöste und versiegelte Herausforderungen der Expedition." },
     ],
   }),

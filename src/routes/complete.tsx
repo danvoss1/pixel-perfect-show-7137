@@ -8,9 +8,9 @@ import { useElapsed, usePlayer } from "@/game/store";
 export const Route = createFileRoute("/complete")({
   head: () => ({
     meta: [
-      { title: "Expedition abgeschlossen — The Hidden Path" },
+      { title: "Expedition abgeschlossen — Der verborgene Pfad" },
       { name: "description", content: "Dein Expeditionsbericht: Zeit, gelöste Rätsel und zurückgelegte Strecke." },
-      { property: "og:title", content: "Expedition abgeschlossen — The Hidden Path" },
+      { property: "og:title", content: "Expedition abgeschlossen — Der verborgene Pfad" },
       { property: "og:description", content: "Zeit, gelöste Rätsel, genutzte Hinweise und zurückgelegte Strecke." },
     ],
   }),
@@ -43,7 +43,7 @@ function CompletePage() {
       >
         <Label>Expedition abgeschlossen</Label>
         <h1 className="mt-3 font-display text-[clamp(2.5rem,9vw,4.5rem)] font-bold uppercase leading-none text-gold">
-          The Hidden Path
+          Der verborgene Pfad
         </h1>
         <p className="mt-4 text-sm text-muted-foreground">
           Der letzte Umschlag ist geöffnet. Was zurückblieb, gehört nun dir.

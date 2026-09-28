@@ -7,12 +7,12 @@ import { adventure } from "@/game/data";
 export const Route = createFileRoute("/journal")({
   head: () => ({
     meta: [
-      { title: "Expeditionslog — The Hidden Path" },
+      { title: "Expeditionslog — Der verborgene Pfad" },
       {
         name: "description",
         content: "Ein Protokoll der entdeckten Orte, gefundenen Umschläge und gelösten Rätsel.",
       },
-      { property: "og:title", content: "Expeditionslog — The Hidden Path" },
+      { property: "og:title", content: "Expeditionslog — Der verborgene Pfad" },
       { property: "og:description", content: "Entdeckte Orte, gefundene Umschläge und gelöste Rätsel." },
     ],
   }),

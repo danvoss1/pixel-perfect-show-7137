@@ -7,12 +7,12 @@ import { usePlayer } from "@/game/store";
 export const Route = createFileRoute("/inventory")({
   head: () => ({
     meta: [
-      { title: "Inventar — The Hidden Path" },
+      { title: "Inventar — Der verborgene Pfad" },
       {
         name: "description",
         content: "Alle auf der Expedition gesammelten Dokumente, Beweisstücke, Schlüssel und Codefragmente.",
       },
-      { property: "og:title", content: "Inventar — The Hidden Path" },
+      { property: "og:title", content: "Inventar — Der verborgene Pfad" },
       { property: "og:description", content: "Bisher gesammelte Dokumente, Beweisstücke, Schlüssel und Codefragmente." },
     ],
   }),

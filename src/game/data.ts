@@ -8,7 +8,7 @@ import type {
 
 export const adventure: Adventure = {
   id: "hidden-path",
-  title: "The Hidden Path",
+  title: "Der verborgene Pfad",
   subtitle: "Eine Stadtexpedition durch Köln.",
   description:
     "Acht Etappen führen durch verborgene Winkel Kölns. Umschläge warten an echten Orten; der Rest geschieht hier.",

@@ -9,9 +9,9 @@ import { puzzleById } from "@/game/data";
 export const Route = createFileRoute("/room")({
   head: () => ({
     meta: [
-      { title: "Durchsuche den Raum — The Hidden Path" },
+      { title: "Durchsuche den Raum — Der verborgene Pfad" },
       { name: "description", content: "Eine Suche im Rätselraum: Etwas hier gehört nicht an seinen Platz." },
-      { property: "og:title", content: "Durchsuche den Raum — The Hidden Path" },
+      { property: "og:title", content: "Durchsuche den Raum — Der verborgene Pfad" },
       { property: "og:description", content: "Etwas in diesem Raum gehört nicht hierher. Finde es." },
     ],
   }),

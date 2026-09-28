@@ -27,10 +27,10 @@ export const Route = createFileRoute("/puzzle/$id")({
   head: ({ params }) => {
     const p = puzzleById(params.id);
     const title = p?.title ?? "Rätsel";
-    const description = p?.tagline ?? "Eine Herausforderung der Expedition „The Hidden Path“.";
+    const description = p?.tagline ?? "Eine Herausforderung der Expedition „Der verborgene Pfad“.";
     return {
       meta: [
-        { title: `${title} — The Hidden Path` },
+        { title: `${title} — Der verborgene Pfad` },
         { name: "description", content: description },
         { property: "og:title", content: title },
         { property: "og:description", content: description },
