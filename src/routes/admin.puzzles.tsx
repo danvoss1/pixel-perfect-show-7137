@@ -2,6 +2,8 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { AdminShell, Field, TextInput, Toggle } from "@/components/admin/AdminShell";
 import { puzzles } from "@/game/data";
+import { puzzleTypeLabel } from "@/game/labels";
+import { Button } from "@/components/ui/button";
 import type { CodeConfig, FlappyConfig, SlidingConfig, WordleConfig } from "@/game/types";
 
 export const Route = createFileRoute("/admin/puzzles")({
@@ -21,6 +23,8 @@ const tabs = ["Worträtsel", "Schiebepuzzle", "Flugspiel", "Code"] as const;
 
 function VerwaltungRätsel() {
   const [tab, setTab] = useState<(typeof tabs)[number]>("Worträtsel");
+  const [type, setType] = useState("");
+  const [saved, setSaved] = useState(false);
   const wordle = puzzles.find((p) => p.type === "wordle")!.config as WordleConfig;
   const sliding = puzzles.find((p) => p.type === "sliding")!.config as SlidingConfig;
   const flappy = puzzles.find((p) => p.type === "flappy")!.config as FlappyConfig;
@@ -28,17 +32,17 @@ function VerwaltungRätsel() {
 
   return (
     <AdminShell title="Rätsel" lead="Jeder Rätseltyp lässt sich je Etappe konfigurieren.">
+      <div className="mb-5 grid gap-3 sm:grid-cols-[1fr_auto] sm:items-end"><Field label="Rätseltyp hinzufügen"><select className="min-h-[44px] w-full rounded-md border border-border bg-surface px-3 text-sm" value={type} onChange={(e) => setType(e.target.value)}><option value="">Typ auswählen</option>{Object.entries(puzzleTypeLabel).map(([id, label]) => <option key={id} value={id}>{label}</option>)}</select></Field><Button disabled={!type} onClick={() => setSaved(true)}>Rätsel hinzufügen</Button></div>
+      {saved && <p role="status" className="mb-4 text-sm text-muted-foreground">In der Vorschau ausgewählt. Neue Rätsel werden noch nicht gespeichert.</p>}
       <div className="flex gap-2 overflow-x-auto pb-2">
         {tabs.map((t) => (
-          <button
+          <Button variant={tab === t ? "secondary" : "outline"}
             key={t}
             onClick={() => setTab(t)}
-            className={`shrink-0 rounded-md border px-4 py-2 text-sm ${
-              tab === t ? "border-primary bg-accent" : "border-border text-muted-foreground"
-            }`}
+            className="min-h-[44px] shrink-0"
           >
             {t}
-          </button>
+          </Button>
         ))}
       </div>
 
@@ -120,9 +124,9 @@ function VerwaltungRätsel() {
         ) : null}
       </div>
 
-      <button className="mt-6 min-h-[44px] rounded-md bg-primary px-5 text-sm font-semibold text-primary-foreground">
+      <Button onClick={() => setSaved(true)} className="mt-6 min-h-[44px]">
         Konfiguration speichern
-      </button>
+      </Button>
     </AdminShell>
   );
 }

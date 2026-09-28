@@ -12,7 +12,7 @@ export const Route = createFileRoute("/admin/items")({ head: () => ({ meta: [
 ] }), component: ItemsAdmin });
 
 function ItemsAdmin() {
-  const [entries, setEntries] = useState<InventoryItem[]>(items);
+  const [entries, setEntries] = useState<InventoryItem[]>(() => [...items]);
   const [selected, setSelected] = useState(entries[0]?.id ?? "");
   const [draft, setDraft] = useState<InventoryItem>(items[0] ?? { id: "", number: 1, name: "", kind: "", foundAtStage: 1, description: "", detail: "" });
   const [saved, setSaved] = useState(false);

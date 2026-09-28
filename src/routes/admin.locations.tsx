@@ -52,10 +52,10 @@ function VerwaltungOrte() {
           </Field>
           <div className="grid grid-cols-2 gap-3">
             <Field label="Breitengrad">
-              <TextInput key={`${loc.id}-lat-${pos.lat}`} value={pos.lat.toFixed(6)} onChange={(e) => setPos((old) => ({ ...old, lat: Number(e.target.value) }))} />
+              <TextInput type="number" step="any" value={pos.lat} onChange={(e) => setPos((old) => ({ ...old, lat: Number(e.target.value) }))} />
             </Field>
             <Field label="Längengrad">
-              <TextInput key={`${loc.id}-lng-${pos.lng}`} value={pos.lng.toFixed(6)} onChange={(e) => setPos((old) => ({ ...old, lng: Number(e.target.value) }))} />
+              <TextInput type="number" step="any" value={pos.lng} onChange={(e) => setPos((old) => ({ ...old, lng: Number(e.target.value) }))} />
             </Field>
           </div>
           <Field label="Freischaltradius (m)">
