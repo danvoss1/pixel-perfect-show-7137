@@ -68,7 +68,7 @@ export function CologneMap({ selectedId, onSelect, stateOf, editable, onMove }: 
       });
       setReady(true);
     }).catch((cause: Error) => { if (alive) setError(cause.message); });
-    return () => { alive = false; if (window.gm_authFailure === authFailure) delete (window as unknown as Record<string, unknown>).gm_authFailure; markers.current.forEach((m) => m.setMap(null)); overlays.current.forEach((o) => (o as google.maps.Polyline).setMap(null)); map.current = null; };
+    return () => { alive = false; if ((window as unknown as Record<string, unknown>)["gm_authFailure"] === authFailure) delete (window as unknown as Record<string, unknown>)["gm_authFailure"]; markers.current.forEach((m) => m.setMap(null)); overlays.current.forEach((o) => (o as google.maps.Polyline).setMap(null)); map.current = null; };
   }, []);
 
   useEffect(() => {
