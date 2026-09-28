@@ -159,7 +159,7 @@ function StagePage() {
           ) : (
             <>
               <p className="mt-4 text-sm text-muted-foreground">
-                Find Umschlag Nr. 0{envelope.number} vor dem Fortfahren.
+                Finde Umschlag Nr. 0{envelope.number} vor dem Fortfahren.
               </p>
               <motion.input
                 aria-label="Umschlagcode"
@@ -183,7 +183,7 @@ function StagePage() {
                   }}
                   className="min-h-[48px] flex-1 rounded-md bg-primary font-display text-xs font-bold uppercase tracking-[0.2em] text-primary-foreground"
                 >
-                  Verify
+                  Bestätigen
                 </button>
                 <Link
                   to="/scan"

@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { VerwaltungShell, VerwaltungTable } from "@/components/admin/VerwaltungShell";
+import { AdminShell, AdminTable } from "@/components/admin/AdminShell";
 import { adventure } from "@/game/data";
 
 export const Route = createFileRoute("/admin/adventures")({
@@ -17,7 +17,7 @@ export const Route = createFileRoute("/admin/adventures")({
 
 function VerwaltungAbenteuer() {
   return (
-    <VerwaltungShell
+    <AdminShell
       title="Abenteuer"
       lead="Alle Abenteuer für diese Stadt."
       action={
@@ -26,7 +26,7 @@ function VerwaltungAbenteuer() {
         </button>
       }
     >
-      <VerwaltungTable
+      <AdminTable
         head={["Abenteuer", "Stadt", "Etappen", "Status", ""]}
         rows={[
           [
@@ -40,12 +40,12 @@ function VerwaltungAbenteuer() {
               params={{ id: adventure.id }}
               className="text-primary hover:underline"
             >
-              Edit
+              Bearbeiten
             </Link>,
           ],
           ["Nachtschicht", "Köln", "6", "Entwurf", <span key="d" className="text-muted-foreground">Bearbeiten</span>],
         ]}
       />
-    </VerwaltungShell>
+    </AdminShell>
   );
 }

@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { VerwaltungShell, Field, TextInput, Toggle } from "@/components/admin/VerwaltungShell";
+import { AdminShell, Field, TextInput, Toggle } from "@/components/admin/AdminShell";
 
 export const Route = createFileRoute("/admin/settings")({
   head: () => ({
@@ -16,7 +16,7 @@ export const Route = createFileRoute("/admin/settings")({
 
 function VerwaltungEinstellungen() {
   return (
-    <VerwaltungShell title="Einstellungen" lead="Gilt für alle Abenteuer in diesem Bereich.">
+    <AdminShell title="Einstellungen" lead="Gilt für alle Abenteuer in diesem Bereich.">
       <div className="grid gap-4 lg:grid-cols-2">
         <Field label="Organisation">
           <TextInput defaultValue="Hidden Path Expeditions" />
@@ -42,6 +42,6 @@ function VerwaltungEinstellungen() {
       <button className="mt-6 min-h-[44px] rounded-md bg-primary px-5 text-sm font-semibold text-primary-foreground">
         Einstellungen speichern
       </button>
-    </VerwaltungShell>
+    </AdminShell>
   );
 }

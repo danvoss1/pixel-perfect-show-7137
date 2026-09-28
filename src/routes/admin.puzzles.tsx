@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
-import { VerwaltungShell, Field, TextInput, Toggle } from "@/components/admin/VerwaltungShell";
+import { AdminShell, Field, TextInput, Toggle } from "@/components/admin/AdminShell";
 import { puzzles } from "@/game/data";
 import type { CodeConfig, FlappyConfig, SlidingConfig, WordleConfig } from "@/game/types";
 
@@ -27,7 +27,7 @@ function VerwaltungRätsel() {
   const code = puzzles.find((p) => p.type === "code")!.config as CodeConfig;
 
   return (
-    <VerwaltungShell title="Rätsel" lead="Jeder Rätseltyp lässt sich je Etappe konfigurieren.">
+    <AdminShell title="Rätsel" lead="Jeder Rätseltyp lässt sich je Etappe konfigurieren.">
       <div className="flex gap-2 overflow-x-auto pb-2">
         {tabs.map((t) => (
           <button
@@ -123,6 +123,6 @@ function VerwaltungRätsel() {
       <button className="mt-6 min-h-[44px] rounded-md bg-primary px-5 text-sm font-semibold text-primary-foreground">
         Konfiguration speichern
       </button>
-    </VerwaltungShell>
+    </AdminShell>
   );
 }

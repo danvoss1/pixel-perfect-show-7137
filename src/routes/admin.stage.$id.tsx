@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { Plus, X } from "lucide-react";
-import { VerwaltungShell, Field, TextInput } from "@/components/admin/VerwaltungShell";
+import { AdminShell, Field, TextInput } from "@/components/admin/AdminShell";
 import { stageById } from "@/game/data";
 
 const blockTypes = [
@@ -41,12 +41,12 @@ function StageEditor() {
   const [menu, setMenu] = useState(false);
 
   return (
-    <VerwaltungShell
+    <AdminShell
       title={stage ? `Etappe ${String(stage.number).padStart(2, "0")} — ${stage.title}` : "Etappe bearbeiten"}
       lead="Die Inhaltsblöcke erscheinen in der festgelegten Reihenfolge."
       action={
         <button className="min-h-[44px] rounded-md bg-primary px-4 text-sm font-semibold text-primary-foreground">
-          Save
+          Speichern
         </button>
       }
     >
@@ -117,6 +117,6 @@ function StageEditor() {
           </div>
         ) : null}
       </div>
-    </VerwaltungShell>
+    </AdminShell>
   );
 }

@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { VerwaltungShell, Field, TextInput, Toggle } from "@/components/admin/VerwaltungShell";
+import { AdminShell, Field, TextInput, Toggle } from "@/components/admin/AdminShell";
 import { adventure } from "@/game/data";
 
 export const Route = createFileRoute("/admin/adventure/$id")({
@@ -17,12 +17,12 @@ export const Route = createFileRoute("/admin/adventure/$id")({
 
 function AdventureEditor() {
   return (
-    <VerwaltungShell
+    <AdminShell
       title="Abenteuer bearbeiten"
       lead="Änderungen werden in diesem Prototyp lokal gespeichert."
       action={
         <button className="min-h-[44px] rounded-md bg-primary px-4 text-sm font-semibold text-primary-foreground">
-          Save
+          Speichern
         </button>
       }
     >
@@ -67,6 +67,6 @@ function AdventureEditor() {
         <Toggle label="Etappen nacheinander spielen" defaultChecked />
         <Toggle label="Etappen überspringen erlauben" />
       </div>
-    </VerwaltungShell>
+    </AdminShell>
   );
 }

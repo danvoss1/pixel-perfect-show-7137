@@ -54,7 +54,7 @@ export function RoutePuzzle({
           >
             {dirs.map((d) => (
               <option key={d} value={d}>
-                {d}
+                {({ NORTH: "Norden", EAST: "Osten", SOUTH: "Süden", WEST: "Westen" } as const)[d]}
               </option>
             ))}
           </select>

@@ -57,7 +57,7 @@ export const adventure: Adventure = {
       title: "Entschlüsselung",
       kind: "Worträtsel",
       intro:
-        "Die Tagebuchseiten sind vom Wasser beschädigt. Nur ein Wort ist erhalten geblieben – es hat zwölf Buchstaben.",
+        "Die Tagebuchseiten sind vom Wasser beschädigt. Nur ein Wort ist erhalten geblieben – es hat elf Buchstaben.",
       objective: "Entschlüsselung the word from the journal.",
       requiredItem: "Zerrissenes Foto",
       puzzleId: "p-wordle",
@@ -194,12 +194,12 @@ export const puzzles: Puzzle[] = [
   {
     id: "p-wordle",
     type: "wordle",
-    title: "Entschlüsselung The Word",
+    title: "Entschlüssele das Wort",
     tagline: "Das Tagebuch enthielt nur ein Wort.",
     stageId: "s4",
     hints: [
       { id: "h1", label: "Hinweis 1", text: "Ein Ort, an dem Wege verschwinden." },
-      { id: "h2", label: "Hinweis 2", text: "Es ist ein zusammengesetztes Wort mit zwölf Buchstaben." },
+      { id: "h2", label: "Hinweis 2", text: "Es ist ein zusammengesetztes Wort mit elf Buchstaben." },
       { id: "h3", label: "Letzter Hinweis", text: "Es endet auf -HAUS." },
     ],
     config: { word: "WÄCHTERHAUS", maxAttempts: 8, clue: "Ein Ort, an dem Wege verschwinden." },
@@ -250,8 +250,8 @@ export const puzzles: Puzzle[] = [
       { id: "h3", label: "Letzter Hinweis", text: "Man kann hindurchgehen." },
     ],
     config: {
-      table: { "△": "G", "○": "A", "◇": "T", "□": "E" },
-      encoded: "□ △ △ ◇ ○",
+      table: { "△": "T", "○": "O", "◇": "R", "□": "E" },
+      encoded: "△ ○ ◇",
       answer: "TOR",
     },
   },
@@ -296,7 +296,7 @@ export const envelopes: Envelope[] = [
     id: "e5",
     number: 5,
     code: "HOLZWEG",
-    expectedLocation: "Unknown",
+    expectedLocation: "Unbekannt",
     contents: "Ein Messingschlüssel in Wachspapier und ein handgezeichneter Grundriss eines einzelnen Zimmers.",
   },
 ];

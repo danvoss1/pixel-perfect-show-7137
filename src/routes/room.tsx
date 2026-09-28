@@ -56,13 +56,13 @@ function RoomPage() {
             onClick={() => setShowHint((h) => !h)}
             className="min-h-[48px] flex-1 rounded-md border border-border font-display text-xs font-bold uppercase tracking-[0.18em]"
           >
-            Hint
+            Hinweis
           </button>
           <Link
             to="/inventory"
             className="grid min-h-[48px] flex-1 place-items-center rounded-md border border-border font-display text-xs font-bold uppercase tracking-[0.18em]"
           >
-            Inventory
+            Inventar
           </Link>
         </div>
 

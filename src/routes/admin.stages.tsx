@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { GripVertical } from "lucide-react";
-import { VerwaltungShell } from "@/components/admin/VerwaltungShell";
+import { AdminShell } from "@/components/admin/AdminShell";
 import { adventure } from "@/game/data";
 
 export const Route = createFileRoute("/admin/stages")({
@@ -32,7 +32,7 @@ function VerwaltungEtappen() {
   };
 
   return (
-    <VerwaltungShell
+    <AdminShell
       title="Etappen"
       lead="Zum Sortieren ziehen. Jede Etappe enthält eigene Inhaltsblöcke."
       action={
@@ -66,11 +66,11 @@ function VerwaltungEtappen() {
               params={{ id: stage.id }}
               className="shrink-0 text-sm text-primary hover:underline"
             >
-              Edit
+              Bearbeiten
             </Link>
           </li>
         ))}
       </ul>
-    </VerwaltungShell>
+    </AdminShell>
   );
 }

@@ -47,7 +47,7 @@ export function SymbolPuzzle({
         }}
         className="mt-3 min-h-[48px] w-full rounded-md bg-primary font-display text-sm font-bold uppercase tracking-[0.2em] text-primary-foreground"
       >
-        Decode
+        Entschlüsseln
       </button>
       {status === "wrong" ? (
         <p className="mt-3 text-center text-sm text-destructive">Das ist nicht die gesuchte Nachricht.</p>

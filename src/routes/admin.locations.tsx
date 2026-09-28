@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
-import { VerwaltungShell, Field, TextInput, Toggle } from "@/components/admin/VerwaltungShell";
+import { AdminShell, Field, TextInput, Toggle } from "@/components/admin/AdminShell";
 import { locations } from "@/game/data";
 
 export const Route = createFileRoute("/admin/locations")({
@@ -22,7 +22,7 @@ function VerwaltungOrte() {
   const loc = locations.find((l) => l.id === selected)!;
 
   return (
-    <VerwaltungShell title="Orte" lead="Ziehe die Markierung auf der Karte an die gewünschte Stelle.">
+    <AdminShell title="Orte" lead="Ziehe die Markierung auf der Karte an die gewünschte Stelle.">
       <div className="grid gap-5 lg:grid-cols-[1.1fr_1fr]">
         <div
           className="topo relative aspect-[4/3] overflow-hidden rounded-lg border border-border bg-surface"
@@ -85,6 +85,6 @@ function VerwaltungOrte() {
           </button>
         </div>
       </div>
-    </VerwaltungShell>
+    </AdminShell>
   );
 }

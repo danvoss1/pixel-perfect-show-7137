@@ -100,10 +100,10 @@ export function ProgressRing({
   );
 }
 
-export function GesperrtContent({ note }: { note: string }) {
+export function LockedContent({ note }: { note: string }) {
   return (
     <Panel className="text-center">
-      <Label>Gesperrt stage</Label>
+      <Label>Gesperrte Etappe</Label>
       <p className="mt-3 font-display text-lg uppercase">Hier endet die Spur.</p>
       <p className="mt-2 text-sm text-muted-foreground">{note}</p>
     </Panel>

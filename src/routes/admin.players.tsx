@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
-import { VerwaltungShell, VerwaltungTable } from "@/components/admin/VerwaltungShell";
+import { AdminShell, AdminTable } from "@/components/admin/AdminShell";
 
 export const Route = createFileRoute("/admin/players")({
   head: () => ({
@@ -53,8 +53,8 @@ function VerwaltungSpielende() {
   const selected = players.find((p) => p.name === open);
 
   return (
-    <VerwaltungShell title="Spielende" lead="Wähle eine Person, um ihren Fortschritt anzusehen.">
-      <VerwaltungTable
+    <AdminShell title="Spielende" lead="Wähle eine Person, um ihren Fortschritt anzusehen.">
+      <AdminTable
         head={["Spieler/in", "Aktuelle Etappe", "Beginn", "Spielzeit", "Hinweise", "Letzte Aktivität"]}
         rows={players.map((p) => [
           <button key="n" onClick={() => setOpen(p.name)} className="font-medium hover:text-primary">
@@ -78,7 +78,7 @@ function VerwaltungSpielende() {
               </p>
             </div>
             <button onClick={() => setOpen(null)} className="text-sm text-muted-foreground">
-              Close
+              Schließen
             </button>
           </div>
 
@@ -102,6 +102,6 @@ function VerwaltungSpielende() {
           </div>
         </div>
       ) : null}
-    </VerwaltungShell>
+    </AdminShell>
   );
 }

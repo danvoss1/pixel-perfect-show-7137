@@ -72,7 +72,7 @@ export function InteractiveRoom({ onObjectFound, resetSignal }: InteractiveRoomP
             onClick={() => setOpen(null)}
             className="mt-3 label-mono text-primary"
           >
-            Close
+            Schließen
           </button>
         </motion.div>
       ) : null}
