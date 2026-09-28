@@ -378,11 +378,11 @@ export const items: InventoryItem[] = [
 ];
 
 export const loadingLines = [
-  "KOORDINATEN WERDEN GEPRÜFT...",
-  "ENTSCHLÜSSELUNG LÄUFT...",
-  "ARCHIVE WERDEN DURCHSUCHT...",
-  "ORT WIRD ÜBERPRÜFT...",
-  "EXPEDITION WIRD VORBEREITET...",
+  "KOORDINATEN WERDEN GEPRÜFT …",
+  "ENTSCHLÜSSELUNG LÄUFT …",
+  "ARCHIVE WERDEN DURCHSUCHT …",
+  "ORT WIRD ÜBERPRÜFT …",
+  "EXPEDITION WIRD VORBEREITET …",
 ];
 
 export const stageById = (id: string) => adventure.stages.find((s) => s.id === id);
