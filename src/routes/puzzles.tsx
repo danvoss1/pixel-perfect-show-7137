@@ -15,6 +15,7 @@ export const Route = createFileRoute("/puzzles")({
       },
       { property: "og:title", content: "Hinweise & Rätsel — Der verborgene Pfad" },
       { property: "og:description", content: "Aktive, gelöste und versiegelte Herausforderungen der Expedition." },
+      { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary" },
     ],
   }),
   component: PuzzleHub,

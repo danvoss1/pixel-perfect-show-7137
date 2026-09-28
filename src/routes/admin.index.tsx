@@ -1,6 +1,9 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
+import { useState } from "react";
 import { AdminShell, AdminTable } from "@/components/admin/AdminShell";
-import { adventure, puzzles } from "@/game/data";
+import { adventure, locations, puzzles } from "@/game/data";
+import { usePlayer } from "@/game/store";
+import { Button } from "@/components/ui/button";
 
 export const Route = createFileRoute("/admin/")({
   head: () => ({
@@ -9,29 +12,29 @@ export const Route = createFileRoute("/admin/")({
       { name: "description", content: "Spielleitung: Spielende, laufende Partien und Live-Steuerung." },
       { property: "og:title", content: "Spielleitung — Verwaltung" },
       { property: "og:description", content: "Spielende, laufende Partien und Live-Steuerung." },
+      { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary" },
       { name: "robots", content: "noindex" },
     ],
   }),
   component: AdminOverview,
 });
 
-const livePlayers = [
-  { name: "Daniel", stage: "5 / 8", location: "Kontrollpunkt im Wald", puzzle: "3D-Raum aktiv" },
-  { name: "Mira", stage: "3 / 8", location: "Alte Eisenbahnbrücke", puzzle: "Umschlag Nr. 03 offen" },
-  { name: "Jonas", stage: "7 / 8", location: "Tür ohne Nummer", puzzle: "Worträtsel gelöst" },
-];
-
 function AdminOverview() {
+  const [message, setMessage] = useState("");
+  const progress = usePlayer((s) => s);
+  const stage = adventure.stages.find((s) => s.id === progress.currentStageId);
+  const nextPuzzle = puzzles.find((p) => p.stageId === stage?.id);
+  const lastLocation = locations.find((loc) => loc.id === progress.visitedLocations.at(-1));
   const stats = [
-    ["Spielende", "18"],
-    ["Laufende Spiele", "3"],
-    ["Ø Spielzeit", "03:12:40"],
+    ["Lokaler Spielstand", progress.started ? "Aktiv" : "Nicht gestartet"],
+    ["Gesammelte Gegenstände", String(progress.inventory.length)],
+    ["Verwendete Hinweise", String(progress.unlockedHints.length)],
     ["Etappen", String(adventure.stages.length)],
     ["Rätsel", String(puzzles.length)],
   ];
 
   return (
-    <AdminShell title="Spielleitung" lead="Live-Übersicht laufender Expeditionen.">
+    <AdminShell title="Spielleitung" lead="Steuerung des aktuellen lokalen Testspielstands. Andere Geräte sind nicht verbunden.">
       <div className="grid grid-cols-2 gap-3 sm:grid-cols-5">
         {stats.map(([k, v]) => (
           <div key={k} className="rounded-lg border border-border bg-surface p-4">
@@ -41,33 +44,15 @@ function AdminOverview() {
         ))}
       </div>
 
-      <h2 className="mt-9 font-display text-lg font-bold">Spielleitung — live</h2>
-      <p className="text-sm text-muted-foreground">
-        Ereignisse für Spielende auslösen, die gerade unterwegs sind.
-      </p>
+      <h2 className="mt-9 font-display text-lg font-bold">Aktueller Testspielstand</h2>
       <div className="mt-4">
         <AdminTable
-          head={["Spieler/in", "Etappe", "Ort", "Rätselstatus", "Aktionen"]}
-          rows={livePlayers.map((p) => [
-            <Link key="n" to="/admin/players" className="font-medium hover:text-primary">
-              {p.name}
-            </Link>,
-            p.stage,
-            p.location,
-            p.puzzle,
-            <div key="a" className="flex flex-wrap gap-1.5">
-              {["Nachricht senden", "Hinweis freigeben", "Etappe freigeben", "Meldung anzeigen"].map((a) => (
-                <button
-                  key={a}
-                  className="rounded-md border border-border px-2.5 py-1.5 text-xs hover:bg-accent"
-                >
-                  {a}
-                </button>
-              ))}
-            </div>,
-          ])}
+          head={["Etappe", "Letzter Kontrollpunkt", "Rätselstatus", "Hinweise", "Gegenstände"]}
+          rows={[[stage ? `${stage.number} / ${adventure.stages.length} · ${stage.title}` : "—", lastLocation?.name ?? "Noch keiner", nextPuzzle ? progress.completedPuzzles.includes(nextPuzzle.id) ? "Gelöst" : "Offen" : "Kein Rätsel", String(progress.unlockedHints.length), String(progress.inventory.length)]]}
         />
       </div>
+      <div className="mt-6 grid gap-3 sm:grid-cols-[1fr_auto]"><input value={message} onChange={(e) => setMessage(e.target.value)} placeholder="Geheimnisvolle Nachricht verfassen" aria-label="Nachricht an den aktuellen Spielstand" className="min-h-[44px] w-full rounded-md border border-border bg-surface px-4 text-sm" /><Button disabled={!message.trim()} onClick={() => { progress.sendMessage(message.trim()); setMessage(""); }}>Nachricht senden</Button></div>
+      <div className="mt-3 flex flex-wrap gap-2"><Button variant="outline" disabled={!nextPuzzle?.hints[0]} onClick={() => { if (nextPuzzle?.hints[0]) progress.unlockHint(`${nextPuzzle.id}:${nextPuzzle.hints[0].id}`); }}>Hinweis freigeben</Button><Button variant="outline" onClick={progress.advanceStage}>Etappe freigeben</Button><Button variant="outline" disabled={!nextPuzzle} onClick={() => { if (nextPuzzle) progress.resetPuzzle(nextPuzzle.id); }}>Rätsel zurücksetzen</Button><Button variant="outline" onClick={() => progress.sendMessage("Achtung: Neue Nachricht aus der Spielleitung.")}>Warnung anzeigen</Button></div>
     </AdminShell>
   );
 }

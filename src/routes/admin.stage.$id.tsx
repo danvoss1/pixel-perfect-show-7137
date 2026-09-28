@@ -28,6 +28,7 @@ export const Route = createFileRoute("/admin/stage/$id")({
       { name: "description", content: "Geschichte, Ziel und Inhaltsblöcke einer Etappe bearbeiten." },
       { property: "og:title", content: "Etappe bearbeiten — Verwaltung" },
       { property: "og:description", content: "Geschichte, Ziel und Inhaltsblöcke." },
+      { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary" },
       { name: "robots", content: "noindex" },
     ],
   }),

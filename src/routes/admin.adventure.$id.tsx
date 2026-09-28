@@ -9,6 +9,7 @@ export const Route = createFileRoute("/admin/adventure/$id")({
       { name: "description", content: "Abenteuer mit Titel, Thema, Regeln und Startanweisungen konfigurieren." },
       { property: "og:title", content: "Abenteuer bearbeiten — Verwaltung" },
       { property: "og:description", content: "Titel, Thema, Regeln und Startanweisungen." },
+      { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary" },
       { name: "robots", content: "noindex" },
     ],
   }),

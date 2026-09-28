@@ -1,6 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { AdminShell, AdminTable } from "@/components/admin/AdminShell";
+import { Button } from "@/components/ui/button";
+import { usePlayer } from "@/game/store";
+import { adventure, puzzles } from "@/game/data";
 
 export const Route = createFileRoute("/admin/players")({
   head: () => ({
@@ -9,6 +12,7 @@ export const Route = createFileRoute("/admin/players")({
       { name: "description", content: "Fortschritt, Spielzeit und Hinweisnutzung der Spielenden verfolgen." },
       { property: "og:title", content: "Spielende — Verwaltung" },
       { property: "og:description", content: "Fortschritt, Spielzeit und Hinweisnutzung pro Person." },
+      { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary" },
       { name: "robots", content: "noindex" },
     ],
   }),
@@ -50,10 +54,13 @@ const players = [
 
 function VerwaltungSpielende() {
   const [open, setOpen] = useState<string | null>(null);
+  const [notice, setNotice] = useState("");
+  const progress = usePlayer((s) => s);
   const selected = players.find((p) => p.name === open);
 
   return (
-    <AdminShell title="Spielende" lead="Wähle eine Person, um ihren Fortschritt anzusehen.">
+    <AdminShell title="Spielende" lead="Beispielprofile; nur der lokale Testspielstand ist steuerbar.">
+      <div className="mb-5 border-b border-border pb-4"><p className="label-mono">Dieser Browser · Testspielstand</p><p className="mt-1 text-sm">Etappe {adventure.stages.find((stage) => stage.id === progress.currentStageId)?.number ?? 1} · {progress.completedPuzzles.length} Rätsel gelöst · {progress.unlockedHints.length} Hinweise verwendet</p><div className="mt-3 flex flex-wrap gap-2"><Button variant="outline" onClick={() => { progress.advanceStage(); setNotice("Nächste Etappe für diesen Testspielstand freigegeben."); }}>Etappe freigeben</Button><Button variant="outline" onClick={() => { const puzzle = puzzles.find((p) => p.stageId === progress.currentStageId); if (puzzle) { progress.resetPuzzle(puzzle.id); setNotice("Rätsel im aktuellen Testspielstand zurückgesetzt."); } else setNotice("In dieser Etappe gibt es kein Rätsel."); }}>Rätsel zurücksetzen</Button><Button variant="outline" onClick={() => { const puzzle = puzzles.find((p) => p.stageId === progress.currentStageId); const hint = puzzle?.hints[0]; if (hint && puzzle) { progress.unlockHint(`${puzzle.id}:${hint.id}`); setNotice("Erster Hinweis freigegeben."); } else setNotice("Hier gibt es keinen Hinweis."); }}>Hinweis freigeben</Button><Button variant="destructive" onClick={() => { if (window.confirm("Den lokalen Testspielstand wirklich zurücksetzen?")) { progress.reset(); setNotice("Testspielstand zurückgesetzt."); } }}>Spielstand zurücksetzen</Button></div>{notice && <p role="status" className="mt-2 text-sm text-success">{notice}</p>}</div>
       <AdminTable
         head={["Spieler/in", "Aktuelle Etappe", "Beginn", "Spielzeit", "Hinweise", "Letzte Aktivität"]}
         rows={players.map((p) => [
@@ -90,16 +97,7 @@ function VerwaltungSpielende() {
             ))}
           </ul>
 
-          <div className="mt-5 flex flex-wrap gap-2">
-            {["Etappe freigeben", "Rätsel zurücksetzen", "Hinweis hinzufügen", "Spielstand zurücksetzen"].map((a) => (
-              <button
-                key={a}
-                className="min-h-[44px] rounded-md border border-border px-4 text-sm hover:bg-accent"
-              >
-                {a}
-              </button>
-            ))}
-          </div>
+          <p className="mt-5 text-xs text-muted-foreground">Beispielprofil ohne Verbindung zu einem echten Spielstand.</p>
         </div>
       ) : null}
     </AdminShell>

@@ -14,6 +14,7 @@ export const Route = createFileRoute("/journal")({
       },
       { property: "og:title", content: "Expeditionslog — Der verborgene Pfad" },
       { property: "og:description", content: "Entdeckte Orte, gefundene Umschläge und gelöste Rätsel." },
+      { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary" },
     ],
   }),
   component: JournalPage,

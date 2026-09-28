@@ -12,6 +12,8 @@ import {
 import type { ReactNode } from "react";
 import { usePlayer } from "@/game/store";
 import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import { X } from "lucide-react";
 
 const tabs = [
   { to: "/adventure", label: "Abenteuer", icon: Compass },
@@ -30,6 +32,9 @@ export function GameShell({
 }) {
   const soundOn = usePlayer((s) => s.soundOn);
   const toggleSound = usePlayer((s) => s.toggleSound);
+  const messages = usePlayer((s) => s.messages);
+  const dismissMessage = usePlayer((s) => s.dismissMessage);
+  const latestMessage = messages?.[0];
 
   return (
     <div className="topo grain min-h-screen bg-background">
@@ -75,6 +80,7 @@ export function GameShell({
       </aside>
 
       <div className="lg:pl-56">
+        {latestMessage && <div className="relative z-20 mx-auto flex max-w-5xl items-center justify-between gap-3 border-b border-gold bg-panel px-4 py-3" role="status"><div><span className="label-mono text-gold">Neue Nachricht · {latestMessage.time}</span><p className="text-sm">{latestMessage.text}</p></div><Button variant="ghost" size="icon" title="Nachricht schließen" aria-label="Nachricht schließen" onClick={() => dismissMessage(latestMessage.id)}><X className="size-4" /></Button></div>}
         <main
           className={cn(
             "relative z-10 mx-auto w-full pb-28 lg:pb-10",

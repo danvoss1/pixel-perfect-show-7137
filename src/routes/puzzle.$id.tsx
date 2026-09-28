@@ -10,12 +10,18 @@ import { SlidingPuzzle } from "@/components/puzzles/SlidingPuzzle";
 import { FlappyGame } from "@/components/puzzles/FlappyGame";
 import { RoutePuzzle } from "@/components/puzzles/RoutePuzzle";
 import { SymbolPuzzle } from "@/components/puzzles/SymbolPuzzle";
-import { puzzleById, stageById } from "@/game/data";
+import { MastermindGame } from "@/components/puzzles/MastermindGame";
+import { SimonGame } from "@/components/puzzles/SimonGame";
+import { MorseGame } from "@/components/puzzles/MorseGame";
+import { adventure, puzzleById, stageById } from "@/game/data";
 import { usePlayer } from "@/game/store";
 import { puzzleTypeLabel } from "@/game/labels";
 import type {
   CodeConfig,
   FlappyConfig,
+  MastermindConfig,
+  SimonConfig,
+  MorseConfig,
   RouteConfig,
   SlidingConfig,
   SymbolsConfig,
@@ -34,6 +40,7 @@ export const Route = createFileRoute("/puzzle/$id")({
         { name: "description", content: description },
         { property: "og:title", content: title },
         { property: "og:description", content: description },
+        { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary" },
       ],
     };
   },
@@ -46,6 +53,7 @@ function PuzzlePage() {
   const puzzle = puzzleById(id);
   const solvePuzzle = usePlayer((s) => s.solvePuzzle);
   const solvedList = usePlayer((s) => s.completedPuzzles);
+  const currentStageId = usePlayer((s) => s.currentStageId);
   const [celebrate, setCelebrate] = useState(false);
 
   const solved = puzzle ? solvedList.includes(puzzle.id) : false;
@@ -65,6 +73,10 @@ function PuzzlePage() {
   }
 
   const stage = stageById(puzzle.stageId);
+  const currentStage = adventure.stages.find((entry) => entry.id === currentStageId);
+  if (stage && currentStage && stage.number > currentStage.number) {
+    return <GameShell><LockedContent note="Diese Spur ist noch versiegelt. Folge zuerst der aktuellen Etappe." /><Link to="/adventure" className="mt-6 block text-center label-mono text-primary">Zur Etappenübersicht</Link></GameShell>;
+  }
 
   return (
     <GameShell>
@@ -138,6 +150,9 @@ function PuzzlePage() {
             </Link>
           </Panel>
         ) : null}
+        {puzzle.type === "mastermind" && <MastermindGame config={puzzle.config as MastermindConfig} solved={solved} onSolved={onSolved} />}
+        {puzzle.type === "simon" && <SimonGame config={puzzle.config as SimonConfig} solved={solved} onSolved={onSolved} />}
+        {puzzle.type === "morse" && <MorseGame config={puzzle.config as MorseConfig} solved={solved} onSolved={onSolved} />}
       </div>
 
       {solved && puzzle.type === "sliding" ? (

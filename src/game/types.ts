@@ -8,14 +8,21 @@ export type PuzzleType =
   | "route"
   | "symbols"
   | "room"
-  | "evidence";
+  | "evidence"
+  | "mastermind"
+  | "simon"
+  | "morse";
 
-export type MarkerState = "unknown" | "discovered" | "active" | "completed" | "locked";
+export type MarkerState = "unknown" | "discovered" | "active" | "completed" | "locked" | "food" | "drink" | "envelope" | "puzzle" | "bonus";
+
+export type HintCost = "none" | "drink" | "video" | "minigame" | "token" | "time" | "team" | "custom";
 
 export interface Hint {
   id: string;
   label: string;
   text: string;
+  cost?: HintCost;
+  costDescription?: string;
 }
 
 export interface GameLocation {
@@ -29,6 +36,12 @@ export interface GameLocation {
   x: number;
   y: number;
   clue: string;
+  description?: string;
+  stageId?: string;
+  kind?: "checkpoint" | "food" | "drink" | "envelope" | "bonus";
+  image?: string;
+  envelopeId?: string;
+  rewardItemId?: string;
   requireGps?: boolean;
   requireCode?: boolean;
   requireQr?: boolean;
@@ -69,6 +82,9 @@ export interface SymbolsConfig {
   encoded: string;
   answer: string;
 }
+export interface MastermindConfig { secret: string; attempts: number; }
+export interface SimonConfig { sequence: number[]; }
+export interface MorseConfig { code: string; answer: string; }
 
 export interface Puzzle {
   id: string;
@@ -84,6 +100,9 @@ export interface Puzzle {
     | CodeConfig
     | RouteConfig
     | SymbolsConfig
+    | MastermindConfig
+    | SimonConfig
+    | MorseConfig
     | Record<string, never>;
 }
 
@@ -103,6 +122,10 @@ export interface InventoryItem {
   foundAtStage: number;
   description: string;
   detail: string;
+  category?: "Dokument" | "Schlüssel" | "Hinweis" | "Kartenfragment" | "Codefragment" | "Werkzeug" | "Quest-Gegenstand" | "Joker" | "Trinkspiel-Karte" | "Essens-Token" | "Getränke-Token" | "Bonus" | "Debuff" | "Mystery-Gegenstand";
+  mystery?: boolean;
+  physical?: boolean;
+  consumable?: boolean;
 }
 
 export interface Stage {

@@ -15,6 +15,7 @@ export const Route = createFileRoute("/adventure")({
       },
       { property: "og:title", content: "Abenteuer — Der verborgene Pfad" },
       { property: "og:description", content: "Aktuelles Ziel, Etappenübersicht und Expeditionsfortschritt." },
+      { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary" },
     ],
   }),
   component: AdventureHome,

@@ -14,6 +14,7 @@ export const Route = createFileRoute("/inventory")({
       },
       { property: "og:title", content: "Inventar — Der verborgene Pfad" },
       { property: "og:description", content: "Bisher gesammelte Dokumente, Beweisstücke, Schlüssel und Codefragmente." },
+      { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary" },
     ],
   }),
   component: InventoryPage,

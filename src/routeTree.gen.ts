@@ -21,6 +21,8 @@ import { Route as RoomRouteImport } from './routes/room'
 import { Route as ScanRouteImport } from './routes/scan'
 import { Route as AdminIndexRouteImport } from './routes/admin.index'
 import { Route as AdminAdventuresRouteImport } from './routes/admin.adventures'
+import { Route as AdminEventsRouteImport } from './routes/admin.events'
+import { Route as AdminItemsRouteImport } from './routes/admin.items'
 import { Route as AdminLocationsRouteImport } from './routes/admin.locations'
 import { Route as AdminPlayersRouteImport } from './routes/admin.players'
 import { Route as AdminPuzzlesRouteImport } from './routes/admin.puzzles'
@@ -92,6 +94,16 @@ const AdminAdventuresRoute = AdminAdventuresRouteImport.update({
   path: '/adventures',
   getParentRoute: () => AdminRoute,
 } as any)
+const AdminEventsRoute = AdminEventsRouteImport.update({
+  id: '/events',
+  path: '/events',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminItemsRoute = AdminItemsRouteImport.update({
+  id: '/items',
+  path: '/items',
+  getParentRoute: () => AdminRoute,
+} as any)
 const AdminLocationsRoute = AdminLocationsRouteImport.update({
   id: '/locations',
   path: '/locations',
@@ -155,6 +167,8 @@ export interface FileRoutesByFullPath {
   '/room': typeof RoomRoute
   '/scan': typeof ScanRoute
   '/admin/adventures': typeof AdminAdventuresRoute
+  '/admin/events': typeof AdminEventsRoute
+  '/admin/items': typeof AdminItemsRoute
   '/admin/locations': typeof AdminLocationsRoute
   '/admin/players': typeof AdminPlayersRoute
   '/admin/puzzles': typeof AdminPuzzlesRoute
@@ -178,6 +192,8 @@ export interface FileRoutesByTo {
   '/room': typeof RoomRoute
   '/scan': typeof ScanRoute
   '/admin/adventures': typeof AdminAdventuresRoute
+  '/admin/events': typeof AdminEventsRoute
+  '/admin/items': typeof AdminItemsRoute
   '/admin/locations': typeof AdminLocationsRoute
   '/admin/players': typeof AdminPlayersRoute
   '/admin/puzzles': typeof AdminPuzzlesRoute
@@ -203,6 +219,8 @@ export interface FileRoutesById {
   '/room': typeof RoomRoute
   '/scan': typeof ScanRoute
   '/admin/adventures': typeof AdminAdventuresRoute
+  '/admin/events': typeof AdminEventsRoute
+  '/admin/items': typeof AdminItemsRoute
   '/admin/locations': typeof AdminLocationsRoute
   '/admin/players': typeof AdminPlayersRoute
   '/admin/puzzles': typeof AdminPuzzlesRoute
@@ -229,6 +247,8 @@ export interface FileRouteTypes {
     | '/room'
     | '/scan'
     | '/admin/adventures'
+    | '/admin/events'
+    | '/admin/items'
     | '/admin/locations'
     | '/admin/players'
     | '/admin/puzzles'
@@ -252,6 +272,8 @@ export interface FileRouteTypes {
     | '/room'
     | '/scan'
     | '/admin/adventures'
+    | '/admin/events'
+    | '/admin/items'
     | '/admin/locations'
     | '/admin/players'
     | '/admin/puzzles'
@@ -276,6 +298,8 @@ export interface FileRouteTypes {
     | '/room'
     | '/scan'
     | '/admin/adventures'
+    | '/admin/events'
+    | '/admin/items'
     | '/admin/locations'
     | '/admin/players'
     | '/admin/puzzles'
@@ -391,6 +415,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminAdventuresRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/admin/events': {
+      id: '/admin/events'
+      path: '/events'
+      fullPath: '/admin/events'
+      preLoaderRoute: typeof AdminEventsRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/items': {
+      id: '/admin/items'
+      path: '/items'
+      fullPath: '/admin/items'
+      preLoaderRoute: typeof AdminItemsRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/admin/locations': {
       id: '/admin/locations'
       path: '/locations'
@@ -466,6 +504,8 @@ declare module '@tanstack/react-router' {
 
 interface AdminRouteChildren {
   AdminAdventuresRoute: typeof AdminAdventuresRoute
+  AdminEventsRoute: typeof AdminEventsRoute
+  AdminItemsRoute: typeof AdminItemsRoute
   AdminLocationsRoute: typeof AdminLocationsRoute
   AdminPlayersRoute: typeof AdminPlayersRoute
   AdminPuzzlesRoute: typeof AdminPuzzlesRoute
@@ -478,6 +518,8 @@ interface AdminRouteChildren {
 
 const AdminRouteChildren: AdminRouteChildren = {
   AdminAdventuresRoute: AdminAdventuresRoute,
+  AdminEventsRoute: AdminEventsRoute,
+  AdminItemsRoute: AdminItemsRoute,
   AdminLocationsRoute: AdminLocationsRoute,
   AdminPlayersRoute: AdminPlayersRoute,
   AdminPuzzlesRoute: AdminPuzzlesRoute,

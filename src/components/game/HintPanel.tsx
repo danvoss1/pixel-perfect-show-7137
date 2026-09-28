@@ -1,5 +1,8 @@
 import { AnimatePresence, motion } from "motion/react";
+import { useState } from "react";
 import { Lock, Lightbulb } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { VideoProof } from "./VideoProof";
 import { usePlayer } from "@/game/store";
 import type { Hint } from "@/game/types";
 import { Label } from "./primitives";
@@ -7,6 +10,14 @@ import { Label } from "./primitives";
 export function HintPanel({ puzzleId, hints }: { puzzleId: string; hints: Hint[] }) {
   const unlocked = usePlayer((s) => s.unlockedHints);
   const unlockHint = usePlayer((s) => s.unlockHint);
+  const [pending, setPending] = useState<Hint | null>(null);
+  const [confirmed, setConfirmed] = useState(false);
+  const reveal = () => {
+    if (!pending) return;
+    unlockHint(`${puzzleId}:${pending.id}`);
+    setPending(null);
+    setConfirmed(false);
+  };
 
   return (
     <div className="field-panel p-5">
@@ -20,7 +31,7 @@ export function HintPanel({ puzzleId, hints }: { puzzleId: string; hints: Hint[]
             <div key={hint.id} className="rounded-md border border-border bg-background/40">
               <button
                 disabled={!prevOpen || isOpen}
-                onClick={() => unlockHint(key)}
+                onClick={() => { setPending(hint); setConfirmed(false); }}
                 className="flex min-h-[48px] w-full items-center justify-between gap-3 px-4 py-3 text-left disabled:cursor-not-allowed"
               >
                 <span className="font-display text-sm font-semibold uppercase tracking-wide">
@@ -57,6 +68,14 @@ export function HintPanel({ puzzleId, hints }: { puzzleId: string; hints: Hint[]
       <p className="mt-3 text-xs text-muted-foreground">
         Hinweise werden im Expeditionslog festgehalten.
       </p>
+      {pending && <div className="fixed inset-0 z-50 grid place-items-center bg-background/90 p-4" role="dialog" aria-modal="true" aria-label="Hinweis freischalten">
+        <div className="field-panel w-full max-w-lg p-5 shadow-lg">
+          <Label>Hinweis {pending.label}</Label><h2 className="mt-2 font-display text-xl font-bold uppercase">Hinweis freischalten</h2>
+          <p className="mt-3 text-sm text-muted-foreground">{pending.costDescription ?? (pending.cost === "time" ? "Dieser Hinweis verlängert deine Spielzeit." : "Dieser Hinweis wird im Expeditionslog vermerkt.")}</p>
+          {pending.cost === "video" && <div className="mt-4 space-y-3"><p className="text-sm text-gold">Eine alkoholfreie Variante ist jederzeit möglich. Die Teilnahme ist freiwillig.</p><VideoProof onConfirm={() => setConfirmed(true)} /><label className="flex items-center gap-2 text-sm"><input type="checkbox" checked={confirmed} onChange={(e) => setConfirmed(e.target.checked)} /> Alkoholfreie Variante verwenden / Aufgabe bestätigen</label></div>}
+          <div className="mt-5 flex justify-end gap-2"><Button variant="outline" onClick={() => setPending(null)}>Abbrechen</Button><Button disabled={pending.cost === "video" && !confirmed} onClick={reveal}>Hinweis öffnen</Button></div>
+        </div>
+      </div>}
     </div>
   );
 }

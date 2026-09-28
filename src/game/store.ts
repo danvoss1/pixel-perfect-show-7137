@@ -15,6 +15,7 @@ interface PlayerState {
   verifiedEnvelopes: string[];
   journal: JournalEntry[];
   soundOn: boolean;
+  messages: { id: string; text: string; time: string }[];
   begin: () => void;
   reset: () => void;
   toggleSound: () => void;
@@ -24,6 +25,10 @@ interface PlayerState {
   solvePuzzle: (id: string, title: string) => void;
   completeStage: (id: string) => void;
   addItem: (id: string, name: string) => void;
+  sendMessage: (text: string) => void;
+  dismissMessage: (id: string) => void;
+  advanceStage: () => void;
+  resetPuzzle: (id: string) => void;
 }
 
 const stamp = () =>
@@ -48,6 +53,7 @@ const initial = {
   verifiedEnvelopes: [] as string[],
   journal: [] as JournalEntry[],
   soundOn: false,
+  messages: [] as { id: string; text: string; time: string }[],
 };
 
 export const usePlayer = create<PlayerState>()(
@@ -69,6 +75,14 @@ export const usePlayer = create<PlayerState>()(
         ),
       reset: () => set({ ...initial }),
       toggleSound: () => set((s) => ({ soundOn: !s.soundOn })),
+      sendMessage: (text) => set((s) => ({ messages: [{ id: `${Date.now()}`, text, time: stamp() }, ...s.messages] })),
+      dismissMessage: (id) => set((s) => ({ messages: s.messages.filter((message) => message.id !== id) })),
+      advanceStage: () => set((s) => {
+        const index = adventure.stages.findIndex((stage) => stage.id === s.currentStageId);
+        const next = adventure.stages[index + 1];
+        return next ? { currentStageId: next.id, journal: [entry("ETAPPE FREIGEGEBEN", next.title), ...s.journal] } : s;
+      }),
+      resetPuzzle: (id) => set((s) => ({ completedPuzzles: s.completedPuzzles.filter((puzzleId) => puzzleId !== id) })),
       visitLocation: (id, name) =>
         set((s) =>
           s.visitedLocations.includes(id)

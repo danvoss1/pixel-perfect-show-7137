@@ -11,6 +11,7 @@ export const Route = createFileRoute("/admin/stages")({
       { name: "description", content: "Etappen des Abenteuers sortieren und bearbeiten." },
       { property: "og:title", content: "Etappen — Verwaltung" },
       { property: "og:description", content: "Etappen des Abenteuers sortieren und bearbeiten." },
+      { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary" },
       { name: "robots", content: "noindex" },
     ],
   }),

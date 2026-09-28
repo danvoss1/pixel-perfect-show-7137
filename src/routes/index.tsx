@@ -18,6 +18,7 @@ export const Route = createFileRoute("/")({
         property: "og:description",
         content: "Acht Etappen, versteckte Umschläge und Rätsel in Köln. Das Abenteuer beginnt jenseits des Bildschirms.",
       },
+      { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary" },
     ],
   }),
   component: Landing,
