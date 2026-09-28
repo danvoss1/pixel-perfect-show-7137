@@ -13,6 +13,7 @@ export const Route = createFileRoute("/scan")({
       { name: "description", content: "Scanne eine QR-Markierung oder gib einen Umschlagcode ein, um die nächste Etappe freizuschalten." },
       { property: "og:title", content: "Markierung scannen — Der verborgene Pfad" },
       { property: "og:description", content: "Scanne eine Markierung oder gib einen Umschlagcode ein." },
+      { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary" },
     ],
   }),
   component: ScanPage,

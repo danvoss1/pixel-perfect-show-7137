@@ -12,6 +12,7 @@ export const Route = createFileRoute("/complete")({
       { name: "description", content: "Dein Expeditionsbericht: Zeit, gelöste Rätsel und zurückgelegte Strecke." },
       { property: "og:title", content: "Expedition abgeschlossen — Der verborgene Pfad" },
       { property: "og:description", content: "Zeit, gelöste Rätsel, genutzte Hinweise und zurückgelegte Strecke." },
+      { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary" },
     ],
   }),
   component: CompletePage,

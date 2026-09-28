@@ -13,6 +13,7 @@ export const Route = createFileRoute("/room")({
       { name: "description", content: "Eine Suche im Rätselraum: Etwas hier gehört nicht an seinen Platz." },
       { property: "og:title", content: "Durchsuche den Raum — Der verborgene Pfad" },
       { property: "og:description", content: "Etwas in diesem Raum gehört nicht hierher. Finde es." },
+      { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary" },
     ],
   }),
   component: RoomPage,
