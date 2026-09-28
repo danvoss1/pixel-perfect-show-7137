@@ -19,7 +19,7 @@ function VerwaltungEinstellungen() {
     <AdminShell title="Einstellungen" lead="Gilt für alle Abenteuer in diesem Bereich.">
       <div className="grid gap-4 lg:grid-cols-2">
         <Field label="Organisation">
-          <TextInput defaultValue="Hidden Path Expeditions" />
+          <TextInput defaultValue="The Hidden Path Expeditionen" />
         </Field>
         <Field label="Kontakt für Fragen">
           <TextInput defaultValue="team@hiddenpath.example" />
