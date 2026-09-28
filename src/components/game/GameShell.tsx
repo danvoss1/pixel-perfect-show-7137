@@ -14,11 +14,11 @@ import { usePlayer } from "@/game/store";
 import { cn } from "@/lib/utils";
 
 const tabs = [
-  { to: "/adventure", label: "Adventure", icon: Compass },
-  { to: "/map", label: "Map", icon: MapIcon },
-  { to: "/puzzles", label: "Clues", icon: PuzzleIcon },
-  { to: "/inventory", label: "Inventory", icon: Backpack },
-  { to: "/journal", label: "Journal", icon: BookOpen },
+  { to: "/adventure", label: "Abenteuer", icon: Compass },
+  { to: "/map", label: "Karte", icon: MapIcon },
+  { to: "/puzzles", label: "Rätsel", icon: PuzzleIcon },
+  { to: "/inventory", label: "Inventar", icon: Backpack },
+  { to: "/journal", label: "Logbuch", icon: BookOpen },
 ] as const;
 
 export function GameShell({
@@ -38,9 +38,9 @@ export function GameShell({
         <Link to="/" className="mb-8 block">
           <span className="label-mono">50.9375 N / 6.9603 E</span>
           <span className="mt-1 block font-display text-lg font-bold uppercase leading-tight">
-            The Hidden
+            Der verborgene
             <br />
-            Path
+            Pfad
           </span>
         </Link>
         <nav className="flex flex-1 flex-col gap-1">
@@ -62,14 +62,14 @@ export function GameShell({
             to="/scan"
             className="flex items-center gap-3 rounded-md px-3 py-2.5 text-sm text-muted-foreground transition-colors hover:bg-accent/60"
           >
-            <QrCode className="size-4" /> Scan marker
+            <QrCode className="size-4" /> Markierung scannen
           </Link>
           <button
             onClick={toggleSound}
             className="flex w-full items-center gap-3 rounded-md px-3 py-2.5 text-sm text-muted-foreground transition-colors hover:bg-accent/60"
           >
             {soundOn ? <Volume2 className="size-4" /> : <VolumeX className="size-4" />}
-            Sound {soundOn ? "on" : "off"}
+            Ton {soundOn ? "an" : "aus"}
           </button>
         </div>
       </aside>

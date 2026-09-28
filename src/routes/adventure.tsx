@@ -8,13 +8,13 @@ import { usePlayer } from "@/game/store";
 export const Route = createFileRoute("/adventure")({
   head: () => ({
     meta: [
-      { title: "Adventure — The Hidden Path" },
+      { title: "Abenteuer — Der verborgene Pfad" },
       {
         name: "description",
-        content: "Your expedition home: current objective, stage timeline and progress through The Hidden Path.",
+        content: "Deine Expedition: aktuelles Ziel, Etappenübersicht und Fortschritt auf dem verborgenen Pfad.",
       },
-      { property: "og:title", content: "Adventure — The Hidden Path" },
-      { property: "og:description", content: "Current objective, stage timeline and expedition progress." },
+      { property: "og:title", content: "Abenteuer — Der verborgene Pfad" },
+      { property: "og:description", content: "Aktuelles Ziel, Etappenübersicht und Expeditionsfortschritt." },
     ],
   }),
   component: AdventureHome,
@@ -43,17 +43,17 @@ function AdventureHome() {
 
       <Reveal delay={0.08}>
         <Panel className="mt-7" glow>
-          <Label>Current objective</Label>
+          <Label>Aktuelles Ziel</Label>
           <p className="mt-3 font-display text-xl font-semibold">{current.objective}</p>
           <div className="mt-5 grid grid-cols-2 gap-4">
             <div>
-              <Label>Distance</Label>
+              <Label>Entfernung</Label>
               <p className="mt-1 font-display text-lg">{location?.distance ?? "—"}</p>
             </div>
             <div>
               <Label>Status</Label>
               <p className="mt-1 font-display text-lg text-primary">
-                Stage {String(current.number).padStart(2, "0")} active
+                Etappe {String(current.number).padStart(2, "0")} aktiv
               </p>
             </div>
           </div>
@@ -62,13 +62,13 @@ function AdventureHome() {
             params={{ id: current.id }}
             className="mt-6 flex min-h-[52px] items-center justify-center gap-2 rounded-md bg-primary font-display text-sm font-bold uppercase tracking-[0.2em] text-primary-foreground transition-opacity hover:opacity-90"
           >
-            Open current stage <ArrowRight className="size-4" />
+            Aktuelle Etappe öffnen <ArrowRight className="size-4" />
           </Link>
         </Panel>
       </Reveal>
 
       <div className="mt-10">
-        <Label>Expedition timeline</Label>
+        <Label>Etappenübersicht</Label>
         <ol className="mt-4 space-y-2">
           {adventure.stages.map((stage, i) => {
             const status = completed.includes(stage.id)
@@ -99,11 +99,11 @@ function AdventureHome() {
                           locked ? "locked-blur" : ""
                         }`}
                       >
-                        {locked ? "Unknown" : stage.title}
+                        {locked ? "Unbekannt" : stage.title}
                       </span>
                       <span className="mt-0.5 flex items-center gap-1.5 text-xs text-muted-foreground">
                         {!locked && stage.locationId ? <MapPin className="size-3" /> : null}
-                        {locked ? "Sealed until the trail continues" : stage.kind}
+                        {locked ? "Versiegelt, bis die Spur weiterführt" : stage.kind}
                       </span>
                     </span>
                     <StatusChip status={status} />
@@ -120,7 +120,7 @@ function AdventureHome() {
           to="/complete"
           className="mt-8 flex min-h-[52px] items-center justify-center rounded-md border border-gold/50 font-display text-sm font-bold uppercase tracking-[0.2em] text-gold"
         >
-          View expedition summary
+          Zusammenfassung ansehen
         </Link>
       ) : null}
     </GameShell>

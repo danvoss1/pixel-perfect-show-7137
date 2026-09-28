@@ -8,10 +8,10 @@ import { adventure, envelopes } from "@/game/data";
 export const Route = createFileRoute("/scan")({
   head: () => ({
     meta: [
-      { title: "Scan The Marker — The Hidden Path" },
-      { name: "description", content: "Scan a QR marker or enter an envelope code to unlock the next stage." },
-      { property: "og:title", content: "Scan The Marker — The Hidden Path" },
-      { property: "og:description", content: "Scan a marker or enter an envelope code to continue." },
+      { title: "Markierung scannen — Der verborgene Pfad" },
+      { name: "description", content: "Scanne eine QR-Markierung oder gib einen Umschlagcode ein, um die nächste Etappe freizuschalten." },
+      { property: "og:title", content: "Markierung scannen — Der verborgene Pfad" },
+      { property: "og:description", content: "Scanne eine Markierung oder gib einen Umschlagcode ein." },
     ],
   }),
   component: ScanPage,
@@ -44,10 +44,10 @@ function ScanPage() {
         <div className="relative w-full max-w-sm px-6 text-center">
           <p className="label-mono">
             {status === "idle"
-              ? "Scan the marker"
+              ? "Markierung scannen"
               : status === "scanning"
-                ? "Verifying location..."
-                : "Marker identified"}
+                ? "Ort wird überprüft ..."
+                : "Markierung erkannt"}
           </p>
 
           <div className="relative mx-auto mt-6 aspect-square w-full max-w-xs rounded-lg border border-border bg-surface/60">
@@ -67,7 +67,7 @@ function ScanPage() {
             {status === "found" ? (
               <div className="absolute inset-0 grid place-items-center">
                 <p className="font-display text-sm uppercase tracking-[0.2em] text-success">
-                  Opening Stage {String(stage?.number ?? 1).padStart(2, "0")}...
+                  Etappe {String(stage?.number ?? 1).padStart(2, "0")} wird geöffnet ...
                 </p>
               </div>
             ) : null}
@@ -78,10 +78,10 @@ function ScanPage() {
             disabled={status !== "idle"}
             className="mt-8 min-h-[52px] w-full rounded-md bg-primary font-display text-sm font-bold uppercase tracking-[0.2em] text-primary-foreground disabled:opacity-60"
           >
-            {status === "idle" ? "Start scanner" : "Scanning"}
+            {status === "idle" ? "Scanner starten" : "Scan läuft"}
           </button>
           <p className="mt-4 text-xs text-muted-foreground">
-            Camera access is simulated in this prototype.
+            Der Kamerazugriff wird in diesem Prototyp simuliert.
           </p>
         </div>
       </div>

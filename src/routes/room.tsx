@@ -9,10 +9,10 @@ import { puzzleById } from "@/game/data";
 export const Route = createFileRoute("/room")({
   head: () => ({
     meta: [
-      { title: "Search The Room — The Hidden Path" },
-      { name: "description", content: "An escape-room search: something in this room does not belong." },
-      { property: "og:title", content: "Search The Room — The Hidden Path" },
-      { property: "og:description", content: "Something in this room does not belong. Find it." },
+      { title: "Durchsuche den Raum — Der verborgene Pfad" },
+      { name: "description", content: "Eine Suche im Rätselraum: Etwas hier gehört nicht an seinen Platz." },
+      { property: "og:title", content: "Durchsuche den Raum — Der verborgene Pfad" },
+      { property: "og:description", content: "Etwas in diesem Raum gehört nicht hierher. Finde es." },
     ],
   }),
   component: RoomPage,
@@ -29,8 +29,8 @@ function RoomPage() {
     <GameShell bare>
       <div className="relative flex h-[calc(100vh-56px)] flex-col lg:h-screen">
         <header className="px-5 pt-5">
-          <h1 className="font-display text-2xl font-bold uppercase">Search the room</h1>
-          <p className="text-sm text-muted-foreground">Something here does not belong.</p>
+          <h1 className="font-display text-2xl font-bold uppercase">Durchsuche den Raum</h1>
+          <p className="text-sm text-muted-foreground">Etwas gehört hier nicht hin.</p>
         </header>
 
         <div className="flex-1 p-3 sm:p-5">
@@ -50,19 +50,19 @@ function RoomPage() {
             onClick={() => setResetSignal((n) => n + 1)}
             className="min-h-[48px] flex-1 rounded-md border border-border font-display text-xs font-bold uppercase tracking-[0.18em]"
           >
-            Reset view
+            Ansicht zurücksetzen
           </button>
           <button
             onClick={() => setShowHint((h) => !h)}
             className="min-h-[48px] flex-1 rounded-md border border-border font-display text-xs font-bold uppercase tracking-[0.18em]"
           >
-            Hint
+            Hinweis
           </button>
           <Link
             to="/inventory"
             className="grid min-h-[48px] flex-1 place-items-center rounded-md border border-border font-display text-xs font-bold uppercase tracking-[0.18em]"
           >
-            Inventory
+            Inventar
           </Link>
         </div>
 
@@ -75,9 +75,9 @@ function RoomPage() {
 
       <PuzzleSuccess
         show={done}
-        title="Object recovered"
-        message="A USB stick was taped behind the framed map."
-        continueLabel="Back to the stage"
+        title="Gegenstand gefunden"
+        message="Hinter der gerahmten Karte klebte ein USB-Stick."
+        continueLabel="Zurück zur Etappe"
         onContinue={() => setDone(false)}
       />
     </GameShell>

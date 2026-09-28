@@ -10,11 +10,11 @@ import photo from "@/assets/photo-bridge.jpg";
 export const Route = createFileRoute("/item/$id")({
   head: ({ params }) => {
     const item = itemById(params.id);
-    const title = item ? `${item.name} — Evidence` : "Item";
-    const description = item?.description ?? "An item recovered during the expedition.";
+    const title = item ? `${item.name} — Beweisstück` : "Gegenstand";
+    const description = item?.description ?? "Ein während der Expedition gefundener Gegenstand.";
     return {
       meta: [
-        { title: `${title} — The Hidden Path` },
+        { title: `${title} — Der verborgene Pfad` },
         { name: "description", content: description },
         { property: "og:title", content: title },
         { property: "og:description", content: description },
@@ -34,7 +34,7 @@ function ItemPage() {
   if (!item) {
     return (
       <GameShell>
-        <LockedContent note="This item is not in your inventory." />
+        <LockedContent note="Dieser Gegenstand ist nicht in deinem Inventar." />
       </GameShell>
     );
   }
@@ -42,7 +42,7 @@ function ItemPage() {
   return (
     <GameShell>
       <Reveal>
-        <Label>Item #{String(item.number).padStart(2, "0")} · {item.kind}</Label>
+        <Label>Gegenstand Nr. {String(item.number).padStart(2, "0")} · {item.kind}</Label>
         <h1 className="mt-2 font-display text-3xl font-bold uppercase sm:text-5xl">{item.name}</h1>
       </Reveal>
 
@@ -62,16 +62,16 @@ function ItemPage() {
           />
           <button
             onClick={() => setHotspot(true)}
-            aria-label="Inspect detail"
+            aria-label="Detail untersuchen"
             className="absolute left-[62%] top-[46%] size-11 rounded-full border border-gold/60"
           >
             <span className="absolute inset-0 rounded-full border border-gold/40 marker-pulse" />
           </button>
           <div className="absolute bottom-3 right-3 flex gap-2">
             {[
-              [RotateCw, () => setRotation((r) => r + 90), "Rotate"],
-              [ZoomIn, () => setZoom((z) => Math.min(2.5, z + 0.25)), "Zoom in"],
-              [ZoomOut, () => setZoom((z) => Math.max(1, z - 0.25)), "Zoom out"],
+              [RotateCw, () => setRotation((r) => r + 90), "Drehen"],
+              [ZoomIn, () => setZoom((z) => Math.min(2.5, z + 0.25)), "Vergrößern"],
+              [ZoomOut, () => setZoom((z) => Math.max(1, z - 0.25)), "Verkleinern"],
             ].map(([Icon, fn, label], i) => {
               const I = Icon as typeof RotateCw;
               return (
@@ -90,23 +90,23 @@ function ItemPage() {
 
         <div className="space-y-4">
           <Panel>
-            <Label>Description</Label>
+            <Label>Beschreibung</Label>
             <p className="mt-2 text-sm text-muted-foreground">{item.description}</p>
           </Panel>
           <Panel>
-            <Label>Field notes</Label>
+            <Label>Feldnotizen</Label>
             <p className="mt-2 font-hand text-2xl leading-snug text-paper">{item.detail}</p>
           </Panel>
           {hotspot ? (
             <Panel glow>
-              <Label>Hidden detail</Label>
+              <Label>Verborgenes Detail</Label>
               <p className="mt-2 text-sm">
-                Scratched into the emulsion, barely visible: <span className="text-gold">47 — 29</span>
+                In die Emulsion geritzt, kaum zu erkennen: <span className="text-gold">47 — 29</span>
               </p>
             </Panel>
           ) : null}
           <Link to="/inventory" className="block text-center label-mono text-primary">
-            Back to inventory
+            Zurück zum Inventar
           </Link>
         </div>
       </div>

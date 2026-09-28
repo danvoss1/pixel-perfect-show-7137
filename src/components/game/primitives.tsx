@@ -49,7 +49,7 @@ export function StatusChip({ status }: { status: "completed" | "active" | "locke
     active: "border-primary/50 text-primary",
     locked: "border-border text-muted-foreground",
   } as const;
-  const text = { completed: "Completed", active: "Active", locked: "Locked" };
+  const text = { completed: "Abgeschlossen", active: "Aktiv", locked: "Gesperrt" };
   return (
     <span
       className={cn(
@@ -94,7 +94,7 @@ export function ProgressRing({
       </svg>
       <div className="absolute inset-0 grid place-items-center">
         <span className="font-display text-lg font-bold">{value}</span>
-        <span className="label-mono absolute bottom-3 text-[9px]">of {total}</span>
+        <span className="label-mono absolute bottom-3 text-[9px]">von {total}</span>
       </div>
     </div>
   );
@@ -103,8 +103,8 @@ export function ProgressRing({
 export function LockedContent({ note }: { note: string }) {
   return (
     <Panel className="text-center">
-      <Label>Locked stage</Label>
-      <p className="mt-3 font-display text-lg uppercase">The trail ends here.</p>
+      <Label>Gesperrte Etappe</Label>
+      <p className="mt-3 font-display text-lg uppercase">Hier endet die Spur.</p>
       <p className="mt-2 text-sm text-muted-foreground">{note}</p>
     </Panel>
   );

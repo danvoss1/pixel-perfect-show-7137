@@ -70,11 +70,11 @@ export function SlidingPuzzle({
     <div className="space-y-4">
       <div className="flex items-center justify-between gap-4">
         <div>
-          <Label>Moves</Label>
+          <Label>Züge</Label>
           <p className="font-display text-xl font-bold">{String(moves).padStart(3, "0")}</p>
         </div>
         <div className="text-right">
-          <Label>Time</Label>
+          <Label>Zeit</Label>
           <p className="font-display text-xl font-bold">
             {mm}:{ss}
           </p>
@@ -97,7 +97,7 @@ export function SlidingPuzzle({
               <button
                 key={idx}
                 onClick={() => move(idx)}
-                aria-label={`Tile ${tile + 1}`}
+                aria-label={`Teil ${tile + 1}`}
                 className="relative bg-background/70"
                 style={
                   isBlank
@@ -115,7 +115,7 @@ export function SlidingPuzzle({
         {preview ? (
           <img
             src={image}
-            alt="Original photograph"
+            alt="Originalfoto"
             className="absolute inset-0 h-full w-full object-cover"
             loading="lazy"
           />
@@ -131,7 +131,7 @@ export function SlidingPuzzle({
           }}
           className="min-h-[48px] flex-1 rounded-md border border-border font-display text-xs font-bold uppercase tracking-[0.18em] transition-colors hover:bg-accent"
         >
-          Reset
+          Zurücksetzen
         </button>
         <button
           onMouseDown={() => setPreview(true)}
@@ -141,7 +141,7 @@ export function SlidingPuzzle({
           onTouchEnd={() => setPreview(false)}
           className="min-h-[48px] flex-1 rounded-md border border-border font-display text-xs font-bold uppercase tracking-[0.18em] transition-colors hover:bg-accent"
         >
-          Hold to preview
+          Für Vorschau gedrückt halten
         </button>
       </div>
     </div>

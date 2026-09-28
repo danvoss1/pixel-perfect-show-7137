@@ -7,13 +7,13 @@ import { adventure } from "@/game/data";
 export const Route = createFileRoute("/journal")({
   head: () => ({
     meta: [
-      { title: "Expedition Journal — The Hidden Path" },
+      { title: "Expeditionslog — Der verborgene Pfad" },
       {
         name: "description",
-        content: "A running log of locations discovered, envelopes found and puzzles solved.",
+        content: "Ein Protokoll der entdeckten Orte, gefundenen Umschläge und gelösten Rätsel.",
       },
-      { property: "og:title", content: "Expedition Journal — The Hidden Path" },
-      { property: "og:description", content: "Locations discovered, envelopes found and puzzles solved." },
+      { property: "og:title", content: "Expeditionslog — Der verborgene Pfad" },
+      { property: "og:description", content: "Entdeckte Orte, gefundene Umschläge und gelöste Rätsel." },
     ],
   }),
   component: JournalPage,
@@ -29,17 +29,17 @@ function JournalPage() {
     <GameShell>
       <Reveal>
         <SectionTitle
-          eyebrow="Field log"
-          title="Journal"
-          lead="Everything the expedition has recorded so far, newest first."
+          eyebrow="Feldnotizen"
+          title="Expeditionslog"
+          lead="Alle Einträge deiner Expedition, die neuesten zuerst."
         />
       </Reveal>
 
       <div className="mt-7 grid grid-cols-3 gap-3">
         {[
-          ["Stages", `${completed}/${adventure.stages.length}`],
-          ["Items", String(found)],
-          ["Hints used", String(hints)],
+          ["Etappen", `${completed}/${adventure.stages.length}`],
+          ["Gegenstände", String(found)],
+          ["Hinweise genutzt", String(hints)],
         ].map(([k, v]) => (
           <div key={k} className="field-panel p-4">
             <Label>{k}</Label>
@@ -51,7 +51,7 @@ function JournalPage() {
       <ol className="mt-8 border-l border-border pl-5">
         {journal.length === 0 ? (
           <li className="text-sm text-muted-foreground">
-            The log is empty. It fills itself as you walk.
+            Das Log ist noch leer. Unterwegs wird es sich füllen.
           </li>
         ) : null}
         {journal.map((e, i) => (

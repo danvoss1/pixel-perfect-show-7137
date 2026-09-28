@@ -24,3 +24,4 @@
 - Player screens wrap in `GameShell` (bottom nav on mobile, sidebar on desktop);
   admin screens wrap in `AdminShell`.
 - Animation uses `motion/react` (Motion, the Framer Motion successor).
+- Visible puzzle type names use `src/game/labels.ts` while internal type IDs remain stable, so German UI copy never changes persisted game identifiers.

@@ -7,27 +7,27 @@ import type { CodeConfig, FlappyConfig, SlidingConfig, WordleConfig } from "@/ga
 export const Route = createFileRoute("/admin/puzzles")({
   head: () => ({
     meta: [
-      { title: "Puzzles — Admin" },
-      { name: "description", content: "Configure word ciphers, sliding puzzles, arcade runs and code locks." },
-      { property: "og:title", content: "Puzzles — Admin" },
-      { property: "og:description", content: "Configure ciphers, sliding puzzles, arcade runs and code locks." },
+      { title: "Rätsel — Verwaltung" },
+      { name: "description", content: "Worträtsel, Schiebepuzzles, Flugspiele und Codeschlösser konfigurieren." },
+      { property: "og:title", content: "Rätsel — Verwaltung" },
+      { property: "og:description", content: "Chiffren, Schiebepuzzles, Flugspiele und Codeschlösser konfigurieren." },
       { name: "robots", content: "noindex" },
     ],
   }),
-  component: AdminPuzzles,
+  component: VerwaltungRätsel,
 });
 
-const tabs = ["Wordle", "Sliding", "Flappy", "Code"] as const;
+const tabs = ["Worträtsel", "Schiebepuzzle", "Flugspiel", "Code"] as const;
 
-function AdminPuzzles() {
-  const [tab, setTab] = useState<(typeof tabs)[number]>("Wordle");
+function VerwaltungRätsel() {
+  const [tab, setTab] = useState<(typeof tabs)[number]>("Worträtsel");
   const wordle = puzzles.find((p) => p.type === "wordle")!.config as WordleConfig;
   const sliding = puzzles.find((p) => p.type === "sliding")!.config as SlidingConfig;
   const flappy = puzzles.find((p) => p.type === "flappy")!.config as FlappyConfig;
   const code = puzzles.find((p) => p.type === "code")!.config as CodeConfig;
 
   return (
-    <AdminShell title="Puzzles" lead="Every puzzle type is configurable per stage.">
+    <AdminShell title="Rätsel" lead="Jeder Rätseltyp lässt sich je Etappe konfigurieren.">
       <div className="flex gap-2 overflow-x-auto pb-2">
         {tabs.map((t) => (
           <button
@@ -43,61 +43,61 @@ function AdminPuzzles() {
       </div>
 
       <div className="mt-5 grid gap-4 lg:grid-cols-2">
-        {tab === "Wordle" ? (
+        {tab === "Worträtsel" ? (
           <>
-            <Field label="Target word">
+            <Field label="Lösungswort">
               <TextInput defaultValue={wordle.word} />
             </Field>
-            <Field label="Word length">
+            <Field label="Wortlänge">
               <TextInput type="number" defaultValue={wordle.word.length} />
             </Field>
-            <Field label="Maximum attempts">
+            <Field label="Maximale Versuche">
               <TextInput type="number" defaultValue={wordle.maxAttempts} />
             </Field>
-            <Field label="Hint">
+            <Field label="Hinweis">
               <TextInput defaultValue={wordle.clue} />
             </Field>
             <div className="lg:col-span-2">
-              <Field label="Success message">
-                <TextInput defaultValue="CODE DECRYPTED" />
+              <Field label="Erfolgsmeldung">
+                <TextInput defaultValue="CODE ENTSCHLÜSSELT" />
               </Field>
             </div>
           </>
         ) : null}
 
-        {tab === "Sliding" ? (
+        {tab === "Schiebepuzzle" ? (
           <>
-            <Field label="Image URL">
+            <Field label="Bild-URL">
               <TextInput placeholder="https://" />
             </Field>
-            <Field label="Grid size">
+            <Field label="Rastergröße">
               <TextInput type="number" defaultValue={sliding.grid} />
             </Field>
-            <Field label="Maximum moves (0 = unlimited)">
+            <Field label="Maximale Züge (0 = unbegrenzt)">
               <TextInput type="number" defaultValue={0} />
             </Field>
-            <Toggle label="Timer enabled" defaultChecked />
+            <Toggle label="Zeitmessung aktiv" defaultChecked />
           </>
         ) : null}
 
-        {tab === "Flappy" ? (
+        {tab === "Flugspiel" ? (
           <>
-            <Field label="Icon (PNG / SVG / WEBP)">
-              <TextInput placeholder="Upload or paste URL" />
+            <Field label="Symbol (PNG / SVG / WEBP)">
+              <TextInput placeholder="Hochladen oder URL einfügen" />
             </Field>
-            <Field label="Background theme">
-              <TextInput defaultValue="City skyline at night" />
+            <Field label="Hintergrundmotiv">
+              <TextInput defaultValue="Nächtliche Stadtsilhouette" />
             </Field>
-            <Field label="Speed">
+            <Field label="Geschwindigkeit">
               <TextInput type="number" step="0.1" defaultValue={flappy.speed} />
             </Field>
-            <Field label="Gravity">
+            <Field label="Schwerkraft">
               <TextInput type="number" step="0.05" defaultValue={flappy.gravity} />
             </Field>
-            <Field label="Obstacle gap">
+            <Field label="Abstand zwischen Hindernissen">
               <TextInput type="number" defaultValue={flappy.gap} />
             </Field>
-            <Field label="Required score">
+            <Field label="Benötigte Punktzahl">
               <TextInput type="number" defaultValue={flappy.targetScore} />
             </Field>
           </>
@@ -105,15 +105,15 @@ function AdminPuzzles() {
 
         {tab === "Code" ? (
           <>
-            <Field label="Correct code">
+            <Field label="Richtiger Code">
               <TextInput defaultValue={code.code} />
             </Field>
-            <Field label="Number of characters">
+            <Field label="Zeichenanzahl">
               <TextInput type="number" defaultValue={code.length} />
             </Field>
             <div className="lg:col-span-2">
-              <Field label="Hint">
-                <TextInput defaultValue="The digits are in the opening letter, bottom right." />
+              <Field label="Hinweis">
+                <TextInput defaultValue="Die Ziffern stehen unten rechts auf dem ersten Brief." />
               </Field>
             </div>
           </>
@@ -121,7 +121,7 @@ function AdminPuzzles() {
       </div>
 
       <button className="mt-6 min-h-[44px] rounded-md bg-primary px-5 text-sm font-semibold text-primary-foreground">
-        Save configuration
+        Konfiguration speichern
       </button>
     </AdminShell>
   );

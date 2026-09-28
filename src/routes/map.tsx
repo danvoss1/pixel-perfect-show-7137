@@ -11,13 +11,13 @@ import type { GameLocation, MarkerState } from "@/game/types";
 export const Route = createFileRoute("/map")({
   head: () => ({
     meta: [
-      { title: "Expedition Map — The Hidden Path" },
+      { title: "Expeditionskarte — Der verborgene Pfad" },
       {
         name: "description",
-        content: "Navigate discovered locations, checkpoints and clue markers across the city.",
+        content: "Entdecke Orte, Kontrollpunkte und Hinweismarkierungen in der Stadt.",
       },
-      { property: "og:title", content: "Expedition Map — The Hidden Path" },
-      { property: "og:description", content: "Discovered locations, checkpoints and clue markers." },
+      { property: "og:title", content: "Expeditionskarte — Der verborgene Pfad" },
+      { property: "og:description", content: "Entdeckte Orte, Kontrollpunkte und Hinweismarkierungen." },
     ],
   }),
   component: MapPage,
@@ -70,7 +70,7 @@ function MapPage() {
                 setSelectedId(loc.id);
                 setOpen(true);
               }}
-              aria-label={state === "locked" ? "Unknown marker" : loc.name}
+              aria-label={state === "locked" ? "Unbekannte Markierung" : loc.name}
               className="absolute size-12 -translate-x-1/2 -translate-y-1/2"
               style={{ left: `${loc.x}%`, top: `${loc.y}%` }}
             >
@@ -105,7 +105,7 @@ function MapPage() {
         })}
 
         <div className="pointer-events-none absolute left-4 top-4">
-          <Label>Sector 04 · {selected.lat.toFixed(4)} N / {selected.lng.toFixed(4)} E</Label>
+          <Label>Sektor 04 · {selected.lat.toFixed(4)} N / {selected.lng.toFixed(4)} E</Label>
         </div>
 
         {/* Mission panel */}
@@ -116,7 +116,7 @@ function MapPage() {
               className="flex min-h-[52px] w-full items-center justify-between gap-3 px-5"
             >
               <span className="min-w-0 text-left">
-                <Label>Destination</Label>
+                <Label>Zielort</Label>
                 <span className="mt-0.5 block truncate font-display text-base font-semibold uppercase">
                   {selected.name}
                 </span>
@@ -136,28 +136,28 @@ function MapPage() {
                 >
                   <div className="flex gap-6">
                     <div>
-                      <Label>Distance</Label>
+                      <Label>Entfernung</Label>
                       <p className="mt-1 font-display text-lg">{selected.distance}</p>
                     </div>
                     <div>
-                      <Label>Unlock radius</Label>
+                      <Label>Freischaltradius</Label>
                       <p className="mt-1 font-display text-lg">{selected.radius} m</p>
                     </div>
                   </div>
-                  <Label className="mt-4">Clue</Label>
+                  <Label className="mt-4">Hinweis</Label>
                   <p className="mt-2 font-hand text-2xl leading-tight text-paper">
                     “{selected.clue}”
                   </p>
                   {visited.includes(selected.id) ? (
                     <p className="mt-4 text-center font-display text-xs uppercase tracking-[0.2em] text-success">
-                      Location confirmed
+                      Ort bestätigt
                     </p>
                   ) : (
                     <button
                       onClick={() => visitLocation(selected.id, selected.name)}
                       className="mt-4 min-h-[48px] w-full rounded-md bg-primary font-display text-xs font-bold uppercase tracking-[0.2em] text-primary-foreground"
                     >
-                      I found the location
+                      Ort gefunden
                     </button>
                   )}
                   <Link
@@ -165,7 +165,7 @@ function MapPage() {
                     params={{ id: "p-route" }}
                     className="mt-2 block text-center label-mono text-primary"
                   >
-                    Open navigation puzzle
+                    Navigationsrätsel öffnen
                   </Link>
                 </motion.div>
               )}

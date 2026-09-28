@@ -12,6 +12,7 @@ import { RoutePuzzle } from "@/components/puzzles/RoutePuzzle";
 import { SymbolPuzzle } from "@/components/puzzles/SymbolPuzzle";
 import { puzzleById, stageById } from "@/game/data";
 import { usePlayer } from "@/game/store";
+import { puzzleTypeLabel } from "@/game/labels";
 import type {
   CodeConfig,
   FlappyConfig,
@@ -25,11 +26,11 @@ import photo from "@/assets/photo-bridge.jpg";
 export const Route = createFileRoute("/puzzle/$id")({
   head: ({ params }) => {
     const p = puzzleById(params.id);
-    const title = p?.title ?? "Puzzle";
-    const description = p?.tagline ?? "A challenge from The Hidden Path expedition.";
+    const title = p?.title ?? "Rätsel";
+    const description = p?.tagline ?? "Eine Herausforderung der Expedition „Der verborgene Pfad“.";
     return {
       meta: [
-        { title: `${title} — The Hidden Path` },
+        { title: `${title} — Der verborgene Pfad` },
         { name: "description", content: description },
         { property: "og:title", content: title },
         { property: "og:description", content: description },
@@ -58,7 +59,7 @@ function PuzzlePage() {
   if (!puzzle) {
     return (
       <GameShell>
-        <LockedContent note="No such transmission exists." />
+        <LockedContent note="Diese Nachricht existiert nicht." />
       </GameShell>
     );
   }
@@ -69,7 +70,7 @@ function PuzzlePage() {
     <GameShell>
       <Reveal>
         <Label>
-          {stage ? `Stage ${String(stage.number).padStart(2, "0")}` : "Side entry"} · {puzzle.type}
+          {stage ? `Etappe ${String(stage.number).padStart(2, "0")}` : "Nebenspur"} · {puzzleTypeLabel[puzzle.type]}
         </Label>
         <h1 className="mt-2 font-display text-3xl font-bold uppercase leading-none sm:text-5xl">
           {puzzle.title}
@@ -127,13 +128,13 @@ function PuzzlePage() {
         {puzzle.type === "room" ? (
           <Panel className="text-center">
             <p className="text-sm text-muted-foreground">
-              This challenge takes place inside the room itself.
+              Diese Herausforderung wartet im Raum.
             </p>
             <Link
               to="/room"
               className="mt-4 grid min-h-[48px] place-items-center rounded-md bg-primary font-display text-xs font-bold uppercase tracking-[0.2em] text-primary-foreground"
             >
-              Enter the room
+              Raum betreten
             </Link>
           </Panel>
         ) : null}
@@ -141,7 +142,7 @@ function PuzzlePage() {
 
       {solved && puzzle.type === "sliding" ? (
         <Panel className="mt-6">
-          <Label>Hidden beneath the image</Label>
+          <Label>Unter dem Bild verborgen</Label>
           <p className="mt-2 font-hand text-2xl text-paper">
             {(puzzle.config as SlidingConfig).reveal}
           </p>
@@ -158,15 +159,15 @@ function PuzzlePage() {
           params={{ id: stage.id }}
           className="mt-6 block text-center label-mono text-primary"
         >
-          Back to Stage {String(stage.number).padStart(2, "0")}
+          Zurück zu Etappe {String(stage.number).padStart(2, "0")}
         </Link>
       ) : null}
 
       <PuzzleSuccess
         show={celebrate}
-        title={puzzle.type === "wordle" ? "Code decrypted" : "Mission complete"}
-        message="The trail continues."
-        continueLabel={stage ? "Return to the stage" : "Continue"}
+        title={puzzle.type === "wordle" ? "Code entschlüsselt" : "Auftrag abgeschlossen"}
+        message="Die Spur führt weiter."
+        continueLabel={stage ? "Zurück zur Etappe" : "Weiter"}
         onContinue={() => {
           setCelebrate(false);
           if (stage) navigate({ to: "/stage/$id", params: { id: stage.id } });

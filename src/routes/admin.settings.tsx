@@ -4,43 +4,43 @@ import { AdminShell, Field, TextInput, Toggle } from "@/components/admin/AdminSh
 export const Route = createFileRoute("/admin/settings")({
   head: () => ({
     meta: [
-      { title: "Settings — Admin" },
-      { name: "description", content: "Global settings for the adventure platform." },
-      { property: "og:title", content: "Settings — Admin" },
-      { property: "og:description", content: "Global settings for the adventure platform." },
+      { title: "Einstellungen — Verwaltung" },
+      { name: "description", content: "Allgemeine Einstellungen für das Abenteuerspiel." },
+      { property: "og:title", content: "Einstellungen — Verwaltung" },
+      { property: "og:description", content: "Allgemeine Einstellungen für das Abenteuerspiel." },
       { name: "robots", content: "noindex" },
     ],
   }),
-  component: AdminSettings,
+  component: VerwaltungEinstellungen,
 });
 
-function AdminSettings() {
+function VerwaltungEinstellungen() {
   return (
-    <AdminShell title="Settings" lead="Applies to every adventure in this workspace.">
+    <AdminShell title="Einstellungen" lead="Gilt für alle Abenteuer in diesem Bereich.">
       <div className="grid gap-4 lg:grid-cols-2">
         <Field label="Organisation">
-          <TextInput defaultValue="Hidden Path Expeditions" />
+          <TextInput defaultValue="Der verborgene Pfad Expeditionen" />
         </Field>
-        <Field label="Support contact">
+        <Field label="Kontakt für Fragen">
           <TextInput defaultValue="team@hiddenpath.example" />
         </Field>
-        <Field label="Default city">
-          <TextInput defaultValue="Cologne" />
+        <Field label="Standardstadt">
+          <TextInput defaultValue="Köln" />
         </Field>
-        <Field label="Hint penalty (minutes)">
+        <Field label="Hinweisabzug (Minuten)">
           <TextInput type="number" defaultValue={5} />
         </Field>
       </div>
 
       <div className="mt-6 grid gap-2 sm:grid-cols-2">
-        <Toggle label="Sound effects available to players" defaultChecked />
-        <Toggle label="Reduced motion by default" />
-        <Toggle label="Live game master mode" defaultChecked />
-        <Toggle label="Show leaderboard" />
+        <Toggle label="Toneffekte für Spielende verfügbar" defaultChecked />
+        <Toggle label="Reduzierte Bewegung als Standard" />
+        <Toggle label="Live-Spielleitung" defaultChecked />
+        <Toggle label="Bestenliste anzeigen" />
       </div>
 
       <button className="mt-6 min-h-[44px] rounded-md bg-primary px-5 text-sm font-semibold text-primary-foreground">
-        Save settings
+        Einstellungen speichern
       </button>
     </AdminShell>
   );

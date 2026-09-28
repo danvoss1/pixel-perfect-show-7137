@@ -3,17 +3,18 @@ import { GameShell } from "@/components/game/GameShell";
 import { Label, Reveal, SectionTitle, StatusChip } from "@/components/game/primitives";
 import { adventure, puzzles, stageById } from "@/game/data";
 import { usePlayer } from "@/game/store";
+import { puzzleTypeLabel } from "@/game/labels";
 
 export const Route = createFileRoute("/puzzles")({
   head: () => ({
     meta: [
-      { title: "Clues & Puzzles — The Hidden Path" },
+      { title: "Hinweise & Rätsel — Der verborgene Pfad" },
       {
         name: "description",
-        content: "Every cipher, code and challenge in the expedition: active, solved and still sealed.",
+        content: "Alle Chiffren, Codes und Herausforderungen der Expedition: aktiv, gelöst oder noch versiegelt.",
       },
-      { property: "og:title", content: "Clues & Puzzles — The Hidden Path" },
-      { property: "og:description", content: "Active, solved and sealed challenges of the expedition." },
+      { property: "og:title", content: "Hinweise & Rätsel — Der verborgene Pfad" },
+      { property: "og:description", content: "Aktive, gelöste und versiegelte Herausforderungen der Expedition." },
     ],
   }),
   component: PuzzleHub,
@@ -38,9 +39,9 @@ function PuzzleHub() {
     <GameShell>
       <Reveal>
         <SectionTitle
-          eyebrow="Field log"
-          title="Clues & Puzzles"
-          lead="Each challenge belongs to a stage. Sealed entries reveal themselves as the trail continues."
+          eyebrow="Feldnotizen"
+          title="Hinweise & Rätsel"
+          lead="Jedes Rätsel gehört zu einer Etappe. Versiegelte Einträge öffnen sich, wenn die Spur weiterführt."
         />
       </Reveal>
 
@@ -61,18 +62,18 @@ function PuzzleHub() {
               >
                 <div className="flex items-start justify-between gap-3">
                   <Label>
-                    {stage ? `Stage ${String(stage.number).padStart(2, "0")}` : "Side entry"} ·{" "}
-                    {puzzle.type}
+                    {stage ? `Etappe ${String(stage.number).padStart(2, "0")}` : "Nebenspur"} ·{" "}
+                    {puzzleTypeLabel[puzzle.type]}
                   </Label>
                   <StatusChip status={status} />
                 </div>
                 <h2
                   className={`mt-3 font-display text-lg font-bold uppercase ${locked ? "locked-blur" : ""}`}
                 >
-                  {locked ? "Unknown signal" : puzzle.title}
+                  {locked ? "Unbekanntes Signal" : puzzle.title}
                 </h2>
                 <p className={`mt-1 text-sm text-muted-foreground ${locked ? "locked-blur" : ""}`}>
-                  {locked ? "No transmission yet." : puzzle.tagline}
+                  {locked ? "Noch kein Signal." : puzzle.tagline}
                 </p>
               </Link>
             </Reveal>

@@ -5,7 +5,7 @@ export function PuzzleSuccess({
   title,
   message,
   onContinue,
-  continueLabel = "Continue",
+  continueLabel = "Weiter",
 }: {
   show: boolean;
   title: string;
@@ -29,7 +29,7 @@ export function PuzzleSuccess({
             className="field-panel w-full max-w-md p-8 text-center"
             style={{ boxShadow: "var(--glow-primary)" }}
           >
-            <span className="label-mono text-success">Verified</span>
+            <span className="label-mono text-success">Bestätigt</span>
             <h2 className="mt-3 font-display text-3xl font-bold uppercase text-gold">{title}</h2>
             {message ? <p className="mt-3 text-sm text-muted-foreground">{message}</p> : null}
             {onContinue ? (
