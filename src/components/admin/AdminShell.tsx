@@ -7,6 +7,8 @@ const nav = [
   { to: "/admin/stages", label: "Etappen" },
   { to: "/admin/puzzles", label: "Rätsel" },
   { to: "/admin/locations", label: "Orte" },
+  { to: "/admin/items", label: "Gegenstände" },
+  { to: "/admin/events", label: "Ereignisse" },
   { to: "/admin/players", label: "Spielende" },
   { to: "/admin/settings", label: "Einstellungen" },
 ] as const;
