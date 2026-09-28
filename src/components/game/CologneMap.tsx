@@ -1,3 +1,4 @@
+/// <reference types="google.maps" />
 import { useEffect, useRef, useState } from "react";
 import { locations } from "@/game/data";
 import type { GameLocation, MarkerState } from "@/game/types";
