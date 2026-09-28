@@ -45,11 +45,14 @@ export function CologneMap({ selectedId, onSelect, stateOf, editable, onMove }: 
   const overlays = useRef<google.maps.MVCObject[]>([]);
   const [error, setError] = useState("");
   const [ready, setReady] = useState(false);
+  const [denied, setDenied] = useState(false);
 
   useEffect(() => {
     let alive = true;
+    const authFailure = () => { if (alive) { setDenied(true); setError("Google Maps ist für diese Adresse nicht freigegeben. Die Orte bleiben unten auswählbar."); } };
+    Object.assign(window, { gm_authFailure: authFailure });
     loadMaps().then(() => {
-      if (!alive || !node.current) return;
+      if (!alive || !node.current || denied) return;
       map.current = new google.maps.Map(node.current, {
         center, zoom: 13, clickableIcons: false, mapTypeControl: false, streetViewControl: false,
         fullscreenControl: false, gestureHandling: "greedy",
@@ -65,7 +68,7 @@ export function CologneMap({ selectedId, onSelect, stateOf, editable, onMove }: 
       });
       setReady(true);
     }).catch((cause: Error) => { if (alive) setError(cause.message); });
-    return () => { alive = false; markers.current.forEach((m) => m.setMap(null)); overlays.current.forEach((o) => (o as google.maps.Polyline).setMap(null)); map.current = null; };
+    return () => { alive = false; if (window.gm_authFailure === authFailure) delete (window as unknown as Record<string, unknown>).gm_authFailure; markers.current.forEach((m) => m.setMap(null)); overlays.current.forEach((o) => (o as google.maps.Polyline).setMap(null)); map.current = null; };
   }, []);
 
   useEffect(() => {
@@ -104,6 +107,6 @@ export function CologneMap({ selectedId, onSelect, stateOf, editable, onMove }: 
 
   return <div className="absolute inset-0 bg-surface" role="region" aria-label="Interaktive Karte von Köln">
     <div ref={node} className="h-full w-full" />
-    {error && <div className="absolute inset-x-4 top-16 rounded-md border border-border bg-background p-4 text-sm text-foreground" role="alert">{error}</div>}
+    {error && <div className="absolute inset-0 z-10 flex flex-col justify-center bg-surface p-5 text-center" role="alert"><p className="font-display text-base font-semibold">Karte derzeit nicht verfügbar</p><p className="mt-2 text-sm text-muted-foreground">{error}</p><div className="mt-5 max-h-[55%] space-y-2 overflow-y-auto">{locations.filter((loc) => editable || stateOf?.(loc) !== "locked").map((loc) => <button key={loc.id} onClick={() => onSelect?.(loc.id)} className={`min-h-[44px] w-full rounded-md border px-3 text-left text-sm ${selectedId === loc.id ? "border-primary bg-accent" : "border-border"}`}>{stateOf?.(loc) === "locked" ? "Unbekannter Ort" : loc.name}</button>)}</div></div>}
   </div>;
 }
