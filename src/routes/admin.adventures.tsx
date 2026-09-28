@@ -9,6 +9,7 @@ export const Route = createFileRoute("/admin/adventures")({
       { name: "description", content: "Alle angelegten Abenteuer und ihre Etappenanzahl." },
       { property: "og:title", content: "Abenteuer — Verwaltung" },
       { property: "og:description", content: "Alle angelegten Abenteuer und ihre Etappenanzahl." },
+      { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary" },
       { name: "robots", content: "noindex" },
     ],
   }),

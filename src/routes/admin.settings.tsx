@@ -8,6 +8,7 @@ export const Route = createFileRoute("/admin/settings")({
       { name: "description", content: "Allgemeine Einstellungen für das Abenteuerspiel." },
       { property: "og:title", content: "Einstellungen — Verwaltung" },
       { property: "og:description", content: "Allgemeine Einstellungen für das Abenteuerspiel." },
+      { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary" },
       { name: "robots", content: "noindex" },
     ],
   }),
