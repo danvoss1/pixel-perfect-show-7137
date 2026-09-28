@@ -4,7 +4,8 @@ import { GameShell } from "@/components/game/GameShell";
 import { InteractiveRoom } from "@/components/game/InteractiveRoom";
 import { PuzzleSuccess } from "@/components/game/PuzzleSuccess";
 import { usePlayer } from "@/game/store";
-import { puzzleById } from "@/game/data";
+import { adventure, puzzleById } from "@/game/data";
+import { LockedContent } from "@/components/game/primitives";
 
 export const Route = createFileRoute("/room")({
   head: () => ({
@@ -24,7 +25,11 @@ function RoomPage() {
   const [showHint, setShowHint] = useState(false);
   const [done, setDone] = useState(false);
   const solvePuzzle = usePlayer((s) => s.solvePuzzle);
+  const currentStageId = usePlayer((s) => s.currentStageId);
   const puzzle = puzzleById("p-room")!;
+  const currentStage = adventure.stages.find((stage) => stage.id === currentStageId);
+  const roomStage = adventure.stages.find((stage) => stage.id === puzzle.stageId);
+  if (currentStage && roomStage && currentStage.number < roomStage.number) return <GameShell><LockedContent note="Der Raum ist noch versiegelt." /></GameShell>;
 
   return (
     <GameShell bare>

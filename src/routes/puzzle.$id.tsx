@@ -13,7 +13,7 @@ import { SymbolPuzzle } from "@/components/puzzles/SymbolPuzzle";
 import { MastermindGame } from "@/components/puzzles/MastermindGame";
 import { SimonGame } from "@/components/puzzles/SimonGame";
 import { MorseGame } from "@/components/puzzles/MorseGame";
-import { puzzleById, stageById } from "@/game/data";
+import { adventure, puzzleById, stageById } from "@/game/data";
 import { usePlayer } from "@/game/store";
 import { puzzleTypeLabel } from "@/game/labels";
 import type {
@@ -53,6 +53,7 @@ function PuzzlePage() {
   const puzzle = puzzleById(id);
   const solvePuzzle = usePlayer((s) => s.solvePuzzle);
   const solvedList = usePlayer((s) => s.completedPuzzles);
+  const currentStageId = usePlayer((s) => s.currentStageId);
   const [celebrate, setCelebrate] = useState(false);
 
   const solved = puzzle ? solvedList.includes(puzzle.id) : false;
@@ -72,6 +73,10 @@ function PuzzlePage() {
   }
 
   const stage = stageById(puzzle.stageId);
+  const currentStage = adventure.stages.find((entry) => entry.id === currentStageId);
+  if (stage && currentStage && stage.number > currentStage.number) {
+    return <GameShell><LockedContent note="Diese Spur ist noch versiegelt. Folge zuerst der aktuellen Etappe." /><Link to="/adventure" className="mt-6 block text-center label-mono text-primary">Zur Etappenübersicht</Link></GameShell>;
+  }
 
   return (
     <GameShell>
