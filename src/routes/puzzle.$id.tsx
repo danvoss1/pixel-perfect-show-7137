@@ -10,12 +10,18 @@ import { SlidingPuzzle } from "@/components/puzzles/SlidingPuzzle";
 import { FlappyGame } from "@/components/puzzles/FlappyGame";
 import { RoutePuzzle } from "@/components/puzzles/RoutePuzzle";
 import { SymbolPuzzle } from "@/components/puzzles/SymbolPuzzle";
+import { MastermindGame } from "@/components/puzzles/MastermindGame";
+import { SimonGame } from "@/components/puzzles/SimonGame";
+import { MorseGame } from "@/components/puzzles/MorseGame";
 import { puzzleById, stageById } from "@/game/data";
 import { usePlayer } from "@/game/store";
 import { puzzleTypeLabel } from "@/game/labels";
 import type {
   CodeConfig,
   FlappyConfig,
+  MastermindConfig,
+  SimonConfig,
+  MorseConfig,
   RouteConfig,
   SlidingConfig,
   SymbolsConfig,
@@ -138,6 +144,9 @@ function PuzzlePage() {
             </Link>
           </Panel>
         ) : null}
+        {puzzle.type === "mastermind" && <MastermindGame config={puzzle.config as MastermindConfig} solved={solved} onSolved={onSolved} />}
+        {puzzle.type === "simon" && <SimonGame config={puzzle.config as SimonConfig} solved={solved} onSolved={onSolved} />}
+        {puzzle.type === "morse" && <MorseGame config={puzzle.config as MorseConfig} solved={solved} onSolved={onSolved} />}
       </div>
 
       {solved && puzzle.type === "sliding" ? (
