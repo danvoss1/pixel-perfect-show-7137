@@ -27,7 +27,7 @@ export function AdminShell({
       <aside className="fixed inset-y-0 left-0 z-30 hidden w-52 flex-col border-r border-border bg-surface px-3 py-6 md:flex">
         <Link to="/" className="mb-6 px-2">
           <span className="label-mono">Spielleitung</span>
-          <span className="mt-1 block font-display text-base font-bold uppercase">Admin</span>
+          <span className="mt-1 block font-display text-base font-bold uppercase">Verwaltung</span>
         </Link>
         <nav className="flex flex-col gap-0.5">
           {nav.map((n) => (

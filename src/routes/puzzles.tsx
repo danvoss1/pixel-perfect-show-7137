@@ -3,6 +3,7 @@ import { GameShell } from "@/components/game/GameShell";
 import { Label, Reveal, SectionTitle, StatusChip } from "@/components/game/primitives";
 import { adventure, puzzles, stageById } from "@/game/data";
 import { usePlayer } from "@/game/store";
+import { puzzleTypeLabel } from "@/game/labels";
 
 export const Route = createFileRoute("/puzzles")({
   head: () => ({
@@ -62,7 +63,7 @@ function PuzzleHub() {
                 <div className="flex items-start justify-between gap-3">
                   <Label>
                     {stage ? `Etappe ${String(stage.number).padStart(2, "0")}` : "Nebenspur"} ·{" "}
-                    {puzzle.type}
+                    {puzzleTypeLabel[puzzle.type]}
                   </Label>
                   <StatusChip status={status} />
                 </div>

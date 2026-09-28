@@ -5,9 +5,9 @@ import { adventure, puzzles } from "@/game/data";
 export const Route = createFileRoute("/admin/")({
   head: () => ({
     meta: [
-      { title: "Spielleitung — Admin" },
+      { title: "Spielleitung — Verwaltung" },
       { name: "description", content: "Spielleitung: Spielende, laufende Partien und Live-Steuerung." },
-      { property: "og:title", content: "Spielleitung — Admin" },
+      { property: "og:title", content: "Spielleitung — Verwaltung" },
       { property: "og:description", content: "Spielende, laufende Partien und Live-Steuerung." },
       { name: "robots", content: "noindex" },
     ],

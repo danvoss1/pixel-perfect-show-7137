@@ -92,7 +92,7 @@ function StagePage() {
   return (
     <GameShell>
       <Reveal>
-        <Label >Etappe {String(stage.number).padStart(2, "0")}</Label>
+        <Label>Etappe {String(stage.number).padStart(2, "0")}</Label>
         <h1 className="mt-2 font-display text-4xl font-bold uppercase leading-none sm:text-6xl">
           {stage.title}
         </h1>

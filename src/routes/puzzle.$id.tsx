@@ -12,6 +12,7 @@ import { RoutePuzzle } from "@/components/puzzles/RoutePuzzle";
 import { SymbolPuzzle } from "@/components/puzzles/SymbolPuzzle";
 import { puzzleById, stageById } from "@/game/data";
 import { usePlayer } from "@/game/store";
+import { puzzleTypeLabel } from "@/game/labels";
 import type {
   CodeConfig,
   FlappyConfig,
@@ -69,7 +70,7 @@ function PuzzlePage() {
     <GameShell>
       <Reveal>
         <Label>
-          {stage ? `Etappe ${String(stage.number).padStart(2, "0")}` : "Nebenspur"} · {puzzle.type}
+          {stage ? `Etappe ${String(stage.number).padStart(2, "0")}` : "Nebenspur"} · {puzzleTypeLabel[puzzle.type]}
         </Label>
         <h1 className="mt-2 font-display text-3xl font-bold uppercase leading-none sm:text-5xl">
           {puzzle.title}
