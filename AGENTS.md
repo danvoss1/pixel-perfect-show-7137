@@ -8,3 +8,19 @@
 > Commits you push to the connected branch sync back to Lovable and show up in
 > the editor, so keep the branch in a working state.
 <!-- LOVABLE:END -->
+
+## Project rules
+
+- Game content (adventure, stages, puzzles, locations, items, envelopes) lives in
+  `src/game/data.ts` as mock data behind typed models in `src/game/types.ts`, so a
+  real API can replace the module without touching UI code.
+- Player progress lives in a single Zustand store (`src/game/store.ts`) persisted to
+  localStorage; components never keep progress in local state.
+- Puzzle UIs are standalone components in `src/components/puzzles/` with a
+  `(config, solved, onSolved)` contract, so new puzzle types plug into
+  `src/routes/puzzle.$id.tsx` by adding a branch and a type.
+- The 3D room is mounted only through `src/components/game/InteractiveRoom.tsx`;
+  replace that component to drop in the real Three.js scene.
+- Player screens wrap in `GameShell` (bottom nav on mobile, sidebar on desktop);
+  admin screens wrap in `AdminShell`.
+- Animation uses `motion/react` (Motion, the Framer Motion successor).

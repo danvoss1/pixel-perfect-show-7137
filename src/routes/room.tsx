@@ -68,7 +68,7 @@ function RoomPage() {
 
         {showHint ? (
           <p className="px-5 pb-5 text-center font-hand text-xl text-paper">
-            {puzzle.hints[0].text}
+            {puzzle.hints[0]?.text}
           </p>
         ) : null}
       </div>

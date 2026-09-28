@@ -29,7 +29,7 @@ export function RoutePuzzle({
     const ok =
       steps.length === config.steps.length &&
       steps.every(
-        (s, i) => s.direction === config.steps[i].direction && s.distance === config.steps[i].distance,
+        (s, i) => s.direction === config.steps[i]?.direction && s.distance === config.steps[i]?.distance,
       );
     if (ok) {
       setStatus("ok");

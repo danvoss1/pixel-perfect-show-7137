@@ -39,7 +39,7 @@ const entry = (title: string, detail: string): JournalEntry => ({
 const initial = {
   started: false,
   startTime: null as number | null,
-  currentStageId: adventure.stages[0].id,
+  currentStageId: adventure.stages[0]!.id,
   completedStages: [] as string[],
   completedPuzzles: [] as string[],
   inventory: [] as string[],
@@ -114,6 +114,7 @@ export const usePlayer = create<PlayerState>()(
         if (s.completedStages.includes(id)) return;
         const idx = adventure.stages.findIndex((st) => st.id === id);
         const stage = adventure.stages[idx];
+        if (!stage) return;
         const next = adventure.stages[idx + 1];
         set({
           completedStages: [...s.completedStages, id],

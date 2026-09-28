@@ -15,7 +15,7 @@ export function HintPanel({ puzzleId, hints }: { puzzleId: string; hints: Hint[]
         {hints.map((hint, i) => {
           const key = `${puzzleId}:${hint.id}`;
           const isOpen = unlocked.includes(key);
-          const prevOpen = i === 0 || unlocked.includes(`${puzzleId}:${hints[i - 1].id}`);
+          const prevOpen = i === 0 || unlocked.includes(`${puzzleId}:${hints[i - 1]?.id}`);
           return (
             <div key={hint.id} className="rounded-md border border-border bg-background/40">
               <button

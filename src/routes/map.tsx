@@ -33,7 +33,7 @@ function MapPage() {
   const visitLocation = usePlayer((s) => s.visitLocation);
   const currentStage = adventure.stages.find((s) => s.id === currentId);
   const [selectedId, setSelectedId] = useState<string>(
-    currentStage?.locationId ?? locations[0].id,
+    currentStage?.locationId ?? locations[0]!.id,
   );
   const [open, setOpen] = useState(true);
   const selected = locations.find((l) => l.id === selectedId)!;
