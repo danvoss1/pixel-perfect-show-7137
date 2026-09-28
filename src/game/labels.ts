@@ -9,4 +9,7 @@ export const puzzleTypeLabel: Record<PuzzleType, string> = {
   symbols: "Symbolrätsel",
   room: "3D-Raum",
   evidence: "Beweisstück",
+  mastermind: "Codeknacker",
+  simon: "Signalfolge",
+  morse: "Morsezeichen",
 };

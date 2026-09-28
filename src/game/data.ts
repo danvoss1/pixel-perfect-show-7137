@@ -191,6 +191,21 @@ export const locations: GameLocation[] = [
 
 export const puzzles: Puzzle[] = [
   {
+    id: "p-mastermind", type: "mastermind", title: "Das Zahlenschloss", tagline: "Vier Stellen. Zehn Möglichkeiten. Kein Zufall.", stageId: "s4",
+    hints: [{ id: "h1", label: "Hinweis 1", text: "Ein richtiger Platz zählt anders als eine richtige Zahl am falschen Platz." }],
+    config: { secret: "4729", attempts: 10 },
+  },
+  {
+    id: "p-simon", type: "simon", title: "Die Signalfolge", tagline: "Merke dir die Abfolge der Leuchtzeichen.", stageId: "s6",
+    hints: [{ id: "h1", label: "Hinweis 1", text: "Beginne jede Runde wieder beim ersten Signal." }],
+    config: { sequence: [0, 2, 1, 3, 2] },
+  },
+  {
+    id: "p-morse", type: "morse", title: "Funkspruch", tagline: "Ein kurzes Signal aus Punkten und Strichen.", stageId: "s7",
+    hints: [{ id: "h1", label: "Hinweis 1", text: "Drei kurze Signale stehen für S." }],
+    config: { code: "··· / ––– / ···", answer: "SOS" },
+  },
+  {
     id: "p-code-1",
     type: "code",
     title: "Die versiegelte Anweisung",
