@@ -8,7 +8,7 @@ export type PuzzleType =
   | "route"
   | "symbols"
   | "room"
-  | "evidence";
+  | "evidence"
   | "mastermind"
   | "simon"
   | "morse";
