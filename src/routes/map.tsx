@@ -33,7 +33,7 @@ function MapPage() {
   const currentId = usePlayer((s) => s.currentStageId);
   const visitLocation = usePlayer((s) => s.visitLocation);
   const currentStage = adventure.stages.find((s) => s.id === currentId);
-  const [selectedId, setSelectedId] = useState(currentStage?.locationId ?? locations[0]?.id ?? "");
+  const [selectedId, setSelectedId] = useState(currentStage?.locationId ?? locations.find((l) => l.kind === "food")?.id ?? locations[0]?.id ?? "");
   const [open, setOpen] = useState(true);
   const [position, setPosition] = useState<{ lat: number; lng: number }>();
   const [gpsMessage, setGpsMessage] = useState("");
@@ -74,7 +74,7 @@ function MapPage() {
         <ChevronUp className={`size-4 shrink-0 transition-transform ${open ? "" : "rotate-180"}`} />
       </Button>
       <AnimatePresence initial={false}>{open && <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }} className="overflow-hidden px-5 pb-5">
-        {locked ? <p className="text-sm text-muted-foreground">Weitere Informationen werden im Verlauf der Expedition freigeschaltet.</p> : <>
+         {locked ? <p className="text-sm text-muted-foreground">Weitere Informationen werden im Verlauf der Expedition freigeschaltet.</p> : <>
           <div className="flex gap-6"><div><Label>Entfernung</Label><p className="mt-1 font-display text-lg">{distance === null ? selected.distance : `${distance < 1000 ? `${distance} m` : `${(distance / 1000).toFixed(1)} km`}`}</p></div><div><Label>Suchradius</Label><p className="mt-1 font-display text-lg">{selected.radius} m</p></div></div>
           <p className="mt-3 text-sm text-muted-foreground">{selected.description}</p>
           <Label className="mt-4">Hinweis</Label><p className="mt-2 font-hand text-2xl leading-tight text-paper">„{selected.clue}“</p>
