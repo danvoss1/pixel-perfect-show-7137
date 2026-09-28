@@ -27,7 +27,7 @@ interface PlayerState {
 }
 
 const stamp = () =>
-  new Date().toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit" });
+  new Date().toLocaleTimeString("de-DE", { hour: "2-digit", minute: "2-digit" });
 
 const entry = (title: string, detail: string): JournalEntry => ({
   id: `${Date.now()}-${Math.random().toString(36).slice(2, 7)}`,
@@ -62,7 +62,7 @@ export const usePlayer = create<PlayerState>()(
                 started: true,
                 startTime: Date.now(),
                 journal: [
-                  entry("EXPEDITION STARTED", adventure.title),
+                  entry("EXPEDITION GESTARTET", adventure.title),
                   ...s.journal,
                 ],
               },
@@ -75,7 +75,7 @@ export const usePlayer = create<PlayerState>()(
             ? s
             : {
                 visitedLocations: [...s.visitedLocations, id],
-                journal: [entry(`${name.toUpperCase()} DISCOVERED`, "Location confirmed."), ...s.journal],
+                journal: [entry(`${name.toUpperCase()} ENTDECKT`, "Ort bestätigt."), ...s.journal],
               },
         ),
       verifyEnvelope: (id, num) =>
@@ -84,7 +84,7 @@ export const usePlayer = create<PlayerState>()(
             ? s
             : {
                 verifiedEnvelopes: [...s.verifiedEnvelopes, id],
-                journal: [entry(`ENVELOPE #0${num} FOUND`, "Code verified."), ...s.journal],
+                journal: [entry(`UMSCHLAG NR. 0${num} GEFUNDEN`, "Code bestätigt."), ...s.journal],
               },
         ),
       unlockHint: (id) =>
@@ -97,7 +97,7 @@ export const usePlayer = create<PlayerState>()(
             ? s
             : {
                 completedPuzzles: [...s.completedPuzzles, id],
-                journal: [entry(`${title.toUpperCase()} SOLVED`, "Puzzle completed."), ...s.journal],
+                journal: [entry(`${title.toUpperCase()} GELÖST`, "Rätsel gelöst."), ...s.journal],
               },
         ),
       addItem: (id, name) =>
@@ -106,7 +106,7 @@ export const usePlayer = create<PlayerState>()(
             ? s
             : {
                 inventory: [...s.inventory, id],
-                journal: [entry(`${name.toUpperCase()} COLLECTED`, "Added to inventory."), ...s.journal],
+                journal: [entry(`${name.toUpperCase()} GESAMMELT`, "Zum Inventar hinzugefügt."), ...s.journal],
               },
         ),
       completeStage: (id) => {
@@ -120,7 +120,7 @@ export const usePlayer = create<PlayerState>()(
           completedStages: [...s.completedStages, id],
           currentStageId: next ? next.id : id,
           journal: [
-            entry(`STAGE ${String(stage.number).padStart(2, "0")} COMPLETE`, stage.title),
+            entry(`ETAPPE ${String(stage.number).padStart(2, "0")} ABGESCHLOSSEN`, stage.title),
             ...s.journal,
           ],
         });

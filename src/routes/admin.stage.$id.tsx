@@ -1,33 +1,33 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { Plus, X } from "lucide-react";
-import { AdminShell, Field, TextInput } from "@/components/admin/AdminShell";
+import { VerwaltungShell, Field, TextInput } from "@/components/admin/VerwaltungShell";
 import { stageById } from "@/game/data";
 
 const blockTypes = [
   "TEXT",
-  "IMAGE",
+  "BILD",
   "VIDEO",
-  "MAP",
-  "LOCATION",
+  "KARTE",
+  "ORT",
   "CODE",
-  "WORDLE",
-  "SLIDING PUZZLE",
-  "FLAPPY GAME",
-  "3D ROOM",
-  "ITEM",
-  "QR CODE",
-  "HINT",
-  "CUSTOM HTML",
+  "WORTRÄTSEL",
+  "SCHIEBEPUZZLE",
+  "FLUGSPIEL",
+  "3D-RAUM",
+  "GEGENSTAND",
+  "QR-CODE",
+  "HINWEIS",
+  "EIGENES HTML",
 ];
 
 export const Route = createFileRoute("/admin/stage/$id")({
   head: () => ({
     meta: [
-      { title: "Stage editor — Admin" },
-      { name: "description", content: "Edit a stage: story text, objective and content blocks." },
-      { property: "og:title", content: "Stage editor — Admin" },
-      { property: "og:description", content: "Story text, objective and content blocks." },
+      { title: "Etappe bearbeiten — Verwaltung" },
+      { name: "description", content: "Geschichte, Ziel und Inhaltsblöcke einer Etappe bearbeiten." },
+      { property: "og:title", content: "Etappe bearbeiten — Verwaltung" },
+      { property: "og:description", content: "Geschichte, Ziel und Inhaltsblöcke." },
       { name: "robots", content: "noindex" },
     ],
   }),
@@ -37,13 +37,13 @@ export const Route = createFileRoute("/admin/stage/$id")({
 function StageEditor() {
   const { id } = Route.useParams();
   const stage = stageById(id);
-  const [blocks, setBlocks] = useState<string[]>(["TEXT", "LOCATION", "CODE"]);
+  const [blocks, setBlocks] = useState<string[]>(["TEXT", "ORT", "CODE"]);
   const [menu, setMenu] = useState(false);
 
   return (
-    <AdminShell
-      title={stage ? `Stage ${String(stage.number).padStart(2, "0")} — ${stage.title}` : "Stage editor"}
-      lead="Blocks render top to bottom on the player's stage screen."
+    <VerwaltungShell
+      title={stage ? `Etappe ${String(stage.number).padStart(2, "0")} — ${stage.title}` : "Etappe bearbeiten"}
+      lead="Die Inhaltsblöcke erscheinen in der festgelegten Reihenfolge."
       action={
         <button className="min-h-[44px] rounded-md bg-primary px-4 text-sm font-semibold text-primary-foreground">
           Save
@@ -51,14 +51,14 @@ function StageEditor() {
       }
     >
       <div className="grid gap-4 lg:grid-cols-2">
-        <Field label="Title">
+        <Field label="Titel">
           <TextInput defaultValue={stage?.title ?? ""} />
         </Field>
-        <Field label="Type">
+        <Field label="Typ">
           <TextInput defaultValue={stage?.kind ?? ""} />
         </Field>
         <div className="lg:col-span-2">
-          <Field label="Intro text">
+          <Field label="Einleitung">
             <textarea
               defaultValue={stage?.intro ?? ""}
               rows={3}
@@ -67,13 +67,13 @@ function StageEditor() {
           </Field>
         </div>
         <div className="lg:col-span-2">
-          <Field label="Objective">
+          <Field label="Ziel">
             <TextInput defaultValue={stage?.objective ?? ""} />
           </Field>
         </div>
       </div>
 
-      <h2 className="mt-8 font-display text-lg font-bold">Content blocks</h2>
+      <h2 className="mt-8 font-display text-lg font-bold">Inhaltsblöcke</h2>
       <ul className="mt-3 space-y-2">
         {blocks.map((b, i) => (
           <li
@@ -83,7 +83,7 @@ function StageEditor() {
             <span className="label-mono">{String(i + 1).padStart(2, "0")}</span>
             <span className="min-w-0 flex-1 truncate text-sm">{b}</span>
             <button
-              aria-label="Remove block"
+              aria-label="Block entfernen"
               onClick={() => setBlocks((arr) => arr.filter((_, idx) => idx !== i))}
               className="text-muted-foreground hover:text-destructive"
             >
@@ -98,7 +98,7 @@ function StageEditor() {
           onClick={() => setMenu((m) => !m)}
           className="flex min-h-[44px] items-center gap-2 rounded-md border border-dashed border-border px-4 text-sm"
         >
-          <Plus className="size-4" /> Add content
+          <Plus className="size-4" /> Inhalt hinzufügen
         </button>
         {menu ? (
           <div className="mt-2 grid max-w-md grid-cols-2 gap-1.5 rounded-md border border-border bg-surface p-2 sm:grid-cols-3">
@@ -117,6 +117,6 @@ function StageEditor() {
           </div>
         ) : null}
       </div>
-    </AdminShell>
+    </VerwaltungShell>
   );
 }

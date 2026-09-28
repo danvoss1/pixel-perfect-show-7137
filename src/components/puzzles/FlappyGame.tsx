@@ -159,11 +159,11 @@ export function FlappyGame({
     <div className="space-y-4">
       <div className="flex items-end justify-between">
         <div>
-          <Label>Target</Label>
-          <p className="font-display text-lg font-bold">Reach {targetScore} points</p>
+          <Label>Ziel</Label>
+          <p className="font-display text-lg font-bold">Erreiche {targetScore} Punkte</p>
         </div>
         <div className="text-right">
-          <Label>Current</Label>
+          <Label>Aktuell</Label>
           <p className="font-display text-3xl font-bold text-primary">{score}</p>
         </div>
       </div>
@@ -171,7 +171,7 @@ export function FlappyGame({
       <div
         role="button"
         tabIndex={0}
-        aria-label="Tap to fly"
+        aria-label="Tippen zum Fliegen"
         onPointerDown={flap}
         onKeyDown={(e) => e.key === "Enter" && flap()}
         className="relative overflow-hidden rounded-lg border border-border"
@@ -181,10 +181,10 @@ export function FlappyGame({
           <div className="absolute inset-0 grid place-items-center bg-background/70 text-center">
             <div className="px-6">
               <p className="font-display text-xl font-bold uppercase">
-                {dead ? "You lost the line" : "Above the rooftops"}
+                {dead ? "Du hast die Bahn verlassen" : "Über den Dächern"}
               </p>
               <p className="mt-2 text-sm text-muted-foreground">
-                Tap the screen or press Space to climb.
+                Tippe auf den Bildschirm oder drücke die Leertaste zum Steigen.
               </p>
             </div>
           </div>

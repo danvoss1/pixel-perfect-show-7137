@@ -2,13 +2,13 @@ import { Link } from "@tanstack/react-router";
 import type { ReactNode } from "react";
 
 const nav = [
-  { to: "/admin", label: "Overview" },
-  { to: "/admin/adventures", label: "Adventures" },
-  { to: "/admin/stages", label: "Stages" },
-  { to: "/admin/puzzles", label: "Puzzles" },
-  { to: "/admin/locations", label: "Locations" },
-  { to: "/admin/players", label: "Players" },
-  { to: "/admin/settings", label: "Settings" },
+  { to: "/admin", label: "Übersicht" },
+  { to: "/admin/adventures", label: "Abenteuer" },
+  { to: "/admin/stages", label: "Etappen" },
+  { to: "/admin/puzzles", label: "Rätsel" },
+  { to: "/admin/locations", label: "Orte" },
+  { to: "/admin/players", label: "Spielende" },
+  { to: "/admin/settings", label: "Einstellungen" },
 ] as const;
 
 export function AdminShell({
@@ -26,7 +26,7 @@ export function AdminShell({
     <div className="min-h-screen bg-background">
       <aside className="fixed inset-y-0 left-0 z-30 hidden w-52 flex-col border-r border-border bg-surface px-3 py-6 md:flex">
         <Link to="/" className="mb-6 px-2">
-          <span className="label-mono">Adventure control</span>
+          <span className="label-mono">Spielleitung</span>
           <span className="mt-1 block font-display text-base font-bold uppercase">Admin</span>
         </Link>
         <nav className="flex flex-col gap-0.5">
@@ -44,7 +44,7 @@ export function AdminShell({
           ))}
         </nav>
         <Link to="/adventure" className="mt-auto px-3 py-2 text-xs text-muted-foreground hover:text-foreground">
-          ← Player view
+          ← Spieleransicht
         </Link>
       </aside>
 

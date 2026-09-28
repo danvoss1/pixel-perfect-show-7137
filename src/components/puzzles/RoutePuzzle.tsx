@@ -42,12 +42,12 @@ export function RoutePuzzle({
   return (
     <div className="space-y-4">
       <div className="field-panel p-5">
-        <Label>Your route</Label>
+        <Label>Deine Route</Label>
         <p className="mt-2 text-sm text-muted-foreground">Start: {config.start}</p>
 
         <div className="mt-5 grid grid-cols-[minmax(0,1fr)_auto] gap-2 sm:grid-cols-[1fr_1fr_auto]">
           <select
-            aria-label="Direction"
+            aria-label="Richtung"
             value={direction}
             onChange={(e) => setDirection(e.target.value as RouteStep["direction"])}
             className="min-h-[48px] rounded-md border border-border bg-background/60 px-3 font-display text-sm uppercase tracking-wider outline-none focus:border-primary"
@@ -59,7 +59,7 @@ export function RoutePuzzle({
             ))}
           </select>
           <input
-            aria-label="Distance in metres"
+            aria-label="Entfernung in Metern"
             inputMode="numeric"
             value={distance}
             onChange={(e) => setDistance(e.target.value.replace(/\D/g, ""))}
@@ -73,13 +73,13 @@ export function RoutePuzzle({
             }}
             className="col-span-2 min-h-[48px] rounded-md border border-primary/50 px-4 font-display text-xs font-bold uppercase tracking-[0.18em] text-primary sm:col-span-1"
           >
-            Add step
+            Abschnitt hinzufügen
           </button>
         </div>
 
         <ul className="mt-5 space-y-2">
           {steps.length === 0 ? (
-            <li className="text-sm text-muted-foreground">No legs plotted yet.</li>
+            <li className="text-sm text-muted-foreground">Noch keine Abschnitte eingezeichnet.</li>
           ) : null}
           {steps.map((s, i) => {
             const Icon = icon[s.direction];
@@ -90,10 +90,10 @@ export function RoutePuzzle({
               >
                 <Icon className="size-4 shrink-0 text-primary" />
                 <span className="min-w-0 flex-1 font-display text-sm uppercase tracking-wide">
-                  {s.direction} — {s.distance} m
+                  {({ NORTH: "Norden", EAST: "Osten", SOUTH: "Süden", WEST: "Westen" } as const)[s.direction]} — {s.distance} m
                 </span>
                 <button
-                  aria-label="Remove step"
+                  aria-label="Abschnitt entfernen"
                   onClick={() => setSteps((arr) => arr.filter((_, idx) => idx !== i))}
                   className="shrink-0 text-muted-foreground hover:text-destructive"
                 >
@@ -108,15 +108,15 @@ export function RoutePuzzle({
           onClick={check}
           className="mt-5 min-h-[48px] w-full rounded-md bg-primary font-display text-sm font-bold uppercase tracking-[0.2em] text-primary-foreground"
         >
-          Check route
+          Route überprüfen
         </button>
 
         {status === "wrong" ? (
-          <p className="mt-3 text-center text-sm text-destructive">Something does not line up.</p>
+          <p className="mt-3 text-center text-sm text-destructive">Etwas stimmt noch nicht.</p>
         ) : null}
         {status === "ok" ? (
           <p className="mt-3 text-center font-display text-sm uppercase tracking-[0.2em] text-success">
-            Route confirmed
+            Route bestätigt
           </p>
         ) : null}
       </div>

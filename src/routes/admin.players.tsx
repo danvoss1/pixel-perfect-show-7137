@@ -1,18 +1,18 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
-import { AdminShell, AdminTable } from "@/components/admin/AdminShell";
+import { VerwaltungShell, VerwaltungTable } from "@/components/admin/VerwaltungShell";
 
 export const Route = createFileRoute("/admin/players")({
   head: () => ({
     meta: [
-      { title: "Players — Admin" },
-      { name: "description", content: "Monitor player progress, elapsed time and hint usage." },
-      { property: "og:title", content: "Players — Admin" },
-      { property: "og:description", content: "Progress, elapsed time and hint usage per player." },
+      { title: "Spielende — Verwaltung" },
+      { name: "description", content: "Fortschritt, Spielzeit und Hinweisnutzung der Spielenden verfolgen." },
+      { property: "og:title", content: "Spielende — Verwaltung" },
+      { property: "og:description", content: "Fortschritt, Spielzeit und Hinweisnutzung pro Person." },
       { name: "robots", content: "noindex" },
     ],
   }),
-  component: AdminPlayers,
+  component: VerwaltungSpielende,
 });
 
 const players = [
@@ -22,9 +22,9 @@ const players = [
     started: "18:04",
     elapsed: "01:42",
     hints: 2,
-    last: "2 min ago",
-    location: "Forest checkpoint",
-    puzzles: ["Word Cipher ✓", "Sliding Puzzle ✓", "Envelope #03 ✓", "3D Room active"],
+    last: "vor 2 Min.",
+    location: "Kontrollpunkt im Wald",
+    puzzles: ["Worträtsel ✓", "Schiebepuzzle ✓", "Umschlag Nr. 03 ✓", "3D-Raum aktiv"],
   },
   {
     name: "Mira",
@@ -32,9 +32,9 @@ const players = [
     started: "18:20",
     elapsed: "01:26",
     hints: 0,
-    last: "just now",
-    location: "Old Railway Bridge",
-    puzzles: ["Sealed Instruction ✓", "Envelope #03 pending"],
+    last: "gerade eben",
+    location: "Alte Eisenbahnbrücke",
+    puzzles: ["Versiegelte Anweisung ✓", "Umschlag Nr. 03 offen"],
   },
   {
     name: "Jonas",
@@ -42,20 +42,20 @@ const players = [
     started: "17:41",
     elapsed: "02:05",
     hints: 4,
-    last: "8 min ago",
-    location: "Unmarked door",
-    puzzles: ["Word Cipher ✓", "Route ✓", "3D Room ✓"],
+    last: "vor 8 Min.",
+    location: "Tür ohne Nummer",
+    puzzles: ["Worträtsel ✓", "Route ✓", "3D-Raum ✓"],
   },
 ];
 
-function AdminPlayers() {
+function VerwaltungSpielende() {
   const [open, setOpen] = useState<string | null>(null);
   const selected = players.find((p) => p.name === open);
 
   return (
-    <AdminShell title="Players" lead="Click a player to open their progress overview.">
-      <AdminTable
-        head={["Player", "Current stage", "Started", "Elapsed", "Hints", "Last activity"]}
+    <VerwaltungShell title="Spielende" lead="Wähle eine Person, um ihren Fortschritt anzusehen.">
+      <VerwaltungTable
+        head={["Spieler/in", "Aktuelle Etappe", "Beginn", "Spielzeit", "Hinweise", "Letzte Aktivität"]}
         rows={players.map((p) => [
           <button key="n" onClick={() => setOpen(p.name)} className="font-medium hover:text-primary">
             {p.name}
@@ -74,7 +74,7 @@ function AdminPlayers() {
             <div className="min-w-0">
               <h2 className="truncate font-display text-xl font-bold uppercase">{selected.name}</h2>
               <p className="text-sm text-muted-foreground">
-                Stage {selected.stage} · {selected.location}
+                Etappe {selected.stage} · {selected.location}
               </p>
             </div>
             <button onClick={() => setOpen(null)} className="text-sm text-muted-foreground">
@@ -91,7 +91,7 @@ function AdminPlayers() {
           </ul>
 
           <div className="mt-5 flex flex-wrap gap-2">
-            {["Unlock stage", "Reset puzzle", "Add hint", "Reset player"].map((a) => (
+            {["Etappe freigeben", "Rätsel zurücksetzen", "Hinweis hinzufügen", "Spielstand zurücksetzen"].map((a) => (
               <button
                 key={a}
                 className="min-h-[44px] rounded-md border border-border px-4 text-sm hover:bg-accent"
@@ -102,6 +102,6 @@ function AdminPlayers() {
           </div>
         </div>
       ) : null}
-    </AdminShell>
+    </VerwaltungShell>
   );
 }

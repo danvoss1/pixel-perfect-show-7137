@@ -7,13 +7,13 @@ import { usePlayer } from "@/game/store";
 export const Route = createFileRoute("/inventory")({
   head: () => ({
     meta: [
-      { title: "Inventory — The Hidden Path" },
+      { title: "Inventar — The Hidden Path" },
       {
         name: "description",
-        content: "Everything collected on the expedition: documents, evidence, keys and code fragments.",
+        content: "Alle auf der Expedition gesammelten Dokumente, Beweisstücke, Schlüssel und Codefragmente.",
       },
-      { property: "og:title", content: "Inventory — The Hidden Path" },
-      { property: "og:description", content: "Documents, evidence, keys and code fragments collected so far." },
+      { property: "og:title", content: "Inventar — The Hidden Path" },
+      { property: "og:description", content: "Bisher gesammelte Dokumente, Beweisstücke, Schlüssel und Codefragmente." },
     ],
   }),
   component: InventoryPage,
@@ -26,15 +26,15 @@ function InventoryPage() {
     <GameShell>
       <Reveal>
         <SectionTitle
-          eyebrow={`${owned.length} of ${items.length} recovered`}
-          title="Inventory"
-          lead="Items collected along the trail. Open one to inspect it closely."
+          eyebrow={`${owned.length} von ${items.length} gefunden`}
+          title="Inventar"
+          lead="Gegenstände von der Spur. Öffne einen, um ihn genauer zu untersuchen."
         />
       </Reveal>
 
       {owned.length === 0 ? (
         <p className="mt-10 text-center text-sm text-muted-foreground">
-          Nothing collected yet. The first stage always leaves something behind.
+          Noch nichts gesammelt. Die erste Etappe hinterlässt bestimmt eine Spur.
         </p>
       ) : null}
 
@@ -48,10 +48,10 @@ function InventoryPage() {
                 params={{ id: item.id }}
                 className="block h-full rounded-lg border border-border bg-surface/60 p-5 transition-colors hover:bg-accent/50"
               >
-                <Label>Item #{String(item.number).padStart(2, "0")}</Label>
+                <Label>Gegenstand Nr. {String(item.number).padStart(2, "0")}</Label>
                 <h2 className="mt-3 font-display text-lg font-bold uppercase">{item.name}</h2>
                 <p className="mt-1 text-sm text-muted-foreground">{item.description}</p>
-                <p className="mt-4 label-mono">Found · Stage {String(item.foundAtStage).padStart(2, "0")}</p>
+                <p className="mt-4 label-mono">Gefunden · Etappe {String(item.foundAtStage).padStart(2, "0")}</p>
               </Link>
             </Reveal>
           ))}

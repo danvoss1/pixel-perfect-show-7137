@@ -12,9 +12,9 @@ export interface InteractiveRoomProps {
 }
 
 const hotspots = [
-  { id: "desk", label: "Desk drawer", x: 26, y: 62, note: "A drawer with a false bottom. Empty." },
-  { id: "clock", label: "Wall clock", x: 52, y: 26, note: "Stopped at 4:29. Two hours fast." },
-  { id: "map", label: "Framed map", x: 76, y: 44, note: "A USB stick is taped behind the frame." },
+  { id: "desk", label: "Schreibtischschublade", x: 26, y: 62, note: "Eine Schublade mit doppeltem Boden. Leer." },
+  { id: "clock", label: "Wanduhr", x: 52, y: 26, note: "Um 4:29 Uhr stehen geblieben. Zwei Stunden vorgestellt." },
+  { id: "map", label: "Gerahmte Karte", x: 76, y: 44, note: "Hinter dem Rahmen klebt ein USB-Stick." },
 ];
 
 export function InteractiveRoom({ onObjectFound, resetSignal }: InteractiveRoomProps) {
@@ -34,9 +34,9 @@ export function InteractiveRoom({ onObjectFound, resetSignal }: InteractiveRoomP
         }}
       />
       <div className="absolute inset-x-0 top-6 text-center">
-        <p className="label-mono">3D viewport placeholder</p>
+        <p className="label-mono">Platzhalter für den 3D-Raum</p>
         <p className="mt-1 text-xs text-muted-foreground">
-          The existing room scene mounts here.
+          Hier wird die vorhandene Raumszene eingebunden.
         </p>
       </div>
 

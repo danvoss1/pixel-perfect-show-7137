@@ -10,7 +10,7 @@ export function HintPanel({ puzzleId, hints }: { puzzleId: string; hints: Hint[]
 
   return (
     <div className="field-panel p-5">
-      <Label>Hints</Label>
+      <Label>Hinweise</Label>
       <div className="mt-4 space-y-2">
         {hints.map((hint, i) => {
           const key = `${puzzleId}:${hint.id}`;
@@ -27,7 +27,7 @@ export function HintPanel({ puzzleId, hints }: { puzzleId: string; hints: Hint[]
                   {hint.label}
                 </span>
                 <span className="flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
-                  {isOpen ? "Revealed" : prevOpen ? "Reveal" : "Locked"}
+                  {isOpen ? "Aufgedeckt" : prevOpen ? "Aufdecken" : "Gesperrt"}
                   {isOpen ? (
                     <Lightbulb className="size-4 text-gold" />
                   ) : prevOpen ? (
@@ -55,7 +55,7 @@ export function HintPanel({ puzzleId, hints }: { puzzleId: string; hints: Hint[]
         })}
       </div>
       <p className="mt-3 text-xs text-muted-foreground">
-        Hints are recorded in your expedition log.
+        Hinweise werden im Expeditionslog festgehalten.
       </p>
     </div>
   );

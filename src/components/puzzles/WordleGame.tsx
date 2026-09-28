@@ -103,9 +103,9 @@ export function WordleGame({
       <div className="field-panel p-4 sm:p-5">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <Label>
-            Word length {target.length} · Tries {guesses.length}/{maxAttempts}
+            Wortlänge {target.length} · Versuche {guesses.length}/{maxAttempts}
           </Label>
-          <span className="text-xs text-muted-foreground">First clue: {clue}</span>
+          <span className="text-xs text-muted-foreground">Erster Hinweis: {clue}</span>
         </div>
 
         <div className={invalid ? "shake mt-4 space-y-1.5" : "mt-4 space-y-1.5"}>
@@ -148,7 +148,7 @@ export function WordleGame({
                   k.length > 1 ? "max-w-[68px] text-[10px]" : "max-w-[42px]"
                 } ${markClass(used[k])}`}
               >
-                {k === "DEL" ? "⌫" : k}
+                {k === "DEL" ? "⌫" : k === "ENTER" ? "OK" : k}
               </button>
             ))}
           </div>
@@ -157,7 +157,7 @@ export function WordleGame({
 
       {done && !guesses.includes(target) && !solved ? (
         <p className="text-center text-sm text-destructive">
-          The attempts are spent. Reload the page to try the cipher again.
+          Alle Versuche sind verbraucht. Lade die Seite neu, um es erneut zu versuchen.
         </p>
       ) : null}
     </div>

@@ -1,23 +1,23 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { GripVertical } from "lucide-react";
-import { AdminShell } from "@/components/admin/AdminShell";
+import { VerwaltungShell } from "@/components/admin/VerwaltungShell";
 import { adventure } from "@/game/data";
 
 export const Route = createFileRoute("/admin/stages")({
   head: () => ({
     meta: [
-      { title: "Stages — Admin" },
-      { name: "description", content: "Order and edit the stages of the adventure." },
-      { property: "og:title", content: "Stages — Admin" },
-      { property: "og:description", content: "Order and edit the stages of the adventure." },
+      { title: "Etappen — Verwaltung" },
+      { name: "description", content: "Etappen des Abenteuers sortieren und bearbeiten." },
+      { property: "og:title", content: "Etappen — Verwaltung" },
+      { property: "og:description", content: "Etappen des Abenteuers sortieren und bearbeiten." },
       { name: "robots", content: "noindex" },
     ],
   }),
-  component: AdminStages,
+  component: VerwaltungEtappen,
 });
 
-function AdminStages() {
+function VerwaltungEtappen() {
   const [order, setOrder] = useState(adventure.stages.map((s) => s.id));
   const [dragging, setDragging] = useState<string | null>(null);
 
@@ -32,12 +32,12 @@ function AdminStages() {
   };
 
   return (
-    <AdminShell
-      title="Stages"
-      lead="Drag to reorder. Each stage holds its own content blocks."
+    <VerwaltungShell
+      title="Etappen"
+      lead="Zum Sortieren ziehen. Jede Etappe enthält eigene Inhaltsblöcke."
       action={
         <button className="min-h-[44px] rounded-md bg-primary px-4 text-sm font-semibold text-primary-foreground">
-          Add stage
+          Etappe hinzufügen
         </button>
       }
     >
@@ -71,6 +71,6 @@ function AdminStages() {
           </li>
         ))}
       </ul>
-    </AdminShell>
+    </VerwaltungShell>
   );
 }

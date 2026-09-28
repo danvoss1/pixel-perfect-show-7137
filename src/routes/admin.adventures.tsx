@@ -1,39 +1,39 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { AdminShell, AdminTable } from "@/components/admin/AdminShell";
+import { VerwaltungShell, VerwaltungTable } from "@/components/admin/VerwaltungShell";
 import { adventure } from "@/game/data";
 
 export const Route = createFileRoute("/admin/adventures")({
   head: () => ({
     meta: [
-      { title: "Adventures — Admin" },
-      { name: "description", content: "All configured adventures and their stage counts." },
-      { property: "og:title", content: "Adventures — Admin" },
-      { property: "og:description", content: "All configured adventures and their stage counts." },
+      { title: "Abenteuer — Verwaltung" },
+      { name: "description", content: "Alle angelegten Abenteuer und ihre Etappenanzahl." },
+      { property: "og:title", content: "Abenteuer — Verwaltung" },
+      { property: "og:description", content: "Alle angelegten Abenteuer und ihre Etappenanzahl." },
       { name: "robots", content: "noindex" },
     ],
   }),
-  component: AdminAdventures,
+  component: VerwaltungAbenteuer,
 });
 
-function AdminAdventures() {
+function VerwaltungAbenteuer() {
   return (
-    <AdminShell
-      title="Adventures"
-      lead="Every experience configured for this city."
+    <VerwaltungShell
+      title="Abenteuer"
+      lead="Alle Abenteuer für diese Stadt."
       action={
         <button className="min-h-[44px] rounded-md bg-primary px-4 text-sm font-semibold text-primary-foreground">
-          New adventure
+          Neues Abenteuer
         </button>
       }
     >
-      <AdminTable
-        head={["Adventure", "City", "Stages", "Status", ""]}
+      <VerwaltungTable
+        head={["Abenteuer", "Stadt", "Etappen", "Status", ""]}
         rows={[
           [
             adventure.title,
             adventure.city,
             String(adventure.stages.length),
-            "Published",
+            "Veröffentlicht",
             <Link
               key="e"
               to="/admin/adventure/$id"
@@ -43,9 +43,9 @@ function AdminAdventures() {
               Edit
             </Link>,
           ],
-          ["Nachtschicht", "Cologne", "6", "Draft", <span key="d" className="text-muted-foreground">Edit</span>],
+          ["Nachtschicht", "Köln", "6", "Entwurf", <span key="d" className="text-muted-foreground">Bearbeiten</span>],
         ]}
       />
-    </AdminShell>
+    </VerwaltungShell>
   );
 }

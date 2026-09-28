@@ -18,9 +18,9 @@ export const Route = createFileRoute("/stage/$id")({
   head: ({ params }) => {
     const stage = stageById(params.id);
     const title = stage
-      ? `Stage ${String(stage.number).padStart(2, "0")} — ${stage.title}`
-      : "Stage — The Hidden Path";
-    const description = stage?.objective ?? "A stage of The Hidden Path expedition.";
+      ? `Etappe ${String(stage.number).padStart(2, "0")} — ${stage.title}`
+      : "Etappe — The Hidden Path";
+    const description = stage?.objective ?? "Eine Etappe der Expedition „The Hidden Path“.";
     return {
       meta: [
         { title: `${title} — The Hidden Path` },
@@ -51,7 +51,7 @@ function StagePage() {
   if (!stage) {
     return (
       <GameShell>
-        <LockedContent note="This stage does not exist in the current expedition." />
+        <LockedContent note="Diese Etappe gehört nicht zur aktuellen Expedition." />
       </GameShell>
     );
   }
@@ -67,10 +67,10 @@ function StagePage() {
     return (
       <GameShell>
         <LockedContent
-          note={`Something from Stage ${String(prev?.number ?? 1).padStart(2, "0")} is still missing.`}
+          note={`Von Etappe ${String(prev?.number ?? 1).padStart(2, "0")} fehlt noch etwas.`}
         />
         <Link to="/adventure" className="mt-6 block text-center label-mono text-primary">
-          Back to the timeline
+          Zurück zur Etappenübersicht
         </Link>
       </GameShell>
     );
@@ -92,7 +92,7 @@ function StagePage() {
   return (
     <GameShell>
       <Reveal>
-        <Label>Stage {String(stage.number).padStart(2, "0")}</Label>
+        <Label >Etappe {String(stage.number).padStart(2, "0")}</Label>
         <h1 className="mt-2 font-display text-4xl font-bold uppercase leading-none sm:text-6xl">
           {stage.title}
         </h1>
@@ -102,20 +102,20 @@ function StagePage() {
       <Reveal delay={0.06}>
         <div className="mt-7 grid gap-3 sm:grid-cols-2">
           <Panel>
-            <Label>Objective</Label>
+            <Label>Ziel</Label>
             <p className="mt-2 text-sm">{stage.objective}</p>
           </Panel>
           <Panel>
-            <Label>Location</Label>
-            <p className="mt-2 text-sm">{location ? location.name : "No fixed location"}</p>
+            <Label>Ort</Label>
+            <p className="mt-2 text-sm">{location ? location.name : "Kein fester Ort"}</p>
           </Panel>
           <Panel>
-            <Label>Required item</Label>
-            <p className="mt-2 text-sm">{stage.requiredItem ?? "None"}</p>
+            <Label>Benötigter Gegenstand</Label>
+            <p className="mt-2 text-sm">{stage.requiredItem ?? "Keiner"}</p>
           </Panel>
           <Panel>
-            <Label>Current status</Label>
-            <p className="mt-2 text-sm capitalize text-primary">{status}</p>
+            <Label>Aktueller Status</Label>
+            <p className="mt-2 text-sm capitalize text-primary">{status === "completed" ? "Abgeschlossen" : "Aktiv"}</p>
           </Panel>
         </div>
       </Reveal>
@@ -126,7 +126,7 @@ function StagePage() {
             to="/map"
             className="flex min-h-[48px] flex-1 items-center justify-center gap-2 rounded-md border border-border px-5 font-display text-xs font-bold uppercase tracking-[0.18em] hover:bg-accent"
           >
-            <MapPin className="size-4" /> View map
+            <MapPin className="size-4" /> Karte ansehen
           </Link>
         ) : null}
         {stage.puzzleId ? (
@@ -135,7 +135,7 @@ function StagePage() {
             params={{ id: stage.puzzleId }}
             className="flex min-h-[48px] flex-1 items-center justify-center gap-2 rounded-md border border-border px-5 font-display text-xs font-bold uppercase tracking-[0.18em] hover:bg-accent"
           >
-            <PuzzleIcon className="size-4" /> Open puzzle
+            <PuzzleIcon className="size-4" /> Rätsel öffnen
           </Link>
         ) : null}
       </div>
@@ -145,9 +145,9 @@ function StagePage() {
           <div className="flex items-center gap-3">
             <Mail className="size-5 shrink-0 text-gold" />
             <div className="min-w-0">
-              <Label>Envelope #0{envelope.number}</Label>
+              <Label>Umschlag Nr. 0{envelope.number}</Label>
               <p className="mt-1 text-sm">
-                {envelopeOk ? "Verified" : `Expected location: ${envelope.expectedLocation}`}
+                {envelopeOk ? "Bestätigt" : `Erwarteter Ort: ${envelope.expectedLocation}`}
               </p>
             </div>
           </div>
@@ -159,13 +159,13 @@ function StagePage() {
           ) : (
             <>
               <p className="mt-4 text-sm text-muted-foreground">
-                Find Envelope #0{envelope.number} before continuing.
+                Find Umschlag Nr. 0{envelope.number} vor dem Fortfahren.
               </p>
               <motion.input
-                aria-label="Envelope code"
+                aria-label="Umschlagcode"
                 value={code}
                 onChange={(e) => setCode(e.target.value)}
-                placeholder="Enter code from envelope"
+                placeholder="Code aus dem Umschlag eingeben"
                 className={`mt-3 h-14 w-full rounded-md border border-border bg-background/60 px-4 font-display uppercase tracking-[0.2em] outline-none focus:border-primary ${
                   denied ? "shake" : ""
                 }`}
@@ -189,11 +189,11 @@ function StagePage() {
                   to="/scan"
                   className="grid min-h-[48px] flex-1 place-items-center rounded-md border border-border font-display text-xs font-bold uppercase tracking-[0.2em]"
                 >
-                  Scan QR
+                  QR-Code scannen
                 </Link>
               </div>
               {denied ? (
-                <p className="mt-3 text-center text-sm text-destructive">Access denied</p>
+                <p className="mt-3 text-center text-sm text-destructive">Zugriff verweigert</p>
               ) : null}
             </>
           )}
@@ -203,7 +203,7 @@ function StagePage() {
       <div className="mt-8">
         {status === "completed" ? (
           <p className="text-center font-display text-sm uppercase tracking-[0.2em] text-success">
-            Stage complete · {stage.reward} collected
+            Etappe abgeschlossen · {stage.reward} gesammelt
           </p>
         ) : (
           <button
@@ -211,16 +211,16 @@ function StagePage() {
             onClick={finish}
             className="min-h-[56px] w-full rounded-md bg-primary font-display text-sm font-bold uppercase tracking-[0.2em] text-primary-foreground disabled:cursor-not-allowed disabled:bg-muted disabled:text-muted-foreground"
           >
-            {canFinish ? "Complete stage" : "Requirements not met"}
+            {canFinish ? "Etappe abschließen" : "Voraussetzungen fehlen"}
           </button>
         )}
       </div>
 
       <PuzzleSuccess
         show={granted}
-        title="Access granted"
-        message={`${stage.reward} added to your inventory.`}
-        continueLabel="Continue the trail"
+        title="Zugriff gewährt"
+        message={`${stage.reward} wurde deinem Inventar hinzugefügt.`}
+        continueLabel="Der Spur folgen"
         onContinue={() => {
           setGranted(false);
           const next = adventure.stages.find((s) => s.number === stage.number + 1);

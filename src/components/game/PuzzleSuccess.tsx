@@ -5,7 +5,7 @@ export function PuzzleSuccess({
   title,
   message,
   onContinue,
-  continueLabel = "Continue",
+  continueLabel = "Weiter",
 }: {
   show: boolean;
   title: string;
