@@ -9,6 +9,9 @@ export type PuzzleType =
   | "symbols"
   | "room"
   | "evidence";
+  | "mastermind"
+  | "simon"
+  | "morse";
 
 export type MarkerState = "unknown" | "discovered" | "active" | "completed" | "locked" | "food" | "drink" | "envelope" | "puzzle" | "bonus";
 
@@ -79,6 +82,9 @@ export interface SymbolsConfig {
   encoded: string;
   answer: string;
 }
+export interface MastermindConfig { secret: string; attempts: number; }
+export interface SimonConfig { sequence: number[]; }
+export interface MorseConfig { code: string; answer: string; }
 
 export interface Puzzle {
   id: string;
@@ -94,6 +100,9 @@ export interface Puzzle {
     | CodeConfig
     | RouteConfig
     | SymbolsConfig
+    | MastermindConfig
+    | SimonConfig
+    | MorseConfig
     | Record<string, never>;
 }
 
