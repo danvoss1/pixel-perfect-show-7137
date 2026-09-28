@@ -14,8 +14,8 @@ function shuffled(n: number) {
     if (r < n - 1) moves.push(blank + n);
     if (c > 0) moves.push(blank - 1);
     if (c < n - 1) moves.push(blank + 1);
-    const m = moves[Math.floor(Math.random() * moves.length)];
-    arr = arr.map((v, idx) => (idx === blank ? arr[m] : idx === m ? arr[blank] : v));
+    const m = moves[Math.floor(Math.random() * moves.length)] as number;
+    arr = arr.map((v, idx) => (idx === blank ? (arr[m] as number) : idx === m ? (arr[blank] as number) : v));
     blank = m;
   }
   return arr;
@@ -57,8 +57,8 @@ export function SlidingPuzzle({
     const c2 = blank % grid;
     if (Math.abs(r1 - r2) + Math.abs(c1 - c2) !== 1) return;
     const next = [...tiles];
-    next[blank] = tiles[idx];
-    next[idx] = tiles[blank];
+    next[blank] = tiles[idx] as number;
+    next[idx] = tiles[blank] as number;
     setTiles(next);
     setMoves((m) => m + 1);
   };

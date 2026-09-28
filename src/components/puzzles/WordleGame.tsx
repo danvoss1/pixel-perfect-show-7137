@@ -84,6 +84,7 @@ export function WordleGame({
   guesses.forEach((g) => {
     score(g, target).forEach((m, i) => {
       const c = g[i];
+      if (!c) return;
       if (m === "correct" || (m === "present" && used[c] !== "correct") || !used[c]) used[c] = m;
     });
   });

@@ -143,7 +143,7 @@ export function Toggle({
   defaultChecked,
 }: {
   label: string;
-  defaultChecked?: boolean;
+  defaultChecked?: boolean | undefined;
 }) {
   return (
     <label className="flex min-h-[44px] items-center justify-between gap-4 rounded-md border border-border bg-surface px-4">

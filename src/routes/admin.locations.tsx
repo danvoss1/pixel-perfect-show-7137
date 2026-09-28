@@ -17,8 +17,8 @@ export const Route = createFileRoute("/admin/locations")({
 });
 
 function AdminLocations() {
-  const [selected, setSelected] = useState(locations[0].id);
-  const [pos, setPos] = useState({ x: locations[0].x, y: locations[0].y });
+  const [selected, setSelected] = useState(locations[0]!.id);
+  const [pos, setPos] = useState({ x: locations[0]!.x, y: locations[0]!.y });
   const loc = locations.find((l) => l.id === selected)!;
 
   return (

@@ -23,7 +23,7 @@ export const Route = createFileRoute("/adventure")({
 function AdventureHome() {
   const completed = usePlayer((s) => s.completedStages);
   const currentId = usePlayer((s) => s.currentStageId);
-  const current = adventure.stages.find((s) => s.id === currentId) ?? adventure.stages[0];
+  const current = adventure.stages.find((s) => s.id === currentId) ?? adventure.stages[0]!;
   const location = locationById(current.locationId);
 
   return (
