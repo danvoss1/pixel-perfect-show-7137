@@ -11,10 +11,13 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AdventureRouteImport } from './routes/adventure'
+import { Route as CompleteRouteImport } from './routes/complete'
 import { Route as InventoryRouteImport } from './routes/inventory'
 import { Route as JournalRouteImport } from './routes/journal'
 import { Route as MapRouteImport } from './routes/map'
 import { Route as PuzzlesRouteImport } from './routes/puzzles'
+import { Route as RoomRouteImport } from './routes/room'
+import { Route as ScanRouteImport } from './routes/scan'
 import { Route as ItemIdRouteImport } from './routes/item.$id'
 import { Route as PuzzleIdRouteImport } from './routes/puzzle.$id'
 import { Route as StageIdRouteImport } from './routes/stage.$id'
@@ -27,6 +30,11 @@ const IndexRoute = IndexRouteImport.update({
 const AdventureRoute = AdventureRouteImport.update({
   id: '/adventure',
   path: '/adventure',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CompleteRoute = CompleteRouteImport.update({
+  id: '/complete',
+  path: '/complete',
   getParentRoute: () => rootRouteImport,
 } as any)
 const InventoryRoute = InventoryRouteImport.update({
@@ -49,6 +57,16 @@ const PuzzlesRoute = PuzzlesRouteImport.update({
   path: '/puzzles',
   getParentRoute: () => rootRouteImport,
 } as any)
+const RoomRoute = RoomRouteImport.update({
+  id: '/room',
+  path: '/room',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ScanRoute = ScanRouteImport.update({
+  id: '/scan',
+  path: '/scan',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ItemIdRoute = ItemIdRouteImport.update({
   id: '/item/$id',
   path: '/item/$id',
@@ -68,10 +86,13 @@ const StageIdRoute = StageIdRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/adventure': typeof AdventureRoute
+  '/complete': typeof CompleteRoute
   '/inventory': typeof InventoryRoute
   '/journal': typeof JournalRoute
   '/map': typeof MapRoute
   '/puzzles': typeof PuzzlesRoute
+  '/room': typeof RoomRoute
+  '/scan': typeof ScanRoute
   '/item/$id': typeof ItemIdRoute
   '/puzzle/$id': typeof PuzzleIdRoute
   '/stage/$id': typeof StageIdRoute
@@ -79,10 +100,13 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/adventure': typeof AdventureRoute
+  '/complete': typeof CompleteRoute
   '/inventory': typeof InventoryRoute
   '/journal': typeof JournalRoute
   '/map': typeof MapRoute
   '/puzzles': typeof PuzzlesRoute
+  '/room': typeof RoomRoute
+  '/scan': typeof ScanRoute
   '/item/$id': typeof ItemIdRoute
   '/puzzle/$id': typeof PuzzleIdRoute
   '/stage/$id': typeof StageIdRoute
@@ -91,10 +115,13 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/adventure': typeof AdventureRoute
+  '/complete': typeof CompleteRoute
   '/inventory': typeof InventoryRoute
   '/journal': typeof JournalRoute
   '/map': typeof MapRoute
   '/puzzles': typeof PuzzlesRoute
+  '/room': typeof RoomRoute
+  '/scan': typeof ScanRoute
   '/item/$id': typeof ItemIdRoute
   '/puzzle/$id': typeof PuzzleIdRoute
   '/stage/$id': typeof StageIdRoute
@@ -104,10 +131,13 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/adventure'
+    | '/complete'
     | '/inventory'
     | '/journal'
     | '/map'
     | '/puzzles'
+    | '/room'
+    | '/scan'
     | '/item/$id'
     | '/puzzle/$id'
     | '/stage/$id'
@@ -115,10 +145,13 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/adventure'
+    | '/complete'
     | '/inventory'
     | '/journal'
     | '/map'
     | '/puzzles'
+    | '/room'
+    | '/scan'
     | '/item/$id'
     | '/puzzle/$id'
     | '/stage/$id'
@@ -126,10 +159,13 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/adventure'
+    | '/complete'
     | '/inventory'
     | '/journal'
     | '/map'
     | '/puzzles'
+    | '/room'
+    | '/scan'
     | '/item/$id'
     | '/puzzle/$id'
     | '/stage/$id'
@@ -138,10 +174,13 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AdventureRoute: typeof AdventureRoute
+  CompleteRoute: typeof CompleteRoute
   InventoryRoute: typeof InventoryRoute
   JournalRoute: typeof JournalRoute
   MapRoute: typeof MapRoute
   PuzzlesRoute: typeof PuzzlesRoute
+  RoomRoute: typeof RoomRoute
+  ScanRoute: typeof ScanRoute
   ItemIdRoute: typeof ItemIdRoute
   PuzzleIdRoute: typeof PuzzleIdRoute
   StageIdRoute: typeof StageIdRoute
@@ -161,6 +200,13 @@ declare module '@tanstack/react-router' {
       path: '/adventure'
       fullPath: '/adventure'
       preLoaderRoute: typeof AdventureRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/complete': {
+      id: '/complete'
+      path: '/complete'
+      fullPath: '/complete'
+      preLoaderRoute: typeof CompleteRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/inventory': {
@@ -191,6 +237,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PuzzlesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/room': {
+      id: '/room'
+      path: '/room'
+      fullPath: '/room'
+      preLoaderRoute: typeof RoomRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/scan': {
+      id: '/scan'
+      path: '/scan'
+      fullPath: '/scan'
+      preLoaderRoute: typeof ScanRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/item/$id': {
       id: '/item/$id'
       path: '/item/$id'
@@ -218,10 +278,13 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AdventureRoute: AdventureRoute,
+  CompleteRoute: CompleteRoute,
   InventoryRoute: InventoryRoute,
   JournalRoute: JournalRoute,
   MapRoute: MapRoute,
   PuzzlesRoute: PuzzlesRoute,
+  RoomRoute: RoomRoute,
+  ScanRoute: ScanRoute,
   ItemIdRoute: ItemIdRoute,
   PuzzleIdRoute: PuzzleIdRoute,
   StageIdRoute: StageIdRoute,
