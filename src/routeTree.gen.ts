@@ -21,11 +21,14 @@ import { Route as RoomRouteImport } from './routes/room'
 import { Route as ScanRouteImport } from './routes/scan'
 import { Route as AdminIndexRouteImport } from './routes/admin.index'
 import { Route as AdminAdventuresRouteImport } from './routes/admin.adventures'
+import { Route as AdminLocationsRouteImport } from './routes/admin.locations'
+import { Route as AdminPuzzlesRouteImport } from './routes/admin.puzzles'
 import { Route as AdminStagesRouteImport } from './routes/admin.stages'
 import { Route as ItemIdRouteImport } from './routes/item.$id'
 import { Route as PuzzleIdRouteImport } from './routes/puzzle.$id'
 import { Route as StageIdRouteImport } from './routes/stage.$id'
 import { Route as AdminAdventureIdRouteImport } from './routes/admin.adventure.$id'
+import { Route as AdminStageIdRouteImport } from './routes/admin.stage.$id'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -87,6 +90,16 @@ const AdminAdventuresRoute = AdminAdventuresRouteImport.update({
   path: '/adventures',
   getParentRoute: () => AdminRoute,
 } as any)
+const AdminLocationsRoute = AdminLocationsRouteImport.update({
+  id: '/locations',
+  path: '/locations',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminPuzzlesRoute = AdminPuzzlesRouteImport.update({
+  id: '/puzzles',
+  path: '/puzzles',
+  getParentRoute: () => AdminRoute,
+} as any)
 const AdminStagesRoute = AdminStagesRouteImport.update({
   id: '/stages',
   path: '/stages',
@@ -112,6 +125,11 @@ const AdminAdventureIdRoute = AdminAdventureIdRouteImport.update({
   path: '/adventure/$id',
   getParentRoute: () => AdminRoute,
 } as any)
+const AdminStageIdRoute = AdminStageIdRouteImport.update({
+  id: '/stage/$id',
+  path: '/stage/$id',
+  getParentRoute: () => AdminRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -125,12 +143,15 @@ export interface FileRoutesByFullPath {
   '/room': typeof RoomRoute
   '/scan': typeof ScanRoute
   '/admin/adventures': typeof AdminAdventuresRoute
+  '/admin/locations': typeof AdminLocationsRoute
+  '/admin/puzzles': typeof AdminPuzzlesRoute
   '/admin/stages': typeof AdminStagesRoute
   '/item/$id': typeof ItemIdRoute
   '/puzzle/$id': typeof PuzzleIdRoute
   '/stage/$id': typeof StageIdRoute
   '/admin/': typeof AdminIndexRoute
   '/admin/adventure/$id': typeof AdminAdventureIdRoute
+  '/admin/stage/$id': typeof AdminStageIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -143,12 +164,15 @@ export interface FileRoutesByTo {
   '/room': typeof RoomRoute
   '/scan': typeof ScanRoute
   '/admin/adventures': typeof AdminAdventuresRoute
+  '/admin/locations': typeof AdminLocationsRoute
+  '/admin/puzzles': typeof AdminPuzzlesRoute
   '/admin/stages': typeof AdminStagesRoute
   '/item/$id': typeof ItemIdRoute
   '/puzzle/$id': typeof PuzzleIdRoute
   '/stage/$id': typeof StageIdRoute
   '/admin': typeof AdminIndexRoute
   '/admin/adventure/$id': typeof AdminAdventureIdRoute
+  '/admin/stage/$id': typeof AdminStageIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -163,12 +187,15 @@ export interface FileRoutesById {
   '/room': typeof RoomRoute
   '/scan': typeof ScanRoute
   '/admin/adventures': typeof AdminAdventuresRoute
+  '/admin/locations': typeof AdminLocationsRoute
+  '/admin/puzzles': typeof AdminPuzzlesRoute
   '/admin/stages': typeof AdminStagesRoute
   '/item/$id': typeof ItemIdRoute
   '/puzzle/$id': typeof PuzzleIdRoute
   '/stage/$id': typeof StageIdRoute
   '/admin/': typeof AdminIndexRoute
   '/admin/adventure/$id': typeof AdminAdventureIdRoute
+  '/admin/stage/$id': typeof AdminStageIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -184,12 +211,15 @@ export interface FileRouteTypes {
     | '/room'
     | '/scan'
     | '/admin/adventures'
+    | '/admin/locations'
+    | '/admin/puzzles'
     | '/admin/stages'
     | '/item/$id'
     | '/puzzle/$id'
     | '/stage/$id'
     | '/admin/'
     | '/admin/adventure/$id'
+    | '/admin/stage/$id'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -202,12 +232,15 @@ export interface FileRouteTypes {
     | '/room'
     | '/scan'
     | '/admin/adventures'
+    | '/admin/locations'
+    | '/admin/puzzles'
     | '/admin/stages'
     | '/item/$id'
     | '/puzzle/$id'
     | '/stage/$id'
     | '/admin'
     | '/admin/adventure/$id'
+    | '/admin/stage/$id'
   id:
     | '__root__'
     | '/'
@@ -221,12 +254,15 @@ export interface FileRouteTypes {
     | '/room'
     | '/scan'
     | '/admin/adventures'
+    | '/admin/locations'
+    | '/admin/puzzles'
     | '/admin/stages'
     | '/item/$id'
     | '/puzzle/$id'
     | '/stage/$id'
     | '/admin/'
     | '/admin/adventure/$id'
+    | '/admin/stage/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -331,6 +367,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminAdventuresRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/admin/locations': {
+      id: '/admin/locations'
+      path: '/locations'
+      fullPath: '/admin/locations'
+      preLoaderRoute: typeof AdminLocationsRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/puzzles': {
+      id: '/admin/puzzles'
+      path: '/puzzles'
+      fullPath: '/admin/puzzles'
+      preLoaderRoute: typeof AdminPuzzlesRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/admin/stages': {
       id: '/admin/stages'
       path: '/stages'
@@ -366,21 +416,34 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminAdventureIdRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/admin/stage/$id': {
+      id: '/admin/stage/$id'
+      path: '/stage/$id'
+      fullPath: '/admin/stage/$id'
+      preLoaderRoute: typeof AdminStageIdRouteImport
+      parentRoute: typeof AdminRoute
+    }
   }
 }
 
 interface AdminRouteChildren {
   AdminAdventuresRoute: typeof AdminAdventuresRoute
+  AdminLocationsRoute: typeof AdminLocationsRoute
+  AdminPuzzlesRoute: typeof AdminPuzzlesRoute
   AdminStagesRoute: typeof AdminStagesRoute
   AdminIndexRoute: typeof AdminIndexRoute
   AdminAdventureIdRoute: typeof AdminAdventureIdRoute
+  AdminStageIdRoute: typeof AdminStageIdRoute
 }
 
 const AdminRouteChildren: AdminRouteChildren = {
   AdminAdventuresRoute: AdminAdventuresRoute,
+  AdminLocationsRoute: AdminLocationsRoute,
+  AdminPuzzlesRoute: AdminPuzzlesRoute,
   AdminStagesRoute: AdminStagesRoute,
   AdminIndexRoute: AdminIndexRoute,
   AdminAdventureIdRoute: AdminAdventureIdRoute,
+  AdminStageIdRoute: AdminStageIdRoute,
 }
 
 const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
