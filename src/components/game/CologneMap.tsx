@@ -43,6 +43,7 @@ export function CologneMap({ selectedId, onSelect, stateOf, editable, onMove }: 
   const markers = useRef<google.maps.Marker[]>([]);
   const overlays = useRef<google.maps.MVCObject[]>([]);
   const [error, setError] = useState("");
+  const [ready, setReady] = useState(false);
 
   useEffect(() => {
     let alive = true;
@@ -61,6 +62,7 @@ export function CologneMap({ selectedId, onSelect, stateOf, editable, onMove }: 
           { featureType: "transit", stylers: [{ saturation: -70 }] },
         ],
       });
+      setReady(true);
     }).catch((cause: Error) => { if (alive) setError(cause.message); });
     return () => { alive = false; markers.current.forEach((m) => m.setMap(null)); overlays.current.forEach((o) => (o as google.maps.Polyline).setMap(null)); map.current = null; };
   }, []);
@@ -92,12 +94,12 @@ export function CologneMap({ selectedId, onSelect, stateOf, editable, onMove }: 
       const line = new google.maps.Polyline({ map: map.current, path: visited.map((loc) => ({ lat: loc.lat, lng: loc.lng })), strokeColor: tones.active, strokeOpacity: 0.85, strokeWeight: 3, geodesic: true });
       overlays.current = [line];
     }
-  }, [selectedId, stateOf, onSelect, editable, onMove, error]);
+  }, [selectedId, stateOf, onSelect, editable, onMove, ready]);
 
   useEffect(() => {
     const selected = locations.find((loc) => loc.id === selectedId);
     if (selected && map.current) map.current.panTo({ lat: selected.lat, lng: selected.lng });
-  }, [selectedId, error]);
+  }, [selectedId, ready]);
 
   return <div className="absolute inset-0 bg-surface" role="region" aria-label="Interaktive Karte von Köln">
     <div ref={node} className="h-full w-full" />
