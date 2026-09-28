@@ -2,7 +2,7 @@ import { Link } from "@tanstack/react-router";
 import type { ReactNode } from "react";
 
 const nav = [
-  { to: "/admin", label: "Overview", exact: true },
+  { to: "/admin", label: "Overview" },
   { to: "/admin/adventures", label: "Adventures" },
   { to: "/admin/stages", label: "Stages" },
   { to: "/admin/puzzles", label: "Puzzles" },
@@ -34,7 +34,7 @@ export function AdminShell({
             <Link
               key={n.to}
               to={n.to}
-              activeOptions={{ exact: "exact" in n ? n.exact : false }}
+              activeOptions={{ exact: n.to === "/admin" }}
               activeProps={{ className: "bg-accent text-foreground" }}
               inactiveProps={{ className: "text-muted-foreground hover:bg-accent/60" }}
               className="rounded-md px-3 py-2 text-sm transition-colors"
