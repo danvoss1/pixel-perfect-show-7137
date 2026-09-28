@@ -12,6 +12,7 @@ export const Route = createFileRoute("/admin/locations")({
       { name: "description", content: "Markierungen, Koordinaten und Freischaltradius je Ort festlegen." },
       { property: "og:title", content: "Orte — Verwaltung" },
       { property: "og:description", content: "Koordinaten, Freischaltradius und Prüfregeln." },
+      { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary" },
       { name: "robots", content: "noindex" },
     ],
   }),

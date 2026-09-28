@@ -12,6 +12,7 @@ export const Route = createFileRoute("/admin/")({
       { name: "description", content: "Spielleitung: Spielende, laufende Partien und Live-Steuerung." },
       { property: "og:title", content: "Spielleitung — Verwaltung" },
       { property: "og:description", content: "Spielende, laufende Partien und Live-Steuerung." },
+      { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary" },
       { name: "robots", content: "noindex" },
     ],
   }),

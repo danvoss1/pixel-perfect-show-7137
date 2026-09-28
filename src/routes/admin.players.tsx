@@ -12,6 +12,7 @@ export const Route = createFileRoute("/admin/players")({
       { name: "description", content: "Fortschritt, Spielzeit und Hinweisnutzung der Spielenden verfolgen." },
       { property: "og:title", content: "Spielende — Verwaltung" },
       { property: "og:description", content: "Fortschritt, Spielzeit und Hinweisnutzung pro Person." },
+      { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary" },
       { name: "robots", content: "noindex" },
     ],
   }),

@@ -13,6 +13,7 @@ export const Route = createFileRoute("/admin/puzzles")({
       { name: "description", content: "Worträtsel, Schiebepuzzles, Flugspiele und Codeschlösser konfigurieren." },
       { property: "og:title", content: "Rätsel — Verwaltung" },
       { property: "og:description", content: "Chiffren, Schiebepuzzles, Flugspiele und Codeschlösser konfigurieren." },
+      { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary" },
       { name: "robots", content: "noindex" },
     ],
   }),
