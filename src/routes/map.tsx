@@ -40,9 +40,9 @@ function MapPage() {
   const selected = locations.find((l) => l.id === selectedId) ?? locations[0];
   const stateOf = useCallback((loc: GameLocation): MarkerState => {
     if (visited.includes(loc.id)) return "completed";
-    if (currentStage?.locationId === loc.id) return "active";
+    if (currentStage?.locationId === loc.id || currentStage?.id === loc.stageId) return "active";
     const stage = adventure.stages.find((s) => s.id === loc.stageId || s.locationId === loc.id);
-    if (stage) return stage.number < (currentStage?.number ?? 1) ? "discovered" : "locked";
+    if (stage) return stage.number <= (currentStage?.number ?? 1) ? "discovered" : "locked";
     return loc.kind === "food" ? "food" : loc.kind === "drink" ? "drink" : "discovered";
   }, [visited, currentStage]);
   const choose = useCallback((id: string) => { setSelectedId(id); setOpen(true); setGpsMessage(""); }, []);
@@ -70,7 +70,7 @@ function MapPage() {
     <div className="absolute inset-x-0 bottom-0 z-20 p-3 pb-20 sm:p-4 lg:max-w-md lg:pb-4"><div className="field-panel overflow-hidden shadow-lg">
       <Button variant="ghost" onClick={() => setOpen((value) => !value)} aria-expanded={open} className="flex h-auto min-h-[56px] w-full justify-between gap-3 px-5 text-left hover:bg-accent">
         <span className="min-w-0"><Label>{locked ? "Unbekannter Ort" : selected.kind === "food" ? "Versorgungsstation" : selected.kind === "drink" ? "Getränkestation" : "Nächstes Ziel"}</Label>
-        <span className="mt-0.5 block truncate font-display text-base font-semibold uppercase">{locked ? "Noch nicht entdeckt" : selected.name}</span></span>
+         <span className="mt-0.5 block font-display text-base font-semibold uppercase leading-tight">{locked ? "Noch nicht entdeckt" : selected.name}</span></span>
         <ChevronUp className={`size-4 shrink-0 transition-transform ${open ? "" : "rotate-180"}`} />
       </Button>
       <AnimatePresence initial={false}>{open && <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }} className="overflow-hidden px-5 pb-5">
