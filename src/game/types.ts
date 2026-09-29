@@ -11,7 +11,7 @@ export type PuzzleType =
   | "evidence"
   | "mastermind"
   | "simon"
-  | "morse";
+  | "morse"
   | "minesweeper"
   | "circuit";
 
