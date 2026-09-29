@@ -94,10 +94,16 @@ export function CologneMap({ selectedId, onSelect, stateOf, editable, onMove }: 
       });
       return marker;
     });
-    const visited = visible.filter((loc) => stateOf?.(loc) === "completed" || stateOf?.(loc) === "active");
-    if (!editable && visited.length > 1) {
-      const line = new google.maps.Polyline({ map: map.current, path: visited.map((loc) => ({ lat: loc.lat, lng: loc.lng })), strokeColor: tones.active, strokeOpacity: 0.85, strokeWeight: 3, geodesic: true });
-      overlays.current = [line];
+    const visited = visible.filter((loc) => stateOf?.(loc) === "completed");
+    const target = visible.find((loc) => loc.id === selectedId && stateOf?.(loc) !== "locked");
+    const origin = visited.at(-1);
+    if (!editable && origin && target && origin.id !== target.id) {
+      const route = new google.maps.DirectionsService();
+      route.route({ origin: { lat: origin.lat, lng: origin.lng }, destination: { lat: target.lat, lng: target.lng }, travelMode: google.maps.TravelMode.WALKING }, (result, status) => {
+        if (!map.current || status !== google.maps.DirectionsStatus.OK || !result) return;
+        const renderer = new google.maps.DirectionsRenderer({ map: map.current, directions: result, suppressMarkers: true, preserveViewport: true, polylineOptions: { strokeColor: tones.active, strokeOpacity: 0.85, strokeWeight: 4 } });
+        overlays.current.push(renderer);
+      });
     }
   }, [selectedId, stateOf, onSelect, editable, onMove, ready]);
 

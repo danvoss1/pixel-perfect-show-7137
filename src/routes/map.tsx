@@ -47,12 +47,14 @@ function MapPage() {
   }, [visited, currentStage]);
   const choose = useCallback((id: string) => { setSelectedId(id); setOpen(true); setGpsMessage(""); }, []);
   const locate = () => {
+    if (!selected || stateOf(selected) === "locked") { setGpsMessage("Dieser Ort ist noch nicht freigeschaltet."); return; }
     if (!navigator.geolocation) { setGpsMessage("Standort auf diesem Gerät nicht verfügbar."); return; }
     setGpsMessage("Standort wird ermittelt …");
     navigator.geolocation.getCurrentPosition(
       ({ coords }) => {
         const point = { lat: coords.latitude, lng: coords.longitude };
         setPosition(point);
+        if (coords.accuracy > selected.radius) { setGpsMessage(`Standort zu ungenau (±${Math.round(coords.accuracy)} m). Bitte versuche es an einem freien Platz erneut.`); return; }
         if (selected && metersBetween(point, selected) <= selected.radius) {
           setGpsMessage("Kontrollpunkt erreicht.");
           if (!selected.requireCode && !selected.requireQr) visitLocation(selected.id, selected.name);
