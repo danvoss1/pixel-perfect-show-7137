@@ -9,6 +9,8 @@ import { Label } from "@/components/game/primitives";
 import { adventure, locations } from "@/game/data";
 import { usePlayer } from "@/game/store";
 import type { GameLocation, MarkerState } from "@/game/types";
+import { GameWorldMap } from "@/components/game/GameWorldMap";
+import type { WorldPoint } from "@/game/worldmap";
 
 export const Route = createFileRoute("/map")({
   head: () => ({ meta: [
@@ -35,6 +37,8 @@ function MapPage() {
   const currentStage = adventure.stages.find((s) => s.id === currentId);
   const [selectedId, setSelectedId] = useState(currentStage?.locationId ?? locations.find((l) => l.stageId === currentId)?.id ?? locations.find((l) => l.kind === "food")?.id ?? locations[0]?.id ?? "");
   const [open, setOpen] = useState(true);
+  const [mode, setMode] = useState<"game" | "nav">("game");
+  const [worldId, setWorldId] = useState<string>();
   const [position, setPosition] = useState<{ lat: number; lng: number }>();
   const [gpsMessage, setGpsMessage] = useState("");
   const selected = locations.find((l) => l.id === selectedId) ?? locations[0];
@@ -66,9 +70,22 @@ function MapPage() {
   if (!selected) return null;
   const locked = stateOf(selected) === "locked";
   const distance = position ? metersBetween(position, selected) : null;
+  const isLocked = (p: WorldPoint) => Boolean(p.locked) || (() => { const l = locations.find((x) => x.id === p.locationId); return l ? stateOf(l) === "locked" : false; })();
+  const toggle = <div className="absolute left-1/2 top-4 z-40 flex -translate-x-1/2 rounded-md border border-border bg-background/90 p-1 backdrop-blur-sm" role="tablist">
+    {(["game", "nav"] as const).map((m) => <button key={m} role="tab" aria-selected={mode === m} onClick={() => setMode(m)} className={`relative min-h-[40px] px-4 label-mono ${mode === m ? "text-primary-foreground" : "text-muted-foreground"}`}>
+      {mode === m && <motion.span layoutId="map-mode" className="absolute inset-0 rounded bg-primary" />}<span className="relative">{m === "game" ? "Spielkarte" : "Navigation"}</span></button>)}
+  </div>;
+  if (mode === "game") return <GameShell bare><div className="relative h-[calc(100dvh-56px)] min-h-[480px] w-full overflow-hidden lg:h-screen">
+    {toggle}
+    <motion.div key="game" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="absolute inset-0">
+      <GameWorldMap isLocked={isLocked} selectedId={worldId} onSelect={(p) => setWorldId(p.id)} onNavigate={(p) => {
+        if (p.locationId) { choose(p.locationId); setMode("nav"); } else window.open(`https://www.google.com/maps/search/?api=1&query=${p.lat},${p.lng}`, "_blank", "noopener");
+      }} />
+    </motion.div>
+  </div></GameShell>;
   return <GameShell bare><div className="relative h-[calc(100dvh-56px)] min-h-[480px] w-full overflow-hidden lg:h-screen">
+    {toggle}
     <CologneMap selectedId={selectedId} onSelect={choose} stateOf={stateOf} />
-    <div className="pointer-events-none absolute left-4 top-4 z-20 rounded-md border border-border bg-background/90 px-3 py-2 backdrop-blur-sm"><Label>Köln · Expeditionskarte</Label></div>
     <div className="absolute inset-x-0 bottom-0 z-20 p-3 pb-20 sm:p-4 lg:max-w-md lg:pb-4"><div className="field-panel overflow-hidden shadow-lg">
       <Button variant="ghost" onClick={() => setOpen((value) => !value)} aria-expanded={open} className="flex h-auto min-h-[56px] w-full justify-between gap-3 px-5 text-left hover:bg-accent">
         <span className="min-w-0"><Label>{locked ? "Unbekannter Ort" : selected.kind === "food" ? "Versorgungsstation" : selected.kind === "drink" ? "Getränkestation" : "Nächstes Ziel"}</Label>
