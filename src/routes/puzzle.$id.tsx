@@ -13,6 +13,8 @@ import { SymbolPuzzle } from "@/components/puzzles/SymbolPuzzle";
 import { MastermindGame } from "@/components/puzzles/MastermindGame";
 import { SimonGame } from "@/components/puzzles/SimonGame";
 import { MorseGame } from "@/components/puzzles/MorseGame";
+import { MinesweeperGame } from "@/components/puzzles/MinesweeperGame";
+import { CircuitGame } from "@/components/puzzles/CircuitGame";
 import { adventure, puzzleById, stageById } from "@/game/data";
 import { usePlayer } from "@/game/store";
 import { puzzleTypeLabel } from "@/game/labels";
@@ -22,6 +24,8 @@ import type {
   MastermindConfig,
   SimonConfig,
   MorseConfig,
+  MinesweeperConfig,
+  CircuitConfig,
   RouteConfig,
   SlidingConfig,
   SymbolsConfig,
@@ -153,6 +157,8 @@ function PuzzlePage() {
         {puzzle.type === "mastermind" && <MastermindGame config={puzzle.config as MastermindConfig} solved={solved} onSolved={onSolved} />}
         {puzzle.type === "simon" && <SimonGame config={puzzle.config as SimonConfig} solved={solved} onSolved={onSolved} />}
         {puzzle.type === "morse" && <MorseGame config={puzzle.config as MorseConfig} solved={solved} onSolved={onSolved} />}
+        {puzzle.type === "minesweeper" && <MinesweeperGame config={puzzle.config as MinesweeperConfig} solved={solved} onSolved={onSolved} />}
+        {puzzle.type === "circuit" && <CircuitGame config={puzzle.config as CircuitConfig} solved={solved} onSolved={onSolved} />}
       </div>
 
       {solved && puzzle.type === "sliding" ? (

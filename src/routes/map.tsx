@@ -33,26 +33,28 @@ function MapPage() {
   const currentId = usePlayer((s) => s.currentStageId);
   const visitLocation = usePlayer((s) => s.visitLocation);
   const currentStage = adventure.stages.find((s) => s.id === currentId);
-  const [selectedId, setSelectedId] = useState(currentStage?.locationId ?? locations.find((l) => l.kind === "food")?.id ?? locations[0]?.id ?? "");
+  const [selectedId, setSelectedId] = useState(currentStage?.locationId ?? locations.find((l) => l.stageId === currentId)?.id ?? locations.find((l) => l.kind === "food")?.id ?? locations[0]?.id ?? "");
   const [open, setOpen] = useState(true);
   const [position, setPosition] = useState<{ lat: number; lng: number }>();
   const [gpsMessage, setGpsMessage] = useState("");
   const selected = locations.find((l) => l.id === selectedId) ?? locations[0];
   const stateOf = useCallback((loc: GameLocation): MarkerState => {
     if (visited.includes(loc.id)) return "completed";
-    if (currentStage?.locationId === loc.id) return "active";
-    const stage = adventure.stages.find((s) => s.locationId === loc.id);
-    if (stage) return stage.number < (currentStage?.number ?? 1) ? "discovered" : "locked";
+    if (currentStage?.locationId === loc.id || currentStage?.id === loc.stageId) return "active";
+    const stage = adventure.stages.find((s) => s.id === loc.stageId || s.locationId === loc.id);
+    if (stage) return stage.number <= (currentStage?.number ?? 1) ? "discovered" : "locked";
     return loc.kind === "food" ? "food" : loc.kind === "drink" ? "drink" : "discovered";
   }, [visited, currentStage]);
   const choose = useCallback((id: string) => { setSelectedId(id); setOpen(true); setGpsMessage(""); }, []);
   const locate = () => {
+    if (!selected || stateOf(selected) === "locked") { setGpsMessage("Dieser Ort ist noch nicht freigeschaltet."); return; }
     if (!navigator.geolocation) { setGpsMessage("Standort auf diesem Gerät nicht verfügbar."); return; }
     setGpsMessage("Standort wird ermittelt …");
     navigator.geolocation.getCurrentPosition(
       ({ coords }) => {
         const point = { lat: coords.latitude, lng: coords.longitude };
         setPosition(point);
+        if (coords.accuracy > selected.radius) { setGpsMessage(`Standort zu ungenau (±${Math.round(coords.accuracy)} m). Bitte versuche es an einem freien Platz erneut.`); return; }
         if (selected && metersBetween(point, selected) <= selected.radius) {
           setGpsMessage("Kontrollpunkt erreicht.");
           if (!selected.requireCode && !selected.requireQr) visitLocation(selected.id, selected.name);
@@ -66,11 +68,11 @@ function MapPage() {
   const distance = position ? metersBetween(position, selected) : null;
   return <GameShell bare><div className="relative h-[calc(100dvh-56px)] min-h-[480px] w-full overflow-hidden lg:h-screen">
     <CologneMap selectedId={selectedId} onSelect={choose} stateOf={stateOf} />
-    <div className="pointer-events-none absolute left-4 top-4 rounded-md border border-border bg-background/90 px-3 py-2 backdrop-blur-sm"><Label>Köln · Expeditionskarte</Label></div>
-    <div className="absolute inset-x-0 bottom-0 p-3 pb-20 sm:p-4 lg:max-w-md lg:pb-4"><div className="field-panel overflow-hidden shadow-lg">
+    <div className="pointer-events-none absolute left-4 top-4 z-20 rounded-md border border-border bg-background/90 px-3 py-2 backdrop-blur-sm"><Label>Köln · Expeditionskarte</Label></div>
+    <div className="absolute inset-x-0 bottom-0 z-20 p-3 pb-20 sm:p-4 lg:max-w-md lg:pb-4"><div className="field-panel overflow-hidden shadow-lg">
       <Button variant="ghost" onClick={() => setOpen((value) => !value)} aria-expanded={open} className="flex h-auto min-h-[56px] w-full justify-between gap-3 px-5 text-left hover:bg-accent">
         <span className="min-w-0"><Label>{locked ? "Unbekannter Ort" : selected.kind === "food" ? "Versorgungsstation" : selected.kind === "drink" ? "Getränkestation" : "Nächstes Ziel"}</Label>
-        <span className="mt-0.5 block truncate font-display text-base font-semibold uppercase">{locked ? "Noch nicht entdeckt" : selected.name}</span></span>
+         <span className="mt-0.5 block font-display text-base font-semibold uppercase leading-tight">{locked ? "Noch nicht entdeckt" : selected.name}</span></span>
         <ChevronUp className={`size-4 shrink-0 transition-transform ${open ? "" : "rotate-180"}`} />
       </Button>
       <AnimatePresence initial={false}>{open && <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }} className="overflow-hidden px-5 pb-5">
@@ -81,7 +83,7 @@ function MapPage() {
           {visited.includes(selected.id) ? <p className="mt-4 font-display text-xs uppercase text-success">Ort bestätigt</p> : selected.requireCode || selected.requireQr ? <p className="mt-4 text-xs text-muted-foreground">Hier ist zusätzlich der Umschlagcode oder QR-Code erforderlich.</p> : <Button onClick={locate} className="mt-4 min-h-[48px] w-full gap-2"><LocateFixed className="size-4" /> Standort bestätigen</Button>}
           {gpsMessage && <p role="status" className="mt-2 text-xs text-paper">{gpsMessage}</p>}
           <a href={`https://www.google.com/maps/dir/?api=1&destination=${selected.lat},${selected.lng}&travelmode=walking`} target="_blank" rel="noopener noreferrer" className="mt-4 flex min-h-[44px] items-center justify-center gap-2 border-t border-border pt-2 text-xs text-primary"><Footprints className="size-4" /> Fußweg in Google Maps öffnen</a>
-          <Link to="/puzzle/$id" params={{ id: "p-route" }} className="mt-1 block text-center label-mono text-primary">Navigationsrätsel öffnen</Link>
+           {currentStage?.puzzleId === "p-route" && selected.stageId === currentStage.id && <Link to="/puzzle/$id" params={{ id: "p-route" }} className="mt-1 block text-center label-mono text-primary">Navigationsrätsel öffnen</Link>}
         </>}
       </motion.div>}</AnimatePresence>
     </div></div>

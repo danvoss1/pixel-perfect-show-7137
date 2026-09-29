@@ -1,7 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
-import { Plus, X } from "lucide-react";
+import { Plus, X, GripVertical } from "lucide-react";
 import { AdminShell, Field, TextInput } from "@/components/admin/AdminShell";
+import { Button } from "@/components/ui/button";
 import { stageById } from "@/game/data";
 
 const blockTypes = [
@@ -40,16 +41,18 @@ function StageEditor() {
   const stage = stageById(id);
   const [blocks, setBlocks] = useState<string[]>(["TEXT", "ORT", "CODE"]);
   const [menu, setMenu] = useState(false);
+  const [dragged, setDragged] = useState<number | null>(null);
+  const move = (from: number, to: number) => setBlocks((current) => {
+    const copy = [...current];
+    const [block] = copy.splice(from, 1);
+    if (block) copy.splice(to, 0, block);
+    return copy;
+  });
 
   return (
     <AdminShell
       title={stage ? `Etappe ${String(stage.number).padStart(2, "0")} — ${stage.title}` : "Etappe bearbeiten"}
-      lead="Die Inhaltsblöcke erscheinen in der festgelegten Reihenfolge."
-      action={
-        <button className="min-h-[44px] rounded-md bg-primary px-4 text-sm font-semibold text-primary-foreground">
-          Speichern
-        </button>
-      }
+      lead="Die Inhaltsblöcke lassen sich hier für die Vorschau sortieren; Änderungen am Abenteuer werden noch nicht gespeichert."
     >
       <div className="grid gap-4 lg:grid-cols-2">
         <Field label="Titel">
@@ -79,41 +82,50 @@ function StageEditor() {
         {blocks.map((b, i) => (
           <li
             key={`${b}-${i}`}
+            draggable
+            onDragStart={() => setDragged(i)}
+            onDragEnd={() => setDragged(null)}
+            onDragOver={(e) => e.preventDefault()}
+            onDrop={(e) => { e.preventDefault(); if (dragged !== null) move(dragged, i); setDragged(null); }}
             className="flex min-h-[48px] items-center gap-3 rounded-md border border-border bg-surface px-4"
           >
+            <GripVertical className="size-4 shrink-0 text-muted-foreground" aria-hidden="true" />
             <span className="label-mono">{String(i + 1).padStart(2, "0")}</span>
             <span className="min-w-0 flex-1 truncate text-sm">{b}</span>
-            <button
+            <Button
+              variant="ghost"
               aria-label="Block entfernen"
               onClick={() => setBlocks((arr) => arr.filter((_, idx) => idx !== i))}
-              className="text-muted-foreground hover:text-destructive"
+              className="size-11 p-0 text-muted-foreground hover:text-destructive"
             >
               <X className="size-4" />
-            </button>
+            </Button>
           </li>
         ))}
       </ul>
 
       <div className="relative mt-3">
-        <button
+        <Button
+          variant="outline"
           onClick={() => setMenu((m) => !m)}
           className="flex min-h-[44px] items-center gap-2 rounded-md border border-dashed border-border px-4 text-sm"
         >
           <Plus className="size-4" /> Inhalt hinzufügen
-        </button>
+        </Button>
         {menu ? (
           <div className="mt-2 grid max-w-md grid-cols-2 gap-1.5 rounded-md border border-border bg-surface p-2 sm:grid-cols-3">
             {blockTypes.map((t) => (
-              <button
+              <Button
+                variant="ghost"
                 key={t}
                 onClick={() => {
                   setBlocks((arr) => [...arr, t]);
                   setMenu(false);
                 }}
-                className="rounded px-2 py-2 text-left text-xs hover:bg-accent"
+                className="min-h-[44px] justify-start px-2 text-left text-xs"
               >
                 {t}
-              </button>
+              </Button>
             ))}
           </div>
         ) : null}

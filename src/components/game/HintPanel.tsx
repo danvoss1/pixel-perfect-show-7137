@@ -72,8 +72,8 @@ export function HintPanel({ puzzleId, hints }: { puzzleId: string; hints: Hint[]
         <div className="field-panel w-full max-w-lg p-5 shadow-lg">
           <Label>Hinweis {pending.label}</Label><h2 className="mt-2 font-display text-xl font-bold uppercase">Hinweis freischalten</h2>
           <p className="mt-3 text-sm text-muted-foreground">{pending.costDescription ?? (pending.cost === "time" ? "Dieser Hinweis verlängert deine Spielzeit." : "Dieser Hinweis wird im Expeditionslog vermerkt.")}</p>
-          {pending.cost === "video" && <div className="mt-4 space-y-3"><p className="text-sm text-gold">Eine alkoholfreie Variante ist jederzeit möglich. Die Teilnahme ist freiwillig.</p><VideoProof onConfirm={() => setConfirmed(true)} /><label className="flex items-center gap-2 text-sm"><input type="checkbox" checked={confirmed} onChange={(e) => setConfirmed(e.target.checked)} /> Alkoholfreie Variante verwenden / Aufgabe bestätigen</label></div>}
-          <div className="mt-5 flex justify-end gap-2"><Button variant="outline" onClick={() => setPending(null)}>Abbrechen</Button><Button disabled={pending.cost === "video" && !confirmed} onClick={reveal}>Hinweis öffnen</Button></div>
+           {pending.cost === "video" && <div className="mt-4 space-y-3"><p className="text-sm text-gold">Keine Aufnahme und kein Getränk sind für diesen Hinweis erforderlich. Jede Teilnahme ist freiwillig.</p><VideoProof onConfirm={() => setConfirmed(true)} /><label className="flex min-h-[44px] items-center gap-2 text-sm"><input type="checkbox" checked={confirmed} onChange={(e) => setConfirmed(e.target.checked)} /> Ohne Video und ohne Trinkaufgabe fortfahren</label></div>}
+           <div className="mt-5 flex justify-end gap-2"><Button variant="outline" onClick={() => setPending(null)}>Abbrechen</Button><Button disabled={pending.cost === "video" && !confirmed} onClick={reveal}>Hinweis öffnen</Button></div>
         </div>
       </div>}
     </div>

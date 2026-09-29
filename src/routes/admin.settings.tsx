@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { AdminShell, Field, TextInput, Toggle } from "@/components/admin/AdminShell";
+import { useState } from "react";
 
 export const Route = createFileRoute("/admin/settings")({
   head: () => ({
@@ -16,8 +17,9 @@ export const Route = createFileRoute("/admin/settings")({
 });
 
 function VerwaltungEinstellungen() {
+  const [saved, setSaved] = useState(false);
   return (
-    <AdminShell title="Einstellungen" lead="Gilt für alle Abenteuer in diesem Bereich.">
+    <AdminShell title="Einstellungen" lead="Einstellungen als Vorschau. Es besteht noch keine Speicherung oder serverseitige Verwaltung.">
       <div className="grid gap-4 lg:grid-cols-2">
         <Field label="Organisation">
           <TextInput defaultValue="Der verborgene Pfad Expeditionen" />
@@ -39,10 +41,12 @@ function VerwaltungEinstellungen() {
         <Toggle label="Live-Spielleitung" defaultChecked />
         <Toggle label="Bestenliste anzeigen" />
       </div>
+      <div className="mt-7 field-panel p-5"><h2 className="font-display text-lg font-bold uppercase">Hinweis-Kosten</h2><p className="mt-2 text-sm text-muted-foreground">Mögliche Aufgaben für künftige Hinweise; aktuelle Spielhinweise sind in den Mockdaten festgelegt.</p><div className="mt-4 grid gap-4 sm:grid-cols-2"><Field label="Standard-Aufgabe"><select className="min-h-[44px] w-full rounded-md border border-border bg-surface px-3 text-sm">{["Keine Kosten", "Trinkaufgabe", "Videoaufgabe", "Minispiel", "Token verbrauchen", "Zeitstrafe", "Teamchallenge", "Eigene Aufgabe"].map((cost) => <option key={cost}>{cost}</option>)}</select></Field><Field label="Video-Aufbewahrung"><select className="min-h-[44px] w-full rounded-md border border-border bg-surface px-3 text-sm">{["Keine Speicherung (Vorschau)", "Nach Prüfung löschen", "Nur Spielleitung"].map((option) => <option key={option}>{option}</option>)}</select></Field></div><p className="mt-3 text-xs text-muted-foreground">Keine dieser Einstellungen lädt Videos hoch oder ändert die Regeln des laufenden Spiels.</p></div>
 
-      <button className="mt-6 min-h-[44px] rounded-md bg-primary px-5 text-sm font-semibold text-primary-foreground">
-        Einstellungen speichern
+      <button onClick={() => setSaved(true)} className="mt-6 min-h-[44px] rounded-md bg-primary px-5 text-sm font-semibold text-primary-foreground">
+        Einstellungen als Entwurf übernehmen
       </button>
+      {saved && <p role="status" className="mt-2 text-xs text-success">Entwurf in dieser Ansicht übernommen; noch nicht gespeichert.</p>}
     </AdminShell>
   );
 }

@@ -49,9 +49,9 @@ function InventoryPage() {
                 params={{ id: item.id }}
                 className="block h-full rounded-lg border border-border bg-surface/60 p-5 transition-colors hover:bg-accent/50"
               >
-                <Label>Gegenstand Nr. {String(item.number).padStart(2, "0")}</Label>
+                 <Label>{item.category ?? item.kind} · Nr. {String(item.number).padStart(2, "0")}</Label>
                 <h2 className="mt-3 font-display text-lg font-bold uppercase">{item.name}</h2>
-                <p className="mt-1 text-sm text-muted-foreground">{item.description}</p>
+                 <p className="mt-1 text-sm text-muted-foreground">{item.mystery ? "Verwendung unbekannt — weitere Hinweise folgen." : item.description}</p>
                 <p className="mt-4 label-mono">Gefunden · Etappe {String(item.foundAtStage).padStart(2, "0")}</p>
               </Link>
             </Reveal>
