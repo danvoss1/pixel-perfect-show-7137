@@ -9,3 +9,5 @@
 - [ ] Verwaltung für Rätsel, Gegenstände, Checkpoints, Events und Spielleitung erweitern.
 - [ ] Mehrspieler-Fortschritt und Nachrichten mit persistentem Dienst vorbereiten bzw. umsetzen.
 - [ ] Deutsche Texte, Spielfluss und mobile Ansichten prüfen.
+
+Offene Abhängigkeiten: Google-Karte auf freigegebener Domain prüfen (lokaler Google-Schlüssel ist gesperrt); für geräteübergreifenden Mehrspielerbetrieb ist ein synchronisierter Spielstand nötig. Video, QR und Verwaltungsentwürfe bleiben derzeit ausdrücklich lokal/simuliert.

@@ -41,7 +41,7 @@ function MapPage() {
   const stateOf = useCallback((loc: GameLocation): MarkerState => {
     if (visited.includes(loc.id)) return "completed";
     if (currentStage?.locationId === loc.id) return "active";
-    const stage = adventure.stages.find((s) => s.locationId === loc.id);
+    const stage = adventure.stages.find((s) => s.id === loc.stageId || s.locationId === loc.id);
     if (stage) return stage.number < (currentStage?.number ?? 1) ? "discovered" : "locked";
     return loc.kind === "food" ? "food" : loc.kind === "drink" ? "drink" : "discovered";
   }, [visited, currentStage]);
