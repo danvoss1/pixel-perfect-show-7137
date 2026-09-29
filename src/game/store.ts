@@ -2,6 +2,7 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { adventure } from "./data";
 import type { JournalEntry } from "./types";
+import { fieldEvents } from "./events";
 
 interface PlayerState {
   started: boolean;
@@ -16,6 +17,10 @@ interface PlayerState {
   journal: JournalEntry[];
   soundOn: boolean;
   messages: { id: string; text: string; time: string }[];
+  activeEventId: string | null;
+  seenEvents: string[];
+  startEvent: (id: string) => void;
+  dismissEvent: () => void;
   begin: () => void;
   reset: () => void;
   toggleSound: () => void;
@@ -54,6 +59,8 @@ const initial = {
   journal: [] as JournalEntry[],
   soundOn: false,
   messages: [] as { id: string; text: string; time: string }[],
+  activeEventId: null as string | null,
+  seenEvents: [] as string[],
 };
 
 export const usePlayer = create<PlayerState>()(
@@ -75,6 +82,8 @@ export const usePlayer = create<PlayerState>()(
         ),
       reset: () => set({ ...initial }),
       toggleSound: () => set((s) => ({ soundOn: !s.soundOn })),
+      startEvent: (id) => set((s) => fieldEvents.some((event) => event.id === id) ? { activeEventId: id, seenEvents: s.seenEvents.includes(id) ? s.seenEvents : [...s.seenEvents, id], journal: [entry("EREIGNISKARTE", fieldEvents.find((event) => event.id === id)?.title ?? "Ereignis"), ...s.journal] } : s),
+      dismissEvent: () => set({ activeEventId: null }),
       sendMessage: (text) => set((s) => ({ messages: [{ id: `${Date.now()}`, text, time: stamp() }, ...s.messages] })),
       dismissMessage: (id) => set((s) => ({ messages: s.messages.filter((message) => message.id !== id) })),
       advanceStage: () => set((s) => {
@@ -89,6 +98,7 @@ export const usePlayer = create<PlayerState>()(
             ? s
             : {
                 visitedLocations: [...s.visitedLocations, id],
+                ...(s.seenEvents.includes("field-navigator") ? {} : { activeEventId: "field-navigator", seenEvents: [...s.seenEvents, "field-navigator"] }),
                 journal: [entry(`${name.toUpperCase()} ENTDECKT`, "Ort bestätigt."), ...s.journal],
               },
         ),
@@ -111,6 +121,7 @@ export const usePlayer = create<PlayerState>()(
             ? s
             : {
                 completedPuzzles: [...s.completedPuzzles, id],
+                ...(s.seenEvents.includes("field-supply") ? {} : { activeEventId: "field-supply", seenEvents: [...s.seenEvents, "field-supply"] }),
                 journal: [entry(`${title.toUpperCase()} GELÖST`, "Rätsel gelöst."), ...s.journal],
               },
         ),
@@ -120,6 +131,7 @@ export const usePlayer = create<PlayerState>()(
             ? s
             : {
                 inventory: [...s.inventory, id],
+                ...(s.seenEvents.includes("field-pitch") ? {} : { activeEventId: "field-pitch", seenEvents: [...s.seenEvents, "field-pitch"] }),
                 journal: [entry(`${name.toUpperCase()} GESAMMELT`, "Zum Inventar hinzugefügt."), ...s.journal],
               },
         ),
