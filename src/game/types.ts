@@ -12,6 +12,8 @@ export type PuzzleType =
   | "mastermind"
   | "simon"
   | "morse";
+  | "minesweeper"
+  | "circuit";
 
 export type MarkerState = "unknown" | "discovered" | "active" | "completed" | "locked" | "food" | "drink" | "envelope" | "puzzle" | "bonus";
 
@@ -85,6 +87,8 @@ export interface SymbolsConfig {
 export interface MastermindConfig { secret: string; attempts: number; }
 export interface SimonConfig { sequence: number[]; }
 export interface MorseConfig { code: string; answer: string; }
+export interface MinesweeperConfig { grid: number; mines: number[]; }
+export interface CircuitConfig { path: number[]; grid: number; }
 
 export interface Puzzle {
   id: string;
@@ -103,6 +107,8 @@ export interface Puzzle {
     | MastermindConfig
     | SimonConfig
     | MorseConfig
+    | MinesweeperConfig
+    | CircuitConfig
     | Record<string, never>;
 }
 
