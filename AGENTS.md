@@ -25,3 +25,4 @@
   admin screens wrap in `AdminShell`.
 - Animation uses `motion/react` (Motion, the Framer Motion successor).
 - Visible puzzle type names use `src/game/labels.ts` while internal type IDs remain stable, so German UI copy never changes persisted game identifiers.
+- Illustrated game-map pin coordinates are image pixels in `src/game/worldmap.ts`, independent of real latitude/longitude, so hotspots stay aligned with the supplied artwork while real navigation retains geographic coordinates.
