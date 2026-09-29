@@ -5,12 +5,12 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/game/primitives";
 import { worldPoints, kindLabel, project, type WorldPoint } from "@/game/worldmap";
 
-const tone: Record<string, string> = { story: "var(--gold)", envelope: "var(--primary)", puzzle: "var(--gold)", mystery: "var(--muted-foreground)", supply: "var(--sage)", checkpoint: "var(--primary)" };
+const tone: Record<string, string> = { story: "var(--color-gold)", envelope: "var(--color-primary)", puzzle: "var(--color-gold)", mystery: "var(--color-muted-foreground)", supply: "var(--color-sage)", checkpoint: "var(--color-primary)" };
 const RHINE = "M722,1000 C690,850 640,760 630,700 S595,560 600,500 S640,380 645,300 S700,120 730,0";
 
 export function GameWorldMap({ isLocked, selectedId, onSelect, onNavigate }: {
   isLocked: (p: WorldPoint) => boolean;
-  selectedId?: string;
+  selectedId?: string | undefined;
   onSelect: (p: WorldPoint) => void;
   onNavigate: (p: WorldPoint) => void;
 }) {
@@ -32,30 +32,30 @@ export function GameWorldMap({ isLocked, selectedId, onSelect, onNavigate }: {
       transition={{ duration: reduce ? 0 : 1.1, ease: [0.7, 0, 0.3, 1] }}>
       <svg viewBox="0 0 1000 1000" className="h-full w-full" preserveAspectRatio="xMidYMid slice">
         <defs>
-          <pattern id="gw-grid" width="50" height="50" patternUnits="userSpaceOnUse"><path d="M50 0H0V50" fill="none" stroke="var(--border)" strokeWidth="1" opacity="0.5" /></pattern>
+          <pattern id="gw-grid" width="50" height="50" patternUnits="userSpaceOnUse"><path d="M50 0H0V50" fill="none" stroke="var(--color-border)" strokeWidth="1" opacity="0.5" /></pattern>
           <mask id="gw-fog"><rect width="1000" height="1000" fill="white" />{revealed.map((p) => { const c = project(p.lat, p.lng); return <circle key={p.id} cx={c.x} cy={c.y} r="120" fill="black" filter="url(#gw-blur)" />; })}</mask>
           <filter id="gw-blur"><feGaussianBlur stdDeviation="30" /></filter>
         </defs>
-        <rect width="1000" height="1000" fill="var(--background)" />
+        <rect width="1000" height="1000" fill="var(--color-background)" />
         <rect width="1000" height="1000" fill="url(#gw-grid)" />
-        {[0, 1, 2, 3, 4].map((i) => <ellipse key={i} cx="520" cy="500" rx={180 + i * 70} ry={140 + i * 60} fill="none" stroke="var(--sage)" strokeWidth="1" opacity={0.18} strokeDasharray="4 6" />)}
-        <path d="M60,380 C120,300 230,330 250,420 S210,600 120,610 S20,470 60,380Z" fill="var(--sage)" opacity="0.22" />
-        <path d="M780,520 C850,470 960,500 960,600 S860,720 800,680 S730,560 780,520Z" fill="var(--sage)" opacity="0.18" />
-        <path d="M600,500 C560,380 470,360 420,420 S400,580 470,620 S620,600 600,500Z" fill="var(--secondary)" opacity="0.8" />
+        {[0, 1, 2, 3, 4].map((i) => <ellipse key={i} cx="520" cy="500" rx={180 + i * 70} ry={140 + i * 60} fill="none" stroke="var(--color-sage)" strokeWidth="1" opacity={0.18} strokeDasharray="4 6" />)}
+        <path d="M60,380 C120,300 230,330 250,420 S210,600 120,610 S20,470 60,380Z" fill="var(--color-sage)" opacity="0.22" />
+        <path d="M780,520 C850,470 960,500 960,600 S860,720 800,680 S730,560 780,520Z" fill="var(--color-sage)" opacity="0.18" />
+        <path d="M600,500 C560,380 470,360 420,420 S400,580 470,620 S620,600 600,500Z" fill="var(--color-secondary)" opacity="0.8" />
         <path d={RHINE} fill="none" stroke="var(--rhine, oklch(0.4 0.05 210))" strokeWidth="46" strokeLinecap="round" opacity="0.9" />
-        <path d={RHINE} fill="none" stroke="var(--foreground)" strokeWidth="1" opacity="0.15" strokeDasharray="2 10" />
-        {[[560, 470, 660, 470], [575, 540, 665, 545], [590, 620, 680, 630], [610, 330, 690, 320]].map(([a, b, c, d], i) => <line key={i} x1={a} y1={b} x2={c} y2={d} stroke="var(--paper, var(--foreground))" strokeWidth="5" opacity="0.55" />)}
-        <g transform={`translate(${project(50.9413, 6.9583).x - 12},${project(50.9413, 6.9583).y - 40})`} fill="var(--muted-foreground)" opacity="0.7"><path d="M0 40 L4 8 L8 40Z M14 40 L18 4 L22 40Z" /></g>
-        <text x="30" y="970" fill="var(--muted-foreground)" fontSize="14" fontFamily="var(--font-display)" letterSpacing="3">50°56′N · 6°57′O</text>
-        <g transform="translate(920,80)" stroke="var(--gold)" fill="none" opacity="0.8"><circle r="34" /><path d="M0 -30 L6 0 L0 30 L-6 0Z" fill="var(--gold)" /><text y="-40" textAnchor="middle" fill="var(--gold)" stroke="none" fontSize="14">N</text></g>
-        <rect width="1000" height="1000" fill="var(--background)" opacity="0.72" mask="url(#gw-fog)" />
+        <path d={RHINE} fill="none" stroke="var(--color-foreground)" strokeWidth="1" opacity="0.15" strokeDasharray="2 10" />
+        {[[560, 470, 660, 470], [575, 540, 665, 545], [590, 620, 680, 630], [610, 330, 690, 320]].map(([a, b, c, d], i) => <line key={i} x1={a} y1={b} x2={c} y2={d} stroke="var(--color-paper)" strokeWidth="5" opacity="0.55" />)}
+        <g transform={`translate(${project(50.9413, 6.9583).x - 12},${project(50.9413, 6.9583).y - 40})`} fill="var(--color-muted-foreground)" opacity="0.7"><path d="M0 40 L4 8 L8 40Z M14 40 L18 4 L22 40Z" /></g>
+        <text x="30" y="970" fill="var(--color-muted-foreground)" fontSize="14" fontFamily="var(--font-display)" letterSpacing="3">50°56′N · 6°57′O</text>
+        <g transform="translate(920,80)" stroke="var(--color-gold)" fill="none" opacity="0.8"><circle r="34" /><path d="M0 -30 L6 0 L0 30 L-6 0Z" fill="var(--color-gold)" /><text y="-40" textAnchor="middle" fill="var(--color-gold)" stroke="none" fontSize="14">N</text></g>
+        <rect width="1000" height="1000" fill="var(--color-background)" opacity="0.72" mask="url(#gw-fog)" />
         {worldPoints.map((p) => { const c = project(p.lat, p.lng); const locked = isLocked(p); const sel = p.id === selectedId;
           return <g key={p.id} transform={`translate(${c.x},${c.y})`} className="cursor-pointer" role="button" tabIndex={0} aria-label={locked ? "Gesperrter Ort" : p.name}
             onClick={() => { onSelect(p); setCard(p); }} onKeyDown={(e) => { if (e.key === "Enter") { onSelect(p); setCard(p); } }}>
             <circle r="30" fill="transparent" />
-            {sel && <circle r="22" fill="none" stroke="var(--primary)" strokeWidth="2" className="marker-pulse" />}
-            <path d="M0 -16 L12 0 L0 16 L-12 0Z" fill={locked ? "var(--muted)" : tone[p.kind]} stroke="var(--background)" strokeWidth="3" opacity={locked ? 0.6 : 1} />
-            {locked && <text y="5" textAnchor="middle" fontSize="12" fill="var(--muted-foreground)">?</text>}
+            {sel && <circle r="22" fill="none" stroke="var(--color-primary)" strokeWidth="2" className="marker-pulse" />}
+            <path d="M0 -16 L12 0 L0 16 L-12 0Z" fill={locked ? "var(--color-muted)" : tone[p.kind]} stroke="var(--color-background)" strokeWidth="3" opacity={locked ? 0.6 : 1} />
+            {locked && <text y="5" textAnchor="middle" fontSize="12" fill="var(--color-muted-foreground)">?</text>}
           </g>; })}
       </svg>
     </motion.div>
