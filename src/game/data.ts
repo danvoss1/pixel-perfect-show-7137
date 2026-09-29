@@ -191,6 +191,16 @@ export const locations: GameLocation[] = [
 
 export const puzzles: Puzzle[] = [
   {
+    id: "p-minesweeper", type: "minesweeper", title: "Das Minenfeld", tagline: "Nicht jeder Schritt trägt dich weiter.", stageId: "s5",
+    hints: [{ id: "h1", label: "Hinweis 1", text: "Eine Zahl zählt die Minen in allen acht angrenzenden Feldern." }],
+    config: { grid: 5, mines: [3, 7, 12, 19, 21] },
+  },
+  {
+    id: "p-circuit", type: "circuit", title: "Die Leitung", tagline: "Ein durchgehender Weg bringt Licht ins Dunkel.", stageId: "s6",
+    hints: [{ id: "h1", label: "Hinweis 1", text: "Beginne oben links. Jede Verbindung braucht einen Eingang und einen Ausgang." }],
+    config: { grid: 4, path: [0, 1, 5, 9, 10, 11, 15] },
+  },
+  {
     id: "p-mastermind", type: "mastermind", title: "Das Zahlenschloss", tagline: "Vier Stellen. Zehn Möglichkeiten. Kein Zufall.", stageId: "s4",
     hints: [{ id: "h1", label: "Hinweis 1", text: "Ein richtiger Platz zählt anders als eine richtige Zahl am falschen Platz." }],
     config: { secret: "4729", attempts: 10 },
