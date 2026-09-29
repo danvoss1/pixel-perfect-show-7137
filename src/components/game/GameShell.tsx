@@ -14,7 +14,7 @@ import { usePlayer } from "@/game/store";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { X } from "lucide-react";
-import { fieldEvents } from "@/game/events";
+import { eventCategoryLabel, fieldEvents } from "@/game/events";
 
 const tabs = [
   { to: "/adventure", label: "Abenteuer", icon: Compass },
@@ -84,7 +84,7 @@ export function GameShell({
       </aside>
 
       <div className="lg:pl-56">
-        {activeEvent && <div className="fixed inset-0 z-50 grid place-items-center bg-background/90 p-4" role="dialog" aria-modal="true" aria-label="Ereigniskarte"><div className="field-panel w-full max-w-md border border-gold p-6 shadow-xl"><span className="label-mono text-gold">{activeEvent.category}</span><h2 className="mt-3 font-display text-2xl font-bold uppercase">{activeEvent.title}</h2><p className="mt-4 text-sm leading-relaxed text-paper">{activeEvent.description}</p><p className="mt-4 text-xs text-muted-foreground">Konsequenz: {activeEvent.consequence}. Jede Aufgabe ist freiwillig; ein alkoholfreies Getränk ist immer gleichwertig.</p><Button className="mt-6 min-h-[44px] w-full" onClick={dismissEvent}>Verstanden · weiter</Button></div></div>}
+        {activeEvent && <div className="fixed inset-0 z-50 grid place-items-center bg-background/90 p-4" role="dialog" aria-modal="true" aria-label="Ereigniskarte"><div className="field-panel w-full max-w-md border border-gold p-6 shadow-xl"><span className="label-mono text-gold">{eventCategoryLabel[activeEvent.category]}</span><h2 className="mt-3 font-display text-2xl font-bold uppercase">{activeEvent.title}</h2><p className="mt-4 text-sm leading-relaxed text-paper">{activeEvent.description}</p><p className="mt-4 text-xs text-muted-foreground">Konsequenz: {activeEvent.consequence}. Jede Aufgabe ist freiwillig; ein alkoholfreies Getränk ist immer gleichwertig.</p><Button className="mt-6 min-h-[44px] w-full" onClick={dismissEvent}>Verstanden · weiter</Button></div></div>}
         {latestMessage && <div className="relative z-20 mx-auto flex max-w-5xl items-center justify-between gap-3 border-b border-gold bg-panel px-4 py-3" role="status"><div><span className="label-mono text-gold">Neue Nachricht · {latestMessage.time}</span><p className="text-sm">{latestMessage.text}</p></div><Button variant="ghost" size="icon" title="Nachricht schließen" aria-label="Nachricht schließen" onClick={() => dismissMessage(latestMessage.id)}><X className="size-4" /></Button></div>}
         <main
           className={cn(

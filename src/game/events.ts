@@ -1,5 +1,13 @@
 export type EventTrigger = "checkpoint" | "puzzle" | "hint" | "item" | "manual";
 export type FieldEvent = { id: string; category: "FIELD EVENT" | "SUPPLY DROP" | "PITCH" | "BONUS RUN" | "DOUBLE OR NOTHING" | "SILENT MODE"; title: string; description: string; trigger: EventTrigger; consequence: string };
+export const eventCategoryLabel: Record<FieldEvent["category"], string> = {
+  "FIELD EVENT": "Feldereignis",
+  "SUPPLY DROP": "Versorgungslieferung",
+  "PITCH": "Bericht aus dem Feld",
+  "BONUS RUN": "Bonusspur",
+  "DOUBLE OR NOTHING": "Doppelt oder nichts",
+  "SILENT MODE": "Stille Etappe",
+};
 
 export const fieldEvents: FieldEvent[] = [
   { id: "field-navigator", category: "FIELD EVENT", title: "Navigatorwechsel", description: "Bestimmt freiwillig eine neue Person für die Navigation bis zum nächsten Kontrollpunkt.", trigger: "checkpoint", consequence: "Keine" },
