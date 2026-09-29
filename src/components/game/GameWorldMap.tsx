@@ -33,7 +33,7 @@ export function GameWorldMap({ isLocked, selectedId, onSelect, onNavigate }: {
 
   return <div className="absolute inset-0 overflow-hidden bg-background" role="region" aria-label="Spielkarte von Köln">
     <div ref={viewport} className="absolute inset-0 overflow-auto overscroll-contain">
-      <motion.div className="relative mx-auto aspect-[4/3] w-full min-w-[max(960px,100%,calc(100dvh*4/3))]"
+      <motion.div className="relative mx-auto aspect-[4/3] w-full min-w-[960px]"
         animate={diving && origin ? { scale: 5, opacity: 0.2 } : { scale: 1, opacity: 1 }}
         style={{ transformOrigin: origin ? `${origin.x / MAP_WIDTH * 100}% ${origin.y / MAP_HEIGHT * 100}%` : "50% 50%" }}
         transition={{ duration: reduce ? 0 : 1.1, ease: [0.7, 0, 0.3, 1] }}>
