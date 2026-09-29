@@ -3,6 +3,7 @@
 - [x] Übersetzung in der laufenden Vorschau und auf mehreren Seiten prüfen; verbleibendes Englisch korrigieren.
 
 # Erweiterung laut neuer Vorlage
+- [x] Hochgeladene Spielkarte mit allen sichtbaren Markierungen als anklickbare Anflugpunkte einbinden.
 - [ ] Echte Köln-Karte mit Google Maps, Checkpoints, Markierungen und Routen.
 - [ ] Spielmechanik ausbauen: Inventar, Versorgung, freiwillige Aufgaben, Hinweisbestätigung, Videos und Ereignisse.
 - [ ] Weitere Rätsel und mobile Bedienung ergänzen.
