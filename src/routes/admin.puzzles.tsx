@@ -4,7 +4,7 @@ import { AdminShell, Field, TextInput, Toggle } from "@/components/admin/AdminSh
 import { puzzles } from "@/game/data";
 import { puzzleTypeLabel } from "@/game/labels";
 import { Button } from "@/components/ui/button";
-import type { CodeConfig, FlappyConfig, SlidingConfig, WordleConfig } from "@/game/types";
+import type { CircuitConfig, CodeConfig, FlappyConfig, MastermindConfig, MinesweeperConfig, MorseConfig, SimonConfig, SlidingConfig, WordleConfig } from "@/game/types";
 
 export const Route = createFileRoute("/admin/puzzles")({
   head: () => ({
@@ -20,7 +20,7 @@ export const Route = createFileRoute("/admin/puzzles")({
   component: VerwaltungRätsel,
 });
 
-const tabs = ["Worträtsel", "Schiebepuzzle", "Flugspiel", "Code"] as const;
+const tabs = ["Worträtsel", "Schiebepuzzle", "Flugspiel", "Code", "Codeknacker", "Signalfolge", "Morsezeichen", "Minenfeld", "Schaltkreis"] as const;
 
 function VerwaltungRätsel() {
   const [tab, setTab] = useState<(typeof tabs)[number]>("Worträtsel");
@@ -30,9 +30,14 @@ function VerwaltungRätsel() {
   const sliding = puzzles.find((p) => p.type === "sliding")!.config as SlidingConfig;
   const flappy = puzzles.find((p) => p.type === "flappy")!.config as FlappyConfig;
   const code = puzzles.find((p) => p.type === "code")!.config as CodeConfig;
+  const mastermind = puzzles.find((p) => p.type === "mastermind")!.config as MastermindConfig;
+  const simon = puzzles.find((p) => p.type === "simon")!.config as SimonConfig;
+  const morse = puzzles.find((p) => p.type === "morse")!.config as MorseConfig;
+  const mines = puzzles.find((p) => p.type === "minesweeper")!.config as MinesweeperConfig;
+  const circuit = puzzles.find((p) => p.type === "circuit")!.config as CircuitConfig;
 
   return (
-    <AdminShell title="Rätsel" lead="Jeder Rätseltyp lässt sich je Etappe konfigurieren.">
+    <AdminShell title="Rätsel" lead="Rätselkonfiguration als Vorschau. Änderungen werden noch nicht ins Spiel übernommen.">
       <div className="mb-5 grid gap-3 sm:grid-cols-[1fr_auto] sm:items-end"><Field label="Rätseltyp hinzufügen"><select className="min-h-[44px] w-full rounded-md border border-border bg-surface px-3 text-sm" value={type} onChange={(e) => setType(e.target.value)}><option value="">Typ auswählen</option>{Object.entries(puzzleTypeLabel).map(([id, label]) => <option key={id} value={id}>{label}</option>)}</select></Field><Button disabled={!type} onClick={() => setSaved(true)}>Rätsel hinzufügen</Button></div>
       {saved && <p role="status" className="mb-4 text-sm text-muted-foreground">In der Vorschau ausgewählt. Neue Rätsel werden noch nicht gespeichert.</p>}
       <div className="flex gap-2 overflow-x-auto pb-2">
@@ -123,11 +128,17 @@ function VerwaltungRätsel() {
             </div>
           </>
         ) : null}
+        {tab === "Codeknacker" && <><Field label="Geheimkombination"><TextInput defaultValue={mastermind.secret} /></Field><Field label="Maximale Versuche"><TextInput type="number" defaultValue={mastermind.attempts} /></Field></>}
+        {tab === "Signalfolge" && <Field label="Signalreihenfolge (0–3, kommagetrennt)"><TextInput defaultValue={simon.sequence.join(", ")} /></Field>}
+        {tab === "Morsezeichen" && <><Field label="Funksignal"><TextInput defaultValue={morse.code} /></Field><Field label="Lösungswort"><TextInput defaultValue={morse.answer} /></Field></>}
+        {tab === "Minenfeld" && <><Field label="Rastergröße"><TextInput type="number" defaultValue={mines.grid} /></Field><Field label="Minenpositionen (nullbasiert, kommagetrennt)"><TextInput defaultValue={mines.mines.join(", ")} /></Field></>}
+        {tab === "Schaltkreis" && <><Field label="Rastergröße"><TextInput type="number" defaultValue={circuit.grid} /></Field><Field label="Wegpositionen (nullbasiert, kommagetrennt)"><TextInput defaultValue={circuit.path.join(", ")} /></Field></>}
       </div>
 
       <Button onClick={() => setSaved(true)} className="mt-6 min-h-[44px]">
-        Konfiguration speichern
+        Konfiguration als Entwurf übernehmen
       </Button>
+      {saved && <p role="status" className="mt-2 text-xs text-success">Nur in dieser Ansicht übernommen; das aktive Spiel bleibt unverändert.</p>}
     </AdminShell>
   );
 }
