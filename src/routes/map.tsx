@@ -66,8 +66,8 @@ function MapPage() {
   const distance = position ? metersBetween(position, selected) : null;
   return <GameShell bare><div className="relative h-[calc(100dvh-56px)] min-h-[480px] w-full overflow-hidden lg:h-screen">
     <CologneMap selectedId={selectedId} onSelect={choose} stateOf={stateOf} />
-    <div className="pointer-events-none absolute left-4 top-4 rounded-md border border-border bg-background/90 px-3 py-2 backdrop-blur-sm"><Label>Köln · Expeditionskarte</Label></div>
-    <div className="absolute inset-x-0 bottom-0 p-3 pb-20 sm:p-4 lg:max-w-md lg:pb-4"><div className="field-panel overflow-hidden shadow-lg">
+    <div className="pointer-events-none absolute left-4 top-4 z-20 rounded-md border border-border bg-background/90 px-3 py-2 backdrop-blur-sm"><Label>Köln · Expeditionskarte</Label></div>
+    <div className="absolute inset-x-0 bottom-0 z-20 p-3 pb-20 sm:p-4 lg:max-w-md lg:pb-4"><div className="field-panel overflow-hidden shadow-lg">
       <Button variant="ghost" onClick={() => setOpen((value) => !value)} aria-expanded={open} className="flex h-auto min-h-[56px] w-full justify-between gap-3 px-5 text-left hover:bg-accent">
         <span className="min-w-0"><Label>{locked ? "Unbekannter Ort" : selected.kind === "food" ? "Versorgungsstation" : selected.kind === "drink" ? "Getränkestation" : "Nächstes Ziel"}</Label>
         <span className="mt-0.5 block truncate font-display text-base font-semibold uppercase">{locked ? "Noch nicht entdeckt" : selected.name}</span></span>
