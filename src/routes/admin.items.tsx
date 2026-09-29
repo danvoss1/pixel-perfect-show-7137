@@ -26,7 +26,7 @@ function ItemsAdmin() {
         <Field label="Etappe"><TextInput type="number" min={1} max={8} value={draft.foundAtStage} onChange={(e) => setDraft({ ...draft, foundAtStage: Number(e.target.value) })} /></Field>
         <div className="sm:col-span-2"><Field label="Details"><textarea value={draft.detail} onChange={(e) => setDraft({ ...draft, detail: e.target.value })} className="min-h-24 w-full rounded-md border border-border bg-surface p-3 text-sm" /></Field></div>
         <div className="flex flex-wrap gap-3 sm:col-span-2">{(["mystery", "physical", "consumable"] as const).map((key) => <label key={key} className="flex min-h-[44px] items-center gap-2 text-sm"><input type="checkbox" checked={Boolean(draft[key])} onChange={(e) => setDraft({ ...draft, [key]: e.target.checked })} />{key === "mystery" ? "Verwendung unbekannt" : key === "physical" ? "Physisch" : "Verbrauchbar"}</label>)}</div>
-        <div className="sm:col-span-2"><Button type="submit">Gegenstand speichern</Button>{saved && <span role="status" className="ml-3 text-xs text-success">Für diese Vorschau gespeichert.</span>}</div>
+        <div className="sm:col-span-2"><Button type="submit">Gegenstand übernehmen</Button>{saved && <span role="status" className="ml-3 text-xs text-success">Nur bis zum Neuladen in dieser Ansicht übernommen. Im Spiel noch nicht verfügbar.</span>}</div>
       </form></div>
   </AdminShell>;
 }
