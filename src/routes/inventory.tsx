@@ -29,7 +29,7 @@ function InventoryPage() {
         <SectionTitle
           eyebrow={`${owned.length} von ${items.length} gefunden`}
           title="Inventar"
-          lead="Gegenstände von der Spur. Öffne einen, um ihn genauer zu untersuchen."
+          lead="Alles, was ihr findet, bleibt Teil der Expedition. Bewahrt die echten Gegenstände auf – ein Fundstück kann deutlich später erneut wichtig werden."
         />
       </Reveal>
 

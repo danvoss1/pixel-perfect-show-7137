@@ -70,6 +70,11 @@ export interface CodeConfig {
   code: string;
   length: number;
   kind: "pin" | "word" | "coordinates";
+  label?: string;
+  helperText?: string;
+  submitLabel?: string;
+  successText?: string;
+  errorText?: string;
 }
 export interface RouteStep {
   direction: "NORTH" | "EAST" | "SOUTH" | "WEST";
@@ -97,6 +102,7 @@ export interface Puzzle {
   tagline: string;
   stageId: string;
   hints: Hint[];
+  rewardItemIds?: string[];
   config:
     | WordleConfig
     | SlidingConfig

@@ -14,17 +14,21 @@ export const adventure: Adventure = {
     "Acht Etappen führen durch verborgene Winkel Kölns. Umschläge warten an echten Orten; der Rest geschieht hier.",
   city: "Köln",
   stages: [
+    // 1. Stage s1
     {
       id: "s1",
       number: 1,
-      title: "Die Nachricht",
-      kind: "Einführung",
+      title: "Die Zahlen",
+      kind: "Wohnungsrätsel",
+
       intro:
-        "Sie kam ohne Absender. Ein einzelnes Blatt, eine Koordinate und die Anweisung, dort zu beginnen, wo das Wasser eine Biegung macht.",
-      objective: "Lies die erste Nachricht und bestätige, dass du bereit bist.",
+        "Fünf Zahlen wurden in diesem Raum zurückgelassen. Die sechste gehört zum Ort, an dem die Expedition begonnen hat. Findet alle sechs und achtet auf alles, was ihnen beigefügt wurde.",
+
+      objective:
+        "Findet die Zahlen 4, 8, 15, 16, 23 und 42. Untersucht jeden Fund vollständig und ermittelt daraus den Zugangswert.",
+
       puzzleId: "p-code-1",
-      rewardItemId: "i1",
-      reward: "Gefalteter Brief",
+      reward: "Zahlensatz",
     },
     {
       id: "s2",
@@ -219,14 +223,63 @@ export const puzzles: Puzzle[] = [
     id: "p-code-1",
     type: "code",
     title: "Die versiegelte Anweisung",
-    tagline: "Vier Ziffern stehen in der Ecke des Briefs.",
+
+    tagline:
+      "Zahlen. Zwei Hinweise. Ein Zugangswert.",
+
     stageId: "s1",
-    hints: [
-      { id: "h1", label: "Hinweis 1", text: "Die Ziffern stehen unten rechts auf dem ersten Brief." },
-       { id: "h2", label: "Hinweis 2", text: "Zwei davon wiederholen das Jahr, in dem der Hafen geschlossen wurde.", cost: "video", costDescription: "Sendet ein kurzes Video, in dem eine volljährige, freiwillig teilnehmende Person einen Schluck aus Flasche 01 nimmt. Ein alkoholfreies Getränk ist jederzeit gleichwertig." },
-      { id: "h3", label: "Letzter Hinweis", text: "Es beginnt mit 4 und endet mit 9." },
+
+    rewardItemIds: [
+      "i1",
+      "num-4",
+      "num-8",
+      "num-15",
+      "num-16",
+      "num-23",
+      "num-42",
     ],
-    config: { code: "4729", length: 4, kind: "pin" },
+
+    hints: [
+      {
+        id: "h1",
+        label: "Hinweis 1",
+        text:
+          "Habt ihr wirklich alle sechs Zahlen gefunden und jeden Fund vollständig untersucht?",
+      },
+      {
+        id: "h2",
+        label: "Hinweis 2",
+        text:
+          "Nicht jede Information befindet sich auf der Vorderseite eines Fundstücks.",
+        cost: "video",
+        costDescription:
+          "Für diesen Hinweis ist die konfigurierte Hinweis-Aufgabe erforderlich.",
+      },
+      {
+        id: "h3",
+        label: "Letzter Hinweis",
+        text:
+          "Zwei der Zahlen enthalten zusätzliche Regeln für die Lösung.",
+      },
+    ],
+
+    config: {
+      code: "1380",
+      length: 4,
+      kind: "pin",
+
+      label: "Zugangswert eingeben",
+
+      helperText:
+        "Die Website gibt euch an dieser Stelle keine Rechenregel vor. Nutzt alle Hinweise, die ihr zusammen mit den Zahlen gefunden habt.",
+
+      submitLabel: "Anweisung prüfen",
+
+      successText: "Sequenz bestätigt",
+
+      errorText:
+        "Der Zugangswert ist noch nicht korrekt",
+    },
   },
   {
     id: "p-wordle",
@@ -340,14 +393,99 @@ export const envelopes: Envelope[] = [
 
 export const items: InventoryItem[] = [
   {
+    id: "num-4",
+    number: 4,
+    name: "Zahl 4",
+    kind: "Zahlenobjekt",
+    category: "Quest-Gegenstand",
+    foundAtStage: 1,
+    description: "Eines von sechs massiven Zahlenobjekten aus der Wohnung.",
+    detail:
+      "Die 4 gehört zum ursprünglichen Zahlensatz: 4 · 8 · 15 · 16 · 23 · 42. Das physische Objekt bleibt Teil der Expedition und muss aufbewahrt werden.",
+    physical: true,
+    consumable: false,
+  },
+  {
+    id: "num-8",
+    number: 8,
+    name: "Zahl 8",
+    kind: "Zahlenobjekt",
+    category: "Quest-Gegenstand",
+    foundAtStage: 1,
+    description: "Eines von sechs massiven Zahlenobjekten aus der Wohnung.",
+    detail:
+      "Die 8 gehört zum ursprünglichen Zahlensatz: 4 · 8 · 15 · 16 · 23 · 42. Auch wenn sie im ersten Rätsel gestrichen wurde, bleibt das physische Objekt wichtig und muss mitgenommen werden.",
+    physical: true,
+    consumable: false,
+  },
+  {
+    id: "num-15",
+    number: 15,
+    name: "Zahl 15",
+    kind: "Zahlenobjekt",
+    category: "Quest-Gegenstand",
+    foundAtStage: 1,
+    description: "Eines von sechs massiven Zahlenobjekten aus der Wohnung.",
+    detail:
+      "Die 15 gehört zum ursprünglichen Zahlensatz: 4 · 8 · 15 · 16 · 23 · 42. Das physische Objekt bleibt Teil der Expedition und muss aufbewahrt werden.",
+    physical: true,
+    consumable: false,
+  },
+  {
+    id: "num-16",
+    number: 16,
+    name: "Zahl 16",
+    kind: "Zahlenobjekt",
+    category: "Quest-Gegenstand",
+    foundAtStage: 1,
+    description: "Eines von sechs massiven Zahlenobjekten aus der Wohnung.",
+    detail:
+      "Die 16 gehört zum ursprünglichen Zahlensatz: 4 · 8 · 15 · 16 · 23 · 42. Auch wenn sie im ersten Rätsel gestrichen wurde, bleibt das physische Objekt wichtig und muss mitgenommen werden.",
+    physical: true,
+    consumable: false,
+  },
+  {
+    id: "num-23",
+    number: 23,
+    name: "Zahl 23",
+    kind: "Zahlenobjekt",
+    category: "Quest-Gegenstand",
+    foundAtStage: 1,
+    description: "Eines von sechs massiven Zahlenobjekten aus der Wohnung.",
+    detail:
+      "Die 23 gehört zum ursprünglichen Zahlensatz: 4 · 8 · 15 · 16 · 23 · 42. Das physische Objekt bleibt Teil der Expedition und muss aufbewahrt werden.",
+    physical: true,
+    consumable: false,
+  },
+  {
+    id: "num-42",
+    number: 42,
+    name: "Zahl 42",
+    kind: "Umgebungszahl",
+    category: "Hinweis",
+    foundAtStage: 1,
+
+    description:
+      "Die sechste Zahl der ursprünglichen Folge. Sie wurde nicht als Gegenstand gefunden.",
+
+    detail:
+      "Die 42 war von Anfang an Teil des Startortes. Sie ergibt sich aus der Hausnummer des Gebäudes, in dem die Expedition begonnen hat.",
+
+    physical: false,
+    consumable: false,
+  },
+  {
     id: "i1",
     number: 1,
-    name: "Gefalteter Brief",
+    name: "Versiegelte Anweisung",
     kind: "Dokument",
+    category: "Dokument",
     foundAtStage: 1,
-    description: "Die Nachricht, mit der alles begann.",
+    description: "Die erste Anweisung der Expedition – und der Ausgangspunkt des Zahlenspiels.",
     detail:
-      "Auf einer Schreibmaschine mit beschädigtem 'e' getippt. Unten rechts sind vier schwache Ziffern eingeprägt.",
+      "Darauf steht: 'Ein Echo zählt nicht doppelt. Was bleibt, ist mehr als die Summe seiner Teile.' Die Anweisung bleibt Teil der Expedition und muss zusammen mit den Zahlenobjekten aufbewahrt werden.",
+    physical: true,
+    consumable: false,
   },
   {
     id: "i2",

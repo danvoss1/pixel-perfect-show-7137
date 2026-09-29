@@ -15,7 +15,7 @@ import { SimonGame } from "@/components/puzzles/SimonGame";
 import { MorseGame } from "@/components/puzzles/MorseGame";
 import { MinesweeperGame } from "@/components/puzzles/MinesweeperGame";
 import { CircuitGame } from "@/components/puzzles/CircuitGame";
-import { adventure, puzzleById, stageById } from "@/game/data";
+import { adventure, itemById, puzzleById, stageById } from "@/game/data";
 import { usePlayer } from "@/game/store";
 import { puzzleTypeLabel } from "@/game/labels";
 import type {
@@ -56,6 +56,7 @@ function PuzzlePage() {
   const navigate = useNavigate();
   const puzzle = puzzleById(id);
   const solvePuzzle = usePlayer((s) => s.solvePuzzle);
+  const addItem = usePlayer((s) => s.addItem);
   const solvedList = usePlayer((s) => s.completedPuzzles);
   const currentStageId = usePlayer((s) => s.currentStageId);
   const [celebrate, setCelebrate] = useState(false);
@@ -64,9 +65,16 @@ function PuzzlePage() {
 
   const onSolved = useCallback(() => {
     if (!puzzle) return;
+
     solvePuzzle(puzzle.id, puzzle.title);
+
+    for (const itemId of puzzle.rewardItemIds ?? []) {
+      const item = itemById(itemId);
+      if (item) addItem(item.id, item.name);
+    }
+
     setCelebrate(true);
-  }, [puzzle, solvePuzzle]);
+  }, [addItem, puzzle, solvePuzzle]);
 
   if (!puzzle) {
     return (
@@ -125,6 +133,11 @@ function PuzzlePage() {
             length={(puzzle.config as CodeConfig).length}
             kind={(puzzle.config as CodeConfig).kind}
             expected={(puzzle.config as CodeConfig).code}
+            label={(puzzle.config as CodeConfig).label}
+            helperText={(puzzle.config as CodeConfig).helperText}
+            submitLabel={(puzzle.config as CodeConfig).submitLabel}
+            successText={(puzzle.config as CodeConfig).successText}
+            errorText={(puzzle.config as CodeConfig).errorText}
             onSolved={onSolved}
           />
         ) : null}
