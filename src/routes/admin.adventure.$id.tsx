@@ -20,12 +20,7 @@ function AdventureEditor() {
   return (
     <AdminShell
       title="Abenteuer bearbeiten"
-      lead="Änderungen werden in diesem Prototyp lokal gespeichert."
-      action={
-        <button className="min-h-[44px] rounded-md bg-primary px-4 text-sm font-semibold text-primary-foreground">
-          Speichern
-        </button>
-      }
+      lead="Vorschau der Abenteuerfelder. Änderungen werden noch nicht gespeichert."
     >
       <div className="grid gap-4 lg:grid-cols-2">
         <Field label="Name des Abenteuers">
