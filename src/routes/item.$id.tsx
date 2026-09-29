@@ -5,6 +5,8 @@ import { RotateCw, ZoomIn, ZoomOut } from "lucide-react";
 import { GameShell } from "@/components/game/GameShell";
 import { Label, LockedContent, Panel, Reveal } from "@/components/game/primitives";
 import { itemById } from "@/game/data";
+import { usePlayer } from "@/game/store";
+import { Button } from "@/components/ui/button";
 import photo from "@/assets/photo-bridge.jpg";
 
 export const Route = createFileRoute("/item/$id")({
@@ -28,11 +30,12 @@ export const Route = createFileRoute("/item/$id")({
 function ItemPage() {
   const { id } = Route.useParams();
   const item = itemById(id);
+  const owned = usePlayer((s) => s.inventory.includes(id));
   const [rotation, setRotation] = useState(0);
   const [zoom, setZoom] = useState(1);
   const [hotspot, setHotspot] = useState(false);
 
-  if (!item) {
+  if (!item || !owned) {
     return (
       <GameShell>
         <LockedContent note="Dieser Gegenstand ist nicht in deinem Inventar." />
@@ -61,13 +64,14 @@ function ItemPage() {
             drag
             dragConstraints={{ left: -80, right: 80, top: -80, bottom: 80 }}
           />
-          <button
+            <Button
+              variant="ghost"
             onClick={() => setHotspot(true)}
             aria-label="Detail untersuchen"
             className="absolute left-[62%] top-[46%] size-11 rounded-full border border-gold/60"
           >
             <span className="absolute inset-0 rounded-full border border-gold/40 marker-pulse" />
-          </button>
+            </Button>
           <div className="absolute bottom-3 right-3 flex gap-2">
             {[
               [RotateCw, () => setRotation((r) => r + 90), "Drehen"],
@@ -76,14 +80,15 @@ function ItemPage() {
             ].map(([Icon, fn, label], i) => {
               const I = Icon as typeof RotateCw;
               return (
-                <button
+                <Button
+                  variant="ghost"
                   key={i}
                   aria-label={label as string}
                   onClick={fn as () => void}
                   className="grid size-11 place-items-center rounded-md border border-border bg-background/70 backdrop-blur"
                 >
                   <I className="size-4" />
-                </button>
+                </Button>
               );
             })}
           </div>

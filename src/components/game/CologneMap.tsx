@@ -2,6 +2,7 @@
 import { useEffect, useRef, useState } from "react";
 import { locations } from "@/game/data";
 import type { GameLocation, MarkerState } from "@/game/types";
+import { Button } from "@/components/ui/button";
 
 const center = { lat: 50.9375, lng: 6.9603 };
 const key = import.meta.env["VITE_LOVABLE_CONNECTOR_GOOGLE_MAPS_BROWSER_KEY"];
@@ -107,6 +108,6 @@ export function CologneMap({ selectedId, onSelect, stateOf, editable, onMove }: 
 
   return <div className="absolute inset-0 bg-surface" role="region" aria-label="Interaktive Karte von Köln">
     <div ref={node} className="h-full w-full" />
-    {error && <div className="absolute inset-0 z-10 flex flex-col justify-center bg-surface p-5 text-center" role="alert"><p className="font-display text-base font-semibold">Karte derzeit nicht verfügbar</p><p className="mt-2 text-sm text-muted-foreground">{error}</p><div className="mt-5 max-h-[55%] space-y-2 overflow-y-auto">{locations.filter((loc) => editable || stateOf?.(loc) !== "locked").map((loc) => <button key={loc.id} onClick={() => onSelect?.(loc.id)} className={`min-h-[44px] w-full rounded-md border px-3 text-left text-sm ${selectedId === loc.id ? "border-primary bg-accent" : "border-border"}`}>{stateOf?.(loc) === "locked" ? "Unbekannter Ort" : loc.name}</button>)}</div></div>}
+     {error && <div className="absolute inset-0 z-10 flex flex-col justify-center bg-surface p-5 text-center" role="alert"><p className="font-display text-base font-semibold">Karte derzeit nicht verfügbar</p><p className="mt-2 text-sm text-muted-foreground">{error}</p><div className="mt-5 max-h-[55%] space-y-2 overflow-y-auto">{locations.filter((loc) => editable || stateOf?.(loc) !== "locked").map((loc) => <Button variant="outline" key={loc.id} onClick={() => onSelect?.(loc.id)} className={`min-h-[44px] w-full justify-start text-left text-sm ${selectedId === loc.id ? "border-primary bg-accent" : "border-border"}`}>{loc.name}</Button>)}</div></div>}
   </div>;
 }
