@@ -33,7 +33,7 @@ function MapPage() {
   const currentId = usePlayer((s) => s.currentStageId);
   const visitLocation = usePlayer((s) => s.visitLocation);
   const currentStage = adventure.stages.find((s) => s.id === currentId);
-  const [selectedId, setSelectedId] = useState(currentStage?.locationId ?? locations.find((l) => l.kind === "food")?.id ?? locations[0]?.id ?? "");
+  const [selectedId, setSelectedId] = useState(currentStage?.locationId ?? locations.find((l) => l.stageId === currentId)?.id ?? locations.find((l) => l.kind === "food")?.id ?? locations[0]?.id ?? "");
   const [open, setOpen] = useState(true);
   const [position, setPosition] = useState<{ lat: number; lng: number }>();
   const [gpsMessage, setGpsMessage] = useState("");
@@ -83,7 +83,7 @@ function MapPage() {
           {visited.includes(selected.id) ? <p className="mt-4 font-display text-xs uppercase text-success">Ort bestätigt</p> : selected.requireCode || selected.requireQr ? <p className="mt-4 text-xs text-muted-foreground">Hier ist zusätzlich der Umschlagcode oder QR-Code erforderlich.</p> : <Button onClick={locate} className="mt-4 min-h-[48px] w-full gap-2"><LocateFixed className="size-4" /> Standort bestätigen</Button>}
           {gpsMessage && <p role="status" className="mt-2 text-xs text-paper">{gpsMessage}</p>}
           <a href={`https://www.google.com/maps/dir/?api=1&destination=${selected.lat},${selected.lng}&travelmode=walking`} target="_blank" rel="noopener noreferrer" className="mt-4 flex min-h-[44px] items-center justify-center gap-2 border-t border-border pt-2 text-xs text-primary"><Footprints className="size-4" /> Fußweg in Google Maps öffnen</a>
-          {currentStage?.puzzleId === "p-route" && <Link to="/puzzle/$id" params={{ id: "p-route" }} className="mt-1 block text-center label-mono text-primary">Navigationsrätsel öffnen</Link>}
+           {currentStage?.puzzleId === "p-route" && selected.stageId === currentStage.id && <Link to="/puzzle/$id" params={{ id: "p-route" }} className="mt-1 block text-center label-mono text-primary">Navigationsrätsel öffnen</Link>}
         </>}
       </motion.div>}</AnimatePresence>
     </div></div>
