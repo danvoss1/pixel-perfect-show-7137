@@ -4,6 +4,7 @@ import { AdminShell, AdminTable } from "@/components/admin/AdminShell";
 import { adventure, locations, puzzles } from "@/game/data";
 import { usePlayer } from "@/game/store";
 import { Button } from "@/components/ui/button";
+import { fieldEvents } from "@/game/events";
 
 export const Route = createFileRoute("/admin/")({
   head: () => ({
@@ -53,6 +54,7 @@ function AdminOverview() {
       </div>
       <div className="mt-6 grid gap-3 sm:grid-cols-[1fr_auto]"><input value={message} onChange={(e) => setMessage(e.target.value)} placeholder="Geheimnisvolle Nachricht verfassen" aria-label="Nachricht an den aktuellen Spielstand" className="min-h-[44px] w-full rounded-md border border-border bg-surface px-4 text-sm" /><Button disabled={!message.trim()} onClick={() => { progress.sendMessage(message.trim()); setMessage(""); }}>Nachricht senden</Button></div>
       <div className="mt-3 flex flex-wrap gap-2"><Button variant="outline" disabled={!nextPuzzle?.hints[0]} onClick={() => { if (nextPuzzle?.hints[0]) progress.unlockHint(`${nextPuzzle.id}:${nextPuzzle.hints[0].id}`); }}>Hinweis freigeben</Button><Button variant="outline" onClick={progress.advanceStage}>Etappe freigeben</Button><Button variant="outline" disabled={!nextPuzzle} onClick={() => { if (nextPuzzle) progress.resetPuzzle(nextPuzzle.id); }}>Rätsel zurücksetzen</Button><Button variant="outline" onClick={() => progress.sendMessage("Achtung: Neue Nachricht aus der Spielleitung.")}>Warnung anzeigen</Button></div>
+      <div className="mt-8 field-panel p-5"><h2 className="font-display text-lg font-bold uppercase">Ereigniskarte auslösen</h2><p className="mt-1 text-sm text-muted-foreground">Die Karte erscheint beim nächsten Aufruf der Spieleransicht in diesem Browser.</p><div className="mt-4 flex flex-wrap gap-2">{fieldEvents.map((event) => <Button key={event.id} variant="outline" onClick={() => progress.startEvent(event.id)}>{event.category} · {event.title}</Button>)}</div></div>
     </AdminShell>
   );
 }
