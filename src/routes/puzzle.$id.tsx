@@ -15,11 +15,13 @@ import { SimonGame } from "@/components/puzzles/SimonGame";
 import { MorseGame } from "@/components/puzzles/MorseGame";
 import { MinesweeperGame } from "@/components/puzzles/MinesweeperGame";
 import { CircuitGame } from "@/components/puzzles/CircuitGame";
+import { GeometryPuzzle } from "@/components/puzzles/GeometryPuzzle";
 import { adventure, itemById, puzzleById, stageById } from "@/game/data";
 import { usePlayer } from "@/game/store";
 import { puzzleTypeLabel } from "@/game/labels";
 import type {
   CodeConfig,
+  GeometryConfig,
   FlappyConfig,
   MastermindConfig,
   SimonConfig,
@@ -57,6 +59,8 @@ function PuzzlePage() {
   const puzzle = puzzleById(id);
   const solvePuzzle = usePlayer((s) => s.solvePuzzle);
   const addItem = usePlayer((s) => s.addItem);
+  const unlockFeature = usePlayer((s) => s.unlockFeature);
+  const unlockStoryFragment = usePlayer((s) => s.unlockStoryFragment);
   const solvedList = usePlayer((s) => s.completedPuzzles);
   const currentStageId = usePlayer((s) => s.currentStageId);
   const [celebrate, setCelebrate] = useState(false);
@@ -73,8 +77,16 @@ function PuzzlePage() {
       if (item) addItem(item.id, item.name);
     }
 
+    for (const featureId of puzzle.unlockFeatureIds ?? []) {
+      unlockFeature(featureId, featureId === "3d" ? "3D" : featureId.toUpperCase());
+    }
+
+    for (const fragmentId of puzzle.storyFragmentIds ?? []) {
+      unlockStoryFragment(fragmentId);
+    }
+
     setCelebrate(true);
-  }, [addItem, puzzle, solvePuzzle]);
+  }, [addItem, puzzle, solvePuzzle, unlockFeature, unlockStoryFragment]);
 
   if (!puzzle) {
     return (
@@ -172,6 +184,13 @@ function PuzzlePage() {
         {puzzle.type === "morse" && <MorseGame config={puzzle.config as MorseConfig} solved={solved} onSolved={onSolved} />}
         {puzzle.type === "minesweeper" && <MinesweeperGame config={puzzle.config as MinesweeperConfig} solved={solved} onSolved={onSolved} />}
         {puzzle.type === "circuit" && <CircuitGame config={puzzle.config as CircuitConfig} solved={solved} onSolved={onSolved} />}
+        {puzzle.type === "geometry" ? (
+          <GeometryPuzzle
+            config={puzzle.config as GeometryConfig}
+            solved={solved}
+            onSolved={onSolved}
+          />
+        ) : null}
       </div>
 
       {solved && puzzle.type === "sliding" ? (

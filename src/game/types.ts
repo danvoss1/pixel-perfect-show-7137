@@ -13,11 +13,30 @@ export type PuzzleType =
   | "simon"
   | "morse"
   | "minesweeper"
-  | "circuit";
+  | "circuit"
+  | "geometry";
 
-export type MarkerState = "unknown" | "discovered" | "active" | "completed" | "locked" | "food" | "drink" | "envelope" | "puzzle" | "bonus";
+export type MarkerState =
+  | "unknown"
+  | "discovered"
+  | "active"
+  | "completed"
+  | "locked"
+  | "food"
+  | "drink"
+  | "envelope"
+  | "puzzle"
+  | "bonus";
 
-export type HintCost = "none" | "drink" | "video" | "minigame" | "token" | "time" | "team" | "custom";
+export type HintCost =
+  | "none"
+  | "drink"
+  | "video"
+  | "minigame"
+  | "token"
+  | "time"
+  | "team"
+  | "custom";
 
 export interface Hint {
   id: string;
@@ -54,11 +73,13 @@ export interface WordleConfig {
   maxAttempts: number;
   clue: string;
 }
+
 export interface SlidingConfig {
   grid: number;
   image: string;
   reveal: string;
 }
+
 export interface FlappyConfig {
   targetScore: number;
   gravity: number;
@@ -66,6 +87,7 @@ export interface FlappyConfig {
   gap: number;
   icon: string;
 }
+
 export interface CodeConfig {
   code: string;
   length: number;
@@ -76,24 +98,58 @@ export interface CodeConfig {
   successText?: string;
   errorText?: string;
 }
+
+export interface GeometryConfig {
+  answers: string[];
+  prompt: string;
+  helperText?: string;
+  submitLabel?: string;
+  errorText?: string;
+  shapeName: string;
+  faces: number;
+  dimension: number;
+  archiveReference?: string;
+}
+
 export interface RouteStep {
   direction: "NORTH" | "EAST" | "SOUTH" | "WEST";
   distance: number;
 }
+
 export interface RouteConfig {
   start: string;
   steps: RouteStep[];
 }
+
 export interface SymbolsConfig {
   table: Record<string, string>;
   encoded: string;
   answer: string;
 }
-export interface MastermindConfig { secret: string; attempts: number; }
-export interface SimonConfig { sequence: number[]; }
-export interface MorseConfig { code: string; answer: string; }
-export interface MinesweeperConfig { grid: number; mines: number[]; }
-export interface CircuitConfig { path: number[]; grid: number; }
+
+export interface MastermindConfig {
+  secret: string;
+  attempts: number;
+}
+
+export interface SimonConfig {
+  sequence: number[];
+}
+
+export interface MorseConfig {
+  code: string;
+  answer: string;
+}
+
+export interface MinesweeperConfig {
+  grid: number;
+  mines: number[];
+}
+
+export interface CircuitConfig {
+  path: number[];
+  grid: number;
+}
 
 export interface Puzzle {
   id: string;
@@ -103,11 +159,15 @@ export interface Puzzle {
   stageId: string;
   hints: Hint[];
   rewardItemIds?: string[];
+  requiredItemIds?: string[];
+  unlockFeatureIds?: string[];
+  storyFragmentIds?: string[];
   config:
     | WordleConfig
     | SlidingConfig
     | FlappyConfig
     | CodeConfig
+    | GeometryConfig
     | RouteConfig
     | SymbolsConfig
     | MastermindConfig
@@ -116,6 +176,15 @@ export interface Puzzle {
     | MinesweeperConfig
     | CircuitConfig
     | Record<string, never>;
+}
+
+export interface StoryFragment {
+  id: string;
+  title: string;
+  text: string;
+  stageId: string;
+  author?: string;
+  archiveCode?: string;
 }
 
 export interface Envelope {
@@ -134,10 +203,26 @@ export interface InventoryItem {
   foundAtStage: number;
   description: string;
   detail: string;
-  category?: "Dokument" | "Schlüssel" | "Hinweis" | "Kartenfragment" | "Codefragment" | "Werkzeug" | "Quest-Gegenstand" | "Joker" | "Trinkspiel-Karte" | "Essens-Token" | "Getränke-Token" | "Bonus" | "Debuff" | "Mystery-Gegenstand";
+  category?:
+    | "Dokument"
+    | "Schlüssel"
+    | "Hinweis"
+    | "Kartenfragment"
+    | "Codefragment"
+    | "Werkzeug"
+    | "Quest-Gegenstand"
+    | "Joker"
+    | "Trinkspiel-Karte"
+    | "Essens-Token"
+    | "Getränke-Token"
+    | "Bonus"
+    | "Debuff"
+    | "Mystery-Gegenstand";
   mystery?: boolean;
   physical?: boolean;
   consumable?: boolean;
+  requiredLater?: boolean;
+  sourceStageId?: string;
 }
 
 export interface Stage {

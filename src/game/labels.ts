@@ -14,4 +14,5 @@ export const puzzleTypeLabel: Record<PuzzleType, string> = {
   morse: "Morsezeichen",
   minesweeper: "Minenfeld",
   circuit: "Schaltkreis",
+  geometry: "Geometrie",
 };

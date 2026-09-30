@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as R3dRouteImport } from './routes/3d'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as AdventureRouteImport } from './routes/adventure'
 import { Route as CompleteRouteImport } from './routes/complete'
@@ -37,6 +38,11 @@ import { Route as AdminStageIdRouteImport } from './routes/admin.stage.$id'
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const R3dRoute = R3dRouteImport.update({
+  id: '/3d',
+  path: '/3d',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AdminRoute = AdminRouteImport.update({
@@ -157,6 +163,7 @@ const AdminStageIdRoute = AdminStageIdRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/3d': typeof R3dRoute
   '/admin': typeof AdminRouteWithChildren
   '/adventure': typeof AdventureRoute
   '/complete': typeof CompleteRoute
@@ -183,6 +190,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/3d': typeof R3dRoute
   '/adventure': typeof AdventureRoute
   '/complete': typeof CompleteRoute
   '/inventory': typeof InventoryRoute
@@ -209,6 +217,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/3d': typeof R3dRoute
   '/admin': typeof AdminRouteWithChildren
   '/adventure': typeof AdventureRoute
   '/complete': typeof CompleteRoute
@@ -237,6 +246,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/3d'
     | '/admin'
     | '/adventure'
     | '/complete'
@@ -263,6 +273,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/3d'
     | '/adventure'
     | '/complete'
     | '/inventory'
@@ -288,6 +299,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/3d'
     | '/admin'
     | '/adventure'
     | '/complete'
@@ -315,6 +327,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  R3dRoute: typeof R3dRoute
   AdminRoute: typeof AdminRouteWithChildren
   AdventureRoute: typeof AdventureRoute
   CompleteRoute: typeof CompleteRoute
@@ -336,6 +349,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/3d': {
+      id: '/3d'
+      path: '/3d'
+      fullPath: '/3d'
+      preLoaderRoute: typeof R3dRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/admin': {
@@ -534,6 +554,7 @@ const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  R3dRoute: R3dRoute,
   AdminRoute: AdminRouteWithChildren,
   AdventureRoute: AdventureRoute,
   CompleteRoute: CompleteRoute,

@@ -6,6 +6,7 @@ import {
   Backpack,
   BookOpen,
   QrCode,
+  Box,
   Volume2,
   VolumeX,
 } from "lucide-react";
@@ -16,7 +17,7 @@ import { Button } from "@/components/ui/button";
 import { X } from "lucide-react";
 import { eventCategoryLabel, fieldEvents } from "@/game/events";
 
-const tabs = [
+const baseTabs = [
   { to: "/adventure", label: "Abenteuer", icon: Compass },
   { to: "/map", label: "Karte", icon: MapIcon },
   { to: "/puzzles", label: "Rätsel", icon: PuzzleIcon },
@@ -32,6 +33,10 @@ export function GameShell({
   bare?: boolean;
 }) {
   const soundOn = usePlayer((s) => s.soundOn);
+  const unlockedFeatures = usePlayer((s) => s.unlockedFeatures);
+  const tabs = unlockedFeatures.includes("3d")
+    ? [...baseTabs, { to: "/3d", label: "3D", icon: Box } as const]
+    : baseTabs;
   const toggleSound = usePlayer((s) => s.toggleSound);
   const messages = usePlayer((s) => s.messages);
   const dismissMessage = usePlayer((s) => s.dismissMessage);

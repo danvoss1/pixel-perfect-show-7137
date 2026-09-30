@@ -4,6 +4,7 @@ import type {
   GameLocation,
   InventoryItem,
   Puzzle,
+  StoryFragment,
 } from "./types";
 
 export const adventure: Adventure = {
@@ -11,36 +12,33 @@ export const adventure: Adventure = {
   title: "Der verborgene Pfad",
   subtitle: "Eine Stadtexpedition durch Köln.",
   description:
-    "Acht Etappen führen durch verborgene Winkel Kölns. Umschläge warten an echten Orten; der Rest geschieht hier.",
+    "Eine Stadtexpedition durch Köln, in der reale Fundstücke, digitale Rätsel und verborgene Archive ineinandergreifen.",
   city: "Köln",
   stages: [
-    // 1. Stage s1
     {
       id: "s1",
       number: 1,
       title: "Die Zahlen",
       kind: "Wohnungsrätsel",
-
       intro:
         "Fünf Zahlen wurden in diesem Raum zurückgelassen. Die sechste gehört zum Ort, an dem die Expedition begonnen hat. Findet alle sechs und achtet auf alles, was ihnen beigefügt wurde.",
-
       objective:
         "Findet die Zahlen 4, 8, 15, 16, 23 und 42. Untersucht jeden Fund vollständig und ermittelt daraus den Zugangswert.",
-
       puzzleId: "p-code-1",
       reward: "Zahlensatz",
     },
     {
       id: "s2",
       number: 2,
-      title: "Die erste Spur",
-      kind: "Kartenort",
+      title: "Die dritte Dimension",
+      kind: "Physisches Geometrierätsel",
       intro:
-        "Die erste Markierung liegt dort, wo die alten Hafenkräne noch immer über den Rhein wachen. Jemand hat ein Zeichen auf den Stein gemalt.",
-      objective: "Erreiche die Kranhäuser am Rheinauhafen und bestätige die Markierung.",
+        "Mehrere transparente Fragmente tragen nur einzelne Linien. Erst am Rheinauhafen wird klar, dass sie nicht getrennt gelesen werden sollen.",
+      objective:
+        "Bringt die fünf Folien in Deckung, identifiziert den entstehenden geometrischen Körper und gebt seinen Namen ein.",
       locationId: "l1",
-      rewardItemId: "i2",
-      reward: "Kreideabdruck",
+      puzzleId: "p-geometry-dodecahedron",
+      reward: "Zugang zur dritten Dimension",
     },
     {
       id: "s3",
@@ -223,62 +221,78 @@ export const puzzles: Puzzle[] = [
     id: "p-code-1",
     type: "code",
     title: "Die versiegelte Anweisung",
-
-    tagline:
-      "Zahlen. Zwei Hinweise. Ein Zugangswert.",
-
+    tagline: "Sechs Zahlen. Zwei physische Hinweise. Ein Zugangswert.",
     stageId: "s1",
-
-    rewardItemIds: [
-      "i1",
-      "num-4",
-      "num-8",
-      "num-15",
-      "num-16",
-      "num-23",
-      "num-42",
-    ],
-
+    rewardItemIds: ["i1", "num-4", "num-8", "num-15", "num-16", "num-23", "num-42"],
     hints: [
       {
         id: "h1",
         label: "Hinweis 1",
-        text:
-          "Habt ihr wirklich alle sechs Zahlen gefunden und jeden Fund vollständig untersucht?",
+        text: "Habt ihr wirklich alle sechs Zahlen gefunden und jeden Fund vollständig untersucht?",
       },
       {
         id: "h2",
         label: "Hinweis 2",
-        text:
-          "Nicht jede Information befindet sich auf der Vorderseite eines Fundstücks.",
+        text: "Nicht jede Information befindet sich auf der Vorderseite eines Fundstücks.",
         cost: "video",
         costDescription:
-          "Für diesen Hinweis ist die konfigurierte Hinweis-Aufgabe erforderlich.",
+          "Sendet ein kurzes Video, in dem eine volljährige, freiwillig teilnehmende Person einen Schluck aus Flasche 01 nimmt. Ein alkoholfreies Getränk ist jederzeit gleichwertig.",
       },
       {
         id: "h3",
         label: "Letzter Hinweis",
-        text:
-          "Zwei der Zahlen enthalten zusätzliche Regeln für die Lösung.",
+        text: "Zwei der Zahlen enthalten zusätzliche Regeln für die Lösung.",
       },
     ],
-
     config: {
       code: "1380",
       length: 4,
       kind: "pin",
-
       label: "Zugangswert eingeben",
-
       helperText:
         "Die Website gibt euch an dieser Stelle keine Rechenregel vor. Nutzt alle Hinweise, die ihr zusammen mit den Zahlen gefunden habt.",
-
       submitLabel: "Anweisung prüfen",
-
       successText: "Sequenz bestätigt",
-
-      errorText:
-        "Der Zugangswert ist noch nicht korrekt",
+      errorText: "Der Zugangswert ist noch nicht korrekt",
+    },
+  },
+  {
+    id: "p-geometry-dodecahedron",
+    type: "geometry",
+    title: "Die Projektion",
+    tagline: "Fünf Fragmente. Eine Form. Eine Dimension mehr.",
+    stageId: "s2",
+    rewardItemIds: ["dodecahedron-projection"],
+    unlockFeatureIds: ["3d"],
+    storyFragmentIds: ["story-03"],
+    hints: [
+      {
+        id: "geo-h1",
+        label: "Hinweis 1",
+        text: "Die fünf transparenten Fragmente sind keine fünf getrennten Rätsel.",
+      },
+      {
+        id: "geo-h2",
+        label: "Hinweis 2",
+        text: "Legt die Folien deckungsgleich übereinander. Achtet auf eure Ausrichtungsmarken.",
+      },
+      {
+        id: "geo-h3",
+        label: "Letzter Hinweis",
+        text: "Der gesuchte Körper besitzt zwölf fünfeckige Flächen.",
+      },
+    ],
+    config: {
+      answers: ["DODEKAEDER", "DODECAHEDRON", "PENTAGONDODEKAEDER"],
+      prompt: "Welcher geometrische Körper ist entstanden?",
+      helperText:
+        "Die Lösung befindet sich nicht auf dem Bildschirm. Nutzt die fünf physischen Fragmente, die ihr mit euch tragt.",
+      submitLabel: "Körper analysieren",
+      errorText: "Geometrische Form nicht erkannt",
+      shapeName: "Dodekaeder",
+      faces: 12,
+      dimension: 3,
+      archiveReference: "XII",
     },
   },
   {
@@ -373,6 +387,18 @@ export const puzzles: Puzzle[] = [
   },
 ];
 
+export const storyFragments: StoryFragment[] = [
+  {
+    id: "story-03",
+    title: "Notiz 03",
+    text:
+      "Dasselbe Symbol taucht in den Unterlagen immer wieder auf. Zwölf Flächen. Zwölf Positionen. Zwölf Personen? Ich glaube inzwischen nicht mehr, dass ich nach einer einzelnen Person suche.",
+    author: "M.",
+    archiveCode: "XII",
+    stageId: "s2",
+  },
+];
+
 export const envelopes: Envelope[] = [
   {
     id: "e3",
@@ -464,13 +490,9 @@ export const items: InventoryItem[] = [
     kind: "Umgebungszahl",
     category: "Hinweis",
     foundAtStage: 1,
-
-    description:
-      "Die sechste Zahl der ursprünglichen Folge. Sie wurde nicht als Gegenstand gefunden.",
-
+    description: "Die sechste Zahl der ursprünglichen Folge. Sie wurde nicht als verstecktes Zahlenobjekt gefunden.",
     detail:
       "Die 42 war von Anfang an Teil des Startortes. Sie ergibt sich aus der Hausnummer des Gebäudes, in dem die Expedition begonnen hat.",
-
     physical: false,
     consumable: false,
   },
@@ -481,11 +503,26 @@ export const items: InventoryItem[] = [
     kind: "Dokument",
     category: "Dokument",
     foundAtStage: 1,
-    description: "Die erste Anweisung der Expedition – und der Ausgangspunkt des Zahlenspiels.",
+    description: "Die erste Anweisung der Expedition und der Ausgangspunkt des Zahlenspiels.",
     detail:
-      "Darauf steht: 'Ein Echo zählt nicht doppelt. Was bleibt, ist mehr als die Summe seiner Teile.' Die Anweisung bleibt Teil der Expedition und muss zusammen mit den Zahlenobjekten aufbewahrt werden.",
+      "Die Anweisung fordert dazu auf, alle Zahlen zu finden und jeden Fund vollständig zu untersuchen. Sie bleibt Teil der Expedition und sollte zusammen mit den übrigen Gegenständen aufbewahrt werden.",
     physical: true,
     consumable: false,
+  },
+  {
+    id: "dodecahedron-projection",
+    number: 20,
+    name: "Dodekaeder-Projektion",
+    kind: "Entschlüsseltes Fragment",
+    category: "Hinweis",
+    foundAtStage: 2,
+    description: "Fünf transparente Fragmente ergeben gemeinsam die Projektion eines Dodekaeders.",
+    detail:
+      "Der Körper besitzt zwölf Flächen. Nach der Identifikation wurde die Archivreferenz XII sichtbar und der Bereich 3D freigeschaltet.",
+    physical: true,
+    consumable: false,
+    requiredLater: true,
+    sourceStageId: "s2",
   },
   {
     id: "i2",
@@ -567,3 +604,5 @@ export const locationById = (id?: string) =>
 export const itemById = (id: string) => items.find((i) => i.id === id);
 export const envelopeById = (id?: string) =>
   id ? envelopes.find((e) => e.id === id) : undefined;
+export const storyFragmentById = (id: string) =>
+  storyFragments.find((fragment) => fragment.id === id);
