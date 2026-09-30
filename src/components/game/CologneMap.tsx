@@ -5,11 +5,11 @@ import type { GameLocation, MarkerState } from "@/game/types";
 import { Button } from "@/components/ui/button";
 
 const center = { lat: 50.9375, lng: 6.9603 };
-const key = import.meta.env["VITE_LOVABLE_CONNECTOR_GOOGLE_MAPS_BROWSER_KEY"];
+const key = import.meta.env["VITE_GOOGLE_MAPS_API_KEY"];
 const channel = import.meta.env["VITE_LOVABLE_CONNECTOR_GOOGLE_MAPS_TRACKING_ID"];
 let mapsPromise: Promise<void> | undefined;
 
-function loadMaps() {
+export function loadGoogleMaps() {
   if (typeof window === "undefined") return Promise.reject(new Error("Karte nur im Browser verfügbar"));
   if (window.google?.maps?.Map) return Promise.resolve();
   if (!key) return Promise.reject(new Error("Die Kartenverbindung ist nicht verfügbar."));
@@ -52,20 +52,18 @@ export function CologneMap({ selectedId, onSelect, stateOf, editable, onMove }: 
     let alive = true;
     const authFailure = () => { if (alive) { setDenied(true); setError("Google Maps ist für diese Adresse nicht freigegeben. Die Orte bleiben unten auswählbar."); } };
     Object.assign(window, { gm_authFailure: authFailure });
-    loadMaps().then(() => {
+    loadGoogleMaps().then(() => {
       if (!alive || !node.current || denied) return;
       map.current = new google.maps.Map(node.current, {
-        center, zoom: 13, clickableIcons: false, mapTypeControl: false, streetViewControl: false,
-        fullscreenControl: false, gestureHandling: "greedy",
-        styles: [
-          { featureType: "poi", stylers: [{ visibility: "off" }] },
-          { featureType: "road", elementType: "geometry", stylers: [{ color: "#526058" }] },
-          { featureType: "road", elementType: "labels.text.fill", stylers: [{ color: "#E8E3D6" }] },
-          { featureType: "landscape", stylers: [{ color: "#2C3931" }] },
-          { featureType: "water", stylers: [{ color: "#283F49" }] },
-          { featureType: "administrative", elementType: "labels.text.fill", stylers: [{ color: "#CBC8B6" }] },
-          { featureType: "transit", stylers: [{ saturation: -70 }] },
-        ],
+        center,
+        zoom: editable ? 18 : 14,
+        mapTypeId: google.maps.MapTypeId.ROADMAP,
+        clickableIcons: true,
+        mapTypeControl: true,
+        streetViewControl: true,
+        fullscreenControl: true,
+        zoomControl: true,
+        gestureHandling: "greedy",
       });
       setReady(true);
     }).catch((cause: Error) => { if (alive) setError(cause.message); });
@@ -109,8 +107,11 @@ export function CologneMap({ selectedId, onSelect, stateOf, editable, onMove }: 
 
   useEffect(() => {
     const selected = locations.find((loc) => loc.id === selectedId);
-    if (selected && map.current) map.current.panTo({ lat: selected.lat, lng: selected.lng });
-  }, [selectedId, ready]);
+    if (selected && map.current) {
+      map.current.panTo({ lat: selected.lat, lng: selected.lng });
+      if (editable) map.current.setZoom(18);
+    }
+  }, [selectedId, ready, editable]);
 
   return <div className="absolute inset-0 bg-surface" role="region" aria-label="Interaktive Karte von Köln">
     <div ref={node} className="h-full w-full" />

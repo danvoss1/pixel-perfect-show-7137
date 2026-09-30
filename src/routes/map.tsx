@@ -37,7 +37,7 @@ function MapPage() {
   const currentStage = adventure.stages.find((s) => s.id === currentId);
   const [selectedId, setSelectedId] = useState(currentStage?.locationId ?? locations.find((l) => l.stageId === currentId)?.id ?? locations.find((l) => l.kind === "food")?.id ?? locations[0]?.id ?? "");
   const [open, setOpen] = useState(true);
-  const [mode, setMode] = useState<"game" | "nav">("game");
+  const [mode, setMode] = useState<"game" | "nav">("nav");
   const [worldId, setWorldId] = useState<string>();
   const [position, setPosition] = useState<{ lat: number; lng: number }>();
   const [gpsMessage, setGpsMessage] = useState("");

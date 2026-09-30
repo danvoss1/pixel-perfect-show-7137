@@ -1,0 +1,1807 @@
+{
+  "meta": {
+    "title": "Heinzels Wintermärchen · Heumarkt · blueprint-based 3D layout",
+    "source": "Blueprint derived from the generated top-down Heumarkt plan image provided in the conversation; this 3D scene now follows that blueprint as the primary source of truth.",
+    "floorWidth": 150.0,
+    "floorDepth": 50.0,
+    "wallHeight": 14.0,
+    "scaleMetersPerReferencePixel": null,
+    "scaleAccuracy": "BLUEPRINT-ALIGNED RECONSTRUCTION: object placement follows the generated top-down site plan image. Dimensions remain approximate and are intended as an editable adventure-map layout rather than a survey-grade model.",
+    "mapImage": "assets/heumarkt-blueprint-generated-v1.png",
+    "layoutRevision": "v2.0 Blueprint pass: previous photo-driven layout removed; stalls, lodges, gates, rink geometry, bridge, statue and support objects rebuilt from the latest top-down blueprint image.",
+    "sourceCoordinates": "Scene aspect 150 × 50 aligned to the generated blueprint image (roughly 3:1). Coordinates are hand-traced from the blueprint for continued refinement."
+  },
+  "rooms": [
+    {
+      "id": "futtergasse",
+      "name": "Futtergasse",
+      "kind": "market",
+      "bounds": [
+        0,
+        0,
+        112,
+        16
+      ]
+    },
+    {
+      "id": "west_rink",
+      "name": "Westliche Eisrunde",
+      "kind": "ice",
+      "bounds": [
+        7,
+        14,
+        55,
+        42
+      ]
+    },
+    {
+      "id": "east_rink",
+      "name": "Östliche Eisrunde",
+      "kind": "ice",
+      "bounds": [
+        56,
+        14,
+        103,
+        42
+      ]
+    },
+    {
+      "id": "goldgasse",
+      "name": "Goldgasse",
+      "kind": "market",
+      "bounds": [
+        103,
+        14,
+        122,
+        40
+      ]
+    },
+    {
+      "id": "wintergasse",
+      "name": "Wintergasse",
+      "kind": "market",
+      "bounds": [
+        121,
+        12,
+        144,
+        40
+      ]
+    }
+  ],
+  "desks": [],
+  "walls": [],
+  "objects": [
+    {
+      "id": "gate-heumarkt",
+      "kind": "gate",
+      "position": [
+        14.5,
+        4.8
+      ],
+      "rotation": 0,
+      "width": 8.0,
+      "depth": 2.6,
+      "height": 8.8,
+      "elevation": 0,
+      "label": "Eingang Heumarkt"
+    },
+    {
+      "id": "gate-wattogasse",
+      "kind": "gate",
+      "position": [
+        136.0,
+        5.1
+      ],
+      "rotation": 0,
+      "width": 8.0,
+      "depth": 2.6,
+      "height": 8.8,
+      "elevation": 0,
+      "label": "Eingang Wattogasse"
+    },
+    {
+      "id": "stall-top-1-20",
+      "kind": "stall",
+      "position": [
+        20,
+        9.0
+      ],
+      "rotation": 0,
+      "width": 4.2,
+      "depth": 3.0,
+      "height": 3.4,
+      "elevation": 0,
+      "label": "Stand 1",
+      "roomId": "futtergasse"
+    },
+    {
+      "id": "stall-top-2-24",
+      "kind": "stall",
+      "position": [
+        24,
+        9.0
+      ],
+      "rotation": 0,
+      "width": 4.2,
+      "depth": 3.0,
+      "height": 3.4,
+      "elevation": 0,
+      "label": "Stand 2",
+      "roomId": "futtergasse"
+    },
+    {
+      "id": "stall-top-3-40",
+      "kind": "stall",
+      "position": [
+        40,
+        9.0
+      ],
+      "rotation": 0,
+      "width": 4.2,
+      "depth": 3.0,
+      "height": 3.4,
+      "elevation": 0,
+      "label": "Stand 3",
+      "roomId": "futtergasse"
+    },
+    {
+      "id": "stall-top-5-46",
+      "kind": "stall",
+      "position": [
+        46,
+        9.0
+      ],
+      "rotation": 0,
+      "width": 4.2,
+      "depth": 3.0,
+      "height": 3.4,
+      "elevation": 0,
+      "label": "Stand 5",
+      "roomId": "futtergasse"
+    },
+    {
+      "id": "stall-top-6-52",
+      "kind": "stall",
+      "position": [
+        52,
+        9.0
+      ],
+      "rotation": 0,
+      "width": 4.2,
+      "depth": 3.0,
+      "height": 3.4,
+      "elevation": 0,
+      "label": "Stand 6",
+      "roomId": "futtergasse"
+    },
+    {
+      "id": "stall-top-7-59",
+      "kind": "stall",
+      "position": [
+        59,
+        9.0
+      ],
+      "rotation": 0,
+      "width": 4.2,
+      "depth": 3.0,
+      "height": 3.4,
+      "elevation": 0,
+      "label": "Stand 7",
+      "roomId": "futtergasse"
+    },
+    {
+      "id": "stall-top-9-66",
+      "kind": "stall",
+      "position": [
+        66,
+        9.0
+      ],
+      "rotation": 0,
+      "width": 4.2,
+      "depth": 3.0,
+      "height": 3.4,
+      "elevation": 0,
+      "label": "Stand 9",
+      "roomId": "futtergasse"
+    },
+    {
+      "id": "stall-top-10-72",
+      "kind": "stall",
+      "position": [
+        72,
+        9.0
+      ],
+      "rotation": 0,
+      "width": 4.2,
+      "depth": 3.0,
+      "height": 3.4,
+      "elevation": 0,
+      "label": "Stand 10",
+      "roomId": "futtergasse"
+    },
+    {
+      "id": "stall-top-10-78",
+      "kind": "stall",
+      "position": [
+        78,
+        9.0
+      ],
+      "rotation": 0,
+      "width": 4.2,
+      "depth": 3.0,
+      "height": 3.4,
+      "elevation": 0,
+      "label": "Stand 10",
+      "roomId": "futtergasse"
+    },
+    {
+      "id": "stall-top-12-84",
+      "kind": "stall",
+      "position": [
+        84,
+        9.0
+      ],
+      "rotation": 0,
+      "width": 4.2,
+      "depth": 3.0,
+      "height": 3.4,
+      "elevation": 0,
+      "label": "Stand 12",
+      "roomId": "futtergasse"
+    },
+    {
+      "id": "stall-top-14-90",
+      "kind": "stall",
+      "position": [
+        90,
+        9.0
+      ],
+      "rotation": 0,
+      "width": 4.2,
+      "depth": 3.0,
+      "height": 3.4,
+      "elevation": 0,
+      "label": "Stand 14",
+      "roomId": "futtergasse"
+    },
+    {
+      "id": "stall-top-14-97",
+      "kind": "stall",
+      "position": [
+        97,
+        9.0
+      ],
+      "rotation": 0,
+      "width": 4.2,
+      "depth": 3.0,
+      "height": 3.4,
+      "elevation": 0,
+      "label": "Stand 14",
+      "roomId": "futtergasse"
+    },
+    {
+      "id": "stall-top-15-104",
+      "kind": "stall",
+      "position": [
+        104,
+        9.0
+      ],
+      "rotation": 0,
+      "width": 4.2,
+      "depth": 3.0,
+      "height": 3.4,
+      "elevation": 0,
+      "label": "Stand 15",
+      "roomId": "futtergasse"
+    },
+    {
+      "id": "stall-top-16-111",
+      "kind": "stall",
+      "position": [
+        111,
+        9.0
+      ],
+      "rotation": 0,
+      "width": 4.2,
+      "depth": 3.0,
+      "height": 3.4,
+      "elevation": 0,
+      "label": "Stand 16",
+      "roomId": "futtergasse"
+    },
+    {
+      "id": "stall-top-17-118",
+      "kind": "stall",
+      "position": [
+        118,
+        9.0
+      ],
+      "rotation": 0,
+      "width": 4.2,
+      "depth": 3.0,
+      "height": 3.4,
+      "elevation": 0,
+      "label": "Stand 17",
+      "roomId": "futtergasse"
+    },
+    {
+      "id": "stall-top-18",
+      "kind": "stall",
+      "position": [
+        124,
+        9.0
+      ],
+      "rotation": 0,
+      "width": 4.2,
+      "depth": 3.0,
+      "height": 3.4,
+      "elevation": 0,
+      "label": "Stand 18",
+      "roomId": "futtergasse"
+    },
+    {
+      "id": "stall-top-49",
+      "kind": "stall",
+      "position": [
+        141,
+        13.5
+      ],
+      "rotation": 1.5708,
+      "width": 3.8,
+      "depth": 2.8,
+      "height": 3.2,
+      "elevation": 0,
+      "label": "Stand 49",
+      "roomId": "wintergasse"
+    },
+    {
+      "id": "stall-left-20",
+      "kind": "stall",
+      "position": [
+        11.0,
+        18.0
+      ],
+      "rotation": 0,
+      "width": 3.8,
+      "depth": 2.8,
+      "height": 3.2,
+      "elevation": 0,
+      "label": "Stand 20",
+      "roomId": "west_rink"
+    },
+    {
+      "id": "stall-left-21",
+      "kind": "stall",
+      "position": [
+        15.0,
+        18.0
+      ],
+      "rotation": 0,
+      "width": 3.8,
+      "depth": 2.8,
+      "height": 3.2,
+      "elevation": 0,
+      "label": "Stand 21",
+      "roomId": "west_rink"
+    },
+    {
+      "id": "stall-left-22",
+      "kind": "stall",
+      "position": [
+        19.0,
+        18.0
+      ],
+      "rotation": 0,
+      "width": 3.8,
+      "depth": 2.8,
+      "height": 3.2,
+      "elevation": 0,
+      "label": "Stand 22",
+      "roomId": "west_rink"
+    },
+    {
+      "id": "stall-left-23",
+      "kind": "stall",
+      "position": [
+        10.0,
+        31.0
+      ],
+      "rotation": 0,
+      "width": 3.8,
+      "depth": 2.8,
+      "height": 3.2,
+      "elevation": 0,
+      "label": "Stand 23",
+      "roomId": "west_rink"
+    },
+    {
+      "id": "stall-left-19",
+      "kind": "stall",
+      "position": [
+        10.0,
+        39.0
+      ],
+      "rotation": 0,
+      "width": 4.8,
+      "depth": 3.6,
+      "height": 3.6,
+      "elevation": 0,
+      "label": "Stand 19",
+      "roomId": "west_rink"
+    },
+    {
+      "id": "stall-bottom-1",
+      "kind": "stall",
+      "position": [
+        22,
+        44.0
+      ],
+      "rotation": 0,
+      "width": 4.2,
+      "depth": 3.0,
+      "height": 3.3,
+      "elevation": 0,
+      "label": "Unterer Stand 1"
+    },
+    {
+      "id": "stall-bottom-2",
+      "kind": "stall",
+      "position": [
+        27,
+        44.0
+      ],
+      "rotation": 0,
+      "width": 4.2,
+      "depth": 3.0,
+      "height": 3.3,
+      "elevation": 0,
+      "label": "Unterer Stand 2"
+    },
+    {
+      "id": "stall-bottom-3",
+      "kind": "stall",
+      "position": [
+        32,
+        44.0
+      ],
+      "rotation": 0,
+      "width": 4.2,
+      "depth": 3.0,
+      "height": 3.3,
+      "elevation": 0,
+      "label": "Unterer Stand 3"
+    },
+    {
+      "id": "stall-bottom-4",
+      "kind": "stall",
+      "position": [
+        40,
+        44.0
+      ],
+      "rotation": 0,
+      "width": 4.2,
+      "depth": 3.0,
+      "height": 3.3,
+      "elevation": 0,
+      "label": "Unterer Stand 4"
+    },
+    {
+      "id": "stall-bottom-5",
+      "kind": "stall",
+      "position": [
+        45,
+        44.0
+      ],
+      "rotation": 0,
+      "width": 4.2,
+      "depth": 3.0,
+      "height": 3.3,
+      "elevation": 0,
+      "label": "Unterer Stand 5"
+    },
+    {
+      "id": "stall-bottom-6",
+      "kind": "stall",
+      "position": [
+        50,
+        44.0
+      ],
+      "rotation": 0,
+      "width": 4.2,
+      "depth": 3.0,
+      "height": 3.3,
+      "elevation": 0,
+      "label": "Unterer Stand 6"
+    },
+    {
+      "id": "stall-bottom-7",
+      "kind": "stall",
+      "position": [
+        55,
+        44.0
+      ],
+      "rotation": 0,
+      "width": 4.2,
+      "depth": 3.0,
+      "height": 3.3,
+      "elevation": 0,
+      "label": "Unterer Stand 7"
+    },
+    {
+      "id": "stall-bottom-8",
+      "kind": "stall",
+      "position": [
+        63,
+        44.0
+      ],
+      "rotation": 0,
+      "width": 4.2,
+      "depth": 3.0,
+      "height": 3.3,
+      "elevation": 0,
+      "label": "Unterer Stand 8"
+    },
+    {
+      "id": "stall-bottom-9",
+      "kind": "stall",
+      "position": [
+        69,
+        44.0
+      ],
+      "rotation": 0,
+      "width": 4.2,
+      "depth": 3.0,
+      "height": 3.3,
+      "elevation": 0,
+      "label": "Unterer Stand 9"
+    },
+    {
+      "id": "stall-bottom-10",
+      "kind": "stall",
+      "position": [
+        76,
+        44.0
+      ],
+      "rotation": 0,
+      "width": 4.2,
+      "depth": 3.0,
+      "height": 3.3,
+      "elevation": 0,
+      "label": "Unterer Stand 10"
+    },
+    {
+      "id": "stall-bottom-11",
+      "kind": "stall",
+      "position": [
+        82,
+        44.0
+      ],
+      "rotation": 0,
+      "width": 4.2,
+      "depth": 3.0,
+      "height": 3.3,
+      "elevation": 0,
+      "label": "Unterer Stand 11"
+    },
+    {
+      "id": "stall-bottom-12",
+      "kind": "stall",
+      "position": [
+        90,
+        44.0
+      ],
+      "rotation": 0,
+      "width": 4.2,
+      "depth": 3.0,
+      "height": 3.3,
+      "elevation": 0,
+      "label": "Unterer Stand 12"
+    },
+    {
+      "id": "zunfthaus",
+      "kind": "lodge",
+      "position": [
+        49.0,
+        18.2
+      ],
+      "rotation": 0,
+      "width": 13.8,
+      "depth": 9.0,
+      "height": 5.6,
+      "elevation": 0,
+      "label": "Zunfthaus"
+    },
+    {
+      "id": "pad-1",
+      "kind": "ice_lane",
+      "position": [
+        71.0,
+        15.8
+      ],
+      "rotation": 0,
+      "width": 9.2,
+      "depth": 2.4,
+      "height": 0.2,
+      "elevation": 0,
+      "label": "Servicefläche 1"
+    },
+    {
+      "id": "pad-2",
+      "kind": "ice_lane",
+      "position": [
+        71.0,
+        19.0
+      ],
+      "rotation": 0,
+      "width": 9.2,
+      "depth": 2.4,
+      "height": 0.2,
+      "elevation": 0,
+      "label": "Servicefläche 2"
+    },
+    {
+      "id": "pad-3",
+      "kind": "ice_lane",
+      "position": [
+        71.0,
+        22.2
+      ],
+      "rotation": 0,
+      "width": 9.2,
+      "depth": 2.4,
+      "height": 0.2,
+      "elevation": 0,
+      "label": "Servicefläche 3"
+    },
+    {
+      "id": "stapelhaus",
+      "kind": "lodge",
+      "position": [
+        80.0,
+        18.0
+      ],
+      "rotation": 0,
+      "width": 11.8,
+      "depth": 8.2,
+      "height": 5.2,
+      "elevation": 0,
+      "label": "Stapelhaus (10)"
+    },
+    {
+      "id": "carousel",
+      "kind": "carousel",
+      "position": [
+        108.5,
+        14.6
+      ],
+      "rotation": 0,
+      "width": 7.2,
+      "depth": 7.2,
+      "height": 4.2,
+      "elevation": 0,
+      "label": "Karussell (25)"
+    },
+    {
+      "id": "wc",
+      "kind": "kiosk",
+      "position": [
+        112.0,
+        41.5
+      ],
+      "rotation": 0,
+      "width": 4.4,
+      "depth": 3.4,
+      "height": 3.4,
+      "elevation": 0,
+      "label": "WC"
+    },
+    {
+      "id": "south-pavilion",
+      "kind": "lodge",
+      "position": [
+        128.5,
+        43.0
+      ],
+      "rotation": 0,
+      "width": 10.8,
+      "depth": 7.0,
+      "height": 4.8,
+      "elevation": 0,
+      "label": "Pavillon / Haus"
+    },
+    {
+      "id": "rink-kiosk-east",
+      "kind": "kiosk",
+      "position": [
+        103.8,
+        24.0
+      ],
+      "rotation": 0,
+      "width": 2.6,
+      "depth": 5.0,
+      "height": 3.2,
+      "elevation": 0,
+      "label": "Kiosk am Aufgang"
+    },
+    {
+      "id": "rink-platform-east",
+      "kind": "kiosk",
+      "position": [
+        96.5,
+        42.0
+      ],
+      "rotation": 0,
+      "width": 6.2,
+      "depth": 2.8,
+      "height": 1.6,
+      "elevation": 0,
+      "label": "Holzplattform"
+    },
+    {
+      "id": "gold-left-31",
+      "kind": "stall",
+      "position": [
+        115.5,
+        20
+      ],
+      "rotation": 1.5708,
+      "width": 3.8,
+      "depth": 2.8,
+      "height": 3.2,
+      "elevation": 0,
+      "label": "Stand 31",
+      "roomId": "goldgasse"
+    },
+    {
+      "id": "gold-left-32",
+      "kind": "stall",
+      "position": [
+        115.5,
+        26
+      ],
+      "rotation": 1.5708,
+      "width": 3.8,
+      "depth": 2.8,
+      "height": 3.2,
+      "elevation": 0,
+      "label": "Stand 32",
+      "roomId": "goldgasse"
+    },
+    {
+      "id": "gold-left-35",
+      "kind": "stall",
+      "position": [
+        115.5,
+        33
+      ],
+      "rotation": 1.5708,
+      "width": 3.8,
+      "depth": 2.8,
+      "height": 3.2,
+      "elevation": 0,
+      "label": "Stand 35",
+      "roomId": "goldgasse"
+    },
+    {
+      "id": "gold-left-34",
+      "kind": "stall",
+      "position": [
+        115.5,
+        39
+      ],
+      "rotation": 1.5708,
+      "width": 3.8,
+      "depth": 2.8,
+      "height": 3.2,
+      "elevation": 0,
+      "label": "Stand 34",
+      "roomId": "goldgasse"
+    },
+    {
+      "id": "gold-cluster-39-123-20",
+      "kind": "stall",
+      "position": [
+        123,
+        20
+      ],
+      "rotation": 1.5708,
+      "width": 3.8,
+      "depth": 2.8,
+      "height": 3.2,
+      "elevation": 0,
+      "label": "Stand 39",
+      "roomId": "goldgasse"
+    },
+    {
+      "id": "gold-cluster-40-127-20",
+      "kind": "stall",
+      "position": [
+        127,
+        20
+      ],
+      "rotation": 1.5708,
+      "width": 3.8,
+      "depth": 2.8,
+      "height": 3.2,
+      "elevation": 0,
+      "label": "Stand 40",
+      "roomId": "goldgasse"
+    },
+    {
+      "id": "gold-cluster-35-123-26",
+      "kind": "stall",
+      "position": [
+        123,
+        26
+      ],
+      "rotation": 1.5708,
+      "width": 3.8,
+      "depth": 2.8,
+      "height": 3.2,
+      "elevation": 0,
+      "label": "Stand 35",
+      "roomId": "goldgasse"
+    },
+    {
+      "id": "gold-cluster-41-127-26",
+      "kind": "stall",
+      "position": [
+        127,
+        26
+      ],
+      "rotation": 1.5708,
+      "width": 3.8,
+      "depth": 2.8,
+      "height": 3.2,
+      "elevation": 0,
+      "label": "Stand 41",
+      "roomId": "goldgasse"
+    },
+    {
+      "id": "gold-cluster-37-123-33",
+      "kind": "stall",
+      "position": [
+        123,
+        33
+      ],
+      "rotation": 1.5708,
+      "width": 3.8,
+      "depth": 2.8,
+      "height": 3.2,
+      "elevation": 0,
+      "label": "Stand 37",
+      "roomId": "goldgasse"
+    },
+    {
+      "id": "gold-cluster-42-127-33",
+      "kind": "stall",
+      "position": [
+        127,
+        33
+      ],
+      "rotation": 1.5708,
+      "width": 3.8,
+      "depth": 2.8,
+      "height": 3.2,
+      "elevation": 0,
+      "label": "Stand 42",
+      "roomId": "goldgasse"
+    },
+    {
+      "id": "gold-cluster-37-123-39",
+      "kind": "stall",
+      "position": [
+        123,
+        39
+      ],
+      "rotation": 1.5708,
+      "width": 3.8,
+      "depth": 2.8,
+      "height": 3.2,
+      "elevation": 0,
+      "label": "Stand 37",
+      "roomId": "goldgasse"
+    },
+    {
+      "id": "gold-cluster-44-127-39",
+      "kind": "stall",
+      "position": [
+        127,
+        39
+      ],
+      "rotation": 1.5708,
+      "width": 3.8,
+      "depth": 2.8,
+      "height": 3.2,
+      "elevation": 0,
+      "label": "Stand 44",
+      "roomId": "goldgasse"
+    },
+    {
+      "id": "winter-48",
+      "kind": "stall",
+      "position": [
+        141.0,
+        20
+      ],
+      "rotation": 1.5708,
+      "width": 3.8,
+      "depth": 2.8,
+      "height": 3.2,
+      "elevation": 0,
+      "label": "Stand 48",
+      "roomId": "wintergasse"
+    },
+    {
+      "id": "winter-47",
+      "kind": "stall",
+      "position": [
+        141.0,
+        26
+      ],
+      "rotation": 1.5708,
+      "width": 3.8,
+      "depth": 2.8,
+      "height": 3.2,
+      "elevation": 0,
+      "label": "Stand 47",
+      "roomId": "wintergasse"
+    },
+    {
+      "id": "winter-46",
+      "kind": "stall",
+      "position": [
+        141.0,
+        32
+      ],
+      "rotation": 1.5708,
+      "width": 3.8,
+      "depth": 2.8,
+      "height": 3.2,
+      "elevation": 0,
+      "label": "Stand 46",
+      "roomId": "wintergasse"
+    },
+    {
+      "id": "winter-45",
+      "kind": "stall",
+      "position": [
+        141.0,
+        38
+      ],
+      "rotation": 1.5708,
+      "width": 3.8,
+      "depth": 2.8,
+      "height": 3.2,
+      "elevation": 0,
+      "label": "Stand 45",
+      "roomId": "wintergasse"
+    },
+    {
+      "id": "ice-west",
+      "kind": "ice_ring",
+      "position": [
+        26.0,
+        28.0
+      ],
+      "rotation": 0,
+      "width": 28.0,
+      "depth": 22.0,
+      "height": 0.2,
+      "elevation": 0,
+      "label": "Westschleife Eisbahn"
+    },
+    {
+      "id": "ice-west-straight",
+      "kind": "ice_lane",
+      "position": [
+        41.2,
+        33.0
+      ],
+      "rotation": 0,
+      "width": 25.5,
+      "depth": 8.2,
+      "height": 0.2,
+      "elevation": 0,
+      "label": "Westlicher Auslauf"
+    },
+    {
+      "id": "ice-top-mid",
+      "kind": "ice_lane",
+      "position": [
+        61.0,
+        28.0
+      ],
+      "rotation": 0,
+      "width": 36.0,
+      "depth": 3.8,
+      "height": 0.2,
+      "elevation": 0,
+      "label": "Mittlere obere Eisbahn"
+    },
+    {
+      "id": "ice-bottom-mid",
+      "kind": "ice_lane",
+      "position": [
+        61.0,
+        36.5
+      ],
+      "rotation": 0,
+      "width": 37.0,
+      "depth": 8.0,
+      "height": 0.2,
+      "elevation": 0,
+      "label": "Mittlere untere Eisbahn"
+    },
+    {
+      "id": "ice-east",
+      "kind": "ice_ring",
+      "position": [
+        84.2,
+        28.0
+      ],
+      "rotation": 0,
+      "width": 24.5,
+      "depth": 19.2,
+      "height": 0.2,
+      "elevation": 0,
+      "label": "Ostschleife Eisbahn"
+    },
+    {
+      "id": "ice-east-tail",
+      "kind": "ice_lane",
+      "position": [
+        77.5,
+        36.6
+      ],
+      "rotation": 0,
+      "width": 34.5,
+      "depth": 7.8,
+      "height": 0.2,
+      "elevation": 0,
+      "label": "Östlicher Unterlauf"
+    },
+    {
+      "id": "bridge-central",
+      "kind": "bridge",
+      "position": [
+        61.0,
+        31.8
+      ],
+      "rotation": 1.5708,
+      "width": 7.0,
+      "depth": 6.0,
+      "height": 3.6,
+      "elevation": 0,
+      "label": "Brücke"
+    },
+    {
+      "id": "statue-heumarkt",
+      "kind": "statue",
+      "position": [
+        26.0,
+        28.0
+      ],
+      "rotation": 0,
+      "width": 9.0,
+      "depth": 9.0,
+      "height": 10.0,
+      "elevation": 0,
+      "label": "Reiterstatue Heumarkt"
+    },
+    {
+      "id": "rink-marker",
+      "kind": "sign",
+      "position": [
+        84.0,
+        33.0
+      ],
+      "rotation": 0,
+      "width": 2.0,
+      "depth": 0.3,
+      "height": 1.4,
+      "elevation": 0,
+      "label": "Eisbahn-Marker"
+    },
+    {
+      "id": "tree-1",
+      "kind": "tree",
+      "position": [
+        7,
+        9
+      ],
+      "rotation": 0,
+      "width": 2.6,
+      "depth": 2.6,
+      "height": 4.2,
+      "elevation": 0,
+      "label": "Tannenbaum"
+    },
+    {
+      "id": "tree-2",
+      "kind": "tree",
+      "position": [
+        17,
+        5.8
+      ],
+      "rotation": 0,
+      "width": 2.8,
+      "depth": 2.8,
+      "height": 4.2,
+      "elevation": 0,
+      "label": "Tannenbaum"
+    },
+    {
+      "id": "tree-3",
+      "kind": "tree",
+      "position": [
+        22,
+        5.6
+      ],
+      "rotation": 0,
+      "width": 2.8,
+      "depth": 2.8,
+      "height": 4.2,
+      "elevation": 0,
+      "label": "Tannenbaum"
+    },
+    {
+      "id": "tree-4",
+      "kind": "tree",
+      "position": [
+        25,
+        5.8
+      ],
+      "rotation": 0,
+      "width": 2.8,
+      "depth": 2.8,
+      "height": 4.2,
+      "elevation": 0,
+      "label": "Tannenbaum"
+    },
+    {
+      "id": "tree-5",
+      "kind": "tree",
+      "position": [
+        12.5,
+        15.5
+      ],
+      "rotation": 0,
+      "width": 2.6,
+      "depth": 2.6,
+      "height": 4.2,
+      "elevation": 0,
+      "label": "Tannenbaum"
+    },
+    {
+      "id": "tree-6",
+      "kind": "tree",
+      "position": [
+        33,
+        14.2
+      ],
+      "rotation": 0,
+      "width": 2.0,
+      "depth": 2.0,
+      "height": 4.2,
+      "elevation": 0,
+      "label": "Tannenbaum"
+    },
+    {
+      "id": "tree-7",
+      "kind": "tree",
+      "position": [
+        36,
+        14.0
+      ],
+      "rotation": 0,
+      "width": 2.0,
+      "depth": 2.0,
+      "height": 4.2,
+      "elevation": 0,
+      "label": "Tannenbaum"
+    },
+    {
+      "id": "tree-8",
+      "kind": "tree",
+      "position": [
+        39,
+        14.0
+      ],
+      "rotation": 0,
+      "width": 2.0,
+      "depth": 2.0,
+      "height": 4.2,
+      "elevation": 0,
+      "label": "Tannenbaum"
+    },
+    {
+      "id": "tree-9",
+      "kind": "tree",
+      "position": [
+        58,
+        14.5
+      ],
+      "rotation": 0,
+      "width": 2.0,
+      "depth": 2.0,
+      "height": 4.2,
+      "elevation": 0,
+      "label": "Tannenbaum"
+    },
+    {
+      "id": "tree-10",
+      "kind": "tree",
+      "position": [
+        72,
+        14.0
+      ],
+      "rotation": 0,
+      "width": 2.0,
+      "depth": 2.0,
+      "height": 4.2,
+      "elevation": 0,
+      "label": "Tannenbaum"
+    },
+    {
+      "id": "tree-11",
+      "kind": "tree",
+      "position": [
+        89,
+        13.8
+      ],
+      "rotation": 0,
+      "width": 2.2,
+      "depth": 2.2,
+      "height": 4.2,
+      "elevation": 0,
+      "label": "Tannenbaum"
+    },
+    {
+      "id": "tree-12",
+      "kind": "tree",
+      "position": [
+        96,
+        13.8
+      ],
+      "rotation": 0,
+      "width": 2.2,
+      "depth": 2.2,
+      "height": 4.2,
+      "elevation": 0,
+      "label": "Tannenbaum"
+    },
+    {
+      "id": "tree-13",
+      "kind": "tree",
+      "position": [
+        105,
+        7.2
+      ],
+      "rotation": 0,
+      "width": 2.6,
+      "depth": 2.6,
+      "height": 4.2,
+      "elevation": 0,
+      "label": "Tannenbaum"
+    },
+    {
+      "id": "tree-14",
+      "kind": "tree",
+      "position": [
+        126,
+        6.0
+      ],
+      "rotation": 0,
+      "width": 2.6,
+      "depth": 2.6,
+      "height": 4.2,
+      "elevation": 0,
+      "label": "Tannenbaum"
+    },
+    {
+      "id": "tree-15",
+      "kind": "tree",
+      "position": [
+        129,
+        6.0
+      ],
+      "rotation": 0,
+      "width": 2.6,
+      "depth": 2.6,
+      "height": 4.2,
+      "elevation": 0,
+      "label": "Tannenbaum"
+    },
+    {
+      "id": "tree-16",
+      "kind": "tree",
+      "position": [
+        136.5,
+        16.0
+      ],
+      "rotation": 0,
+      "width": 2.6,
+      "depth": 2.6,
+      "height": 4.2,
+      "elevation": 0,
+      "label": "Tannenbaum"
+    },
+    {
+      "id": "tree-17",
+      "kind": "tree",
+      "position": [
+        10,
+        43.5
+      ],
+      "rotation": 0,
+      "width": 2.4,
+      "depth": 2.4,
+      "height": 4.2,
+      "elevation": 0,
+      "label": "Tannenbaum"
+    },
+    {
+      "id": "tree-18",
+      "kind": "tree",
+      "position": [
+        14,
+        42.0
+      ],
+      "rotation": 0,
+      "width": 2.2,
+      "depth": 2.2,
+      "height": 4.2,
+      "elevation": 0,
+      "label": "Tannenbaum"
+    },
+    {
+      "id": "tree-19",
+      "kind": "tree",
+      "position": [
+        57,
+        44.5
+      ],
+      "rotation": 0,
+      "width": 2.0,
+      "depth": 2.0,
+      "height": 4.2,
+      "elevation": 0,
+      "label": "Tannenbaum"
+    },
+    {
+      "id": "tree-20",
+      "kind": "tree",
+      "position": [
+        82,
+        44.0
+      ],
+      "rotation": 0,
+      "width": 2.0,
+      "depth": 2.0,
+      "height": 4.2,
+      "elevation": 0,
+      "label": "Tannenbaum"
+    },
+    {
+      "id": "tree-21",
+      "kind": "tree",
+      "position": [
+        105,
+        39.0
+      ],
+      "rotation": 0,
+      "width": 2.0,
+      "depth": 2.0,
+      "height": 4.2,
+      "elevation": 0,
+      "label": "Tannenbaum"
+    },
+    {
+      "id": "tree-22",
+      "kind": "tree",
+      "position": [
+        109,
+        39.0
+      ],
+      "rotation": 0,
+      "width": 2.0,
+      "depth": 2.0,
+      "height": 4.2,
+      "elevation": 0,
+      "label": "Tannenbaum"
+    },
+    {
+      "id": "tree-23",
+      "kind": "tree",
+      "position": [
+        117,
+        41.5
+      ],
+      "rotation": 0,
+      "width": 2.6,
+      "depth": 2.6,
+      "height": 4.2,
+      "elevation": 0,
+      "label": "Tannenbaum"
+    },
+    {
+      "id": "tree-24",
+      "kind": "tree",
+      "position": [
+        121,
+        42.0
+      ],
+      "rotation": 0,
+      "width": 2.6,
+      "depth": 2.6,
+      "height": 4.2,
+      "elevation": 0,
+      "label": "Tannenbaum"
+    },
+    {
+      "id": "tree-25",
+      "kind": "tree",
+      "position": [
+        136,
+        42.0
+      ],
+      "rotation": 0,
+      "width": 2.4,
+      "depth": 2.4,
+      "height": 4.2,
+      "elevation": 0,
+      "label": "Tannenbaum"
+    },
+    {
+      "id": "tree-26",
+      "kind": "tree",
+      "position": [
+        145,
+        42.0
+      ],
+      "rotation": 0,
+      "width": 2.4,
+      "depth": 2.4,
+      "height": 4.2,
+      "elevation": 0,
+      "label": "Tannenbaum"
+    },
+    {
+      "id": "light-1",
+      "kind": "lightpole",
+      "position": [
+        16,
+        10.8
+      ],
+      "rotation": 0,
+      "width": 0.4,
+      "depth": 0.4,
+      "height": 4.8,
+      "elevation": 0,
+      "label": "Lichtmast"
+    },
+    {
+      "id": "light-2",
+      "kind": "lightpole",
+      "position": [
+        33,
+        8.2
+      ],
+      "rotation": 0,
+      "width": 0.4,
+      "depth": 0.4,
+      "height": 4.8,
+      "elevation": 0,
+      "label": "Lichtmast"
+    },
+    {
+      "id": "light-3",
+      "kind": "lightpole",
+      "position": [
+        46,
+        8.2
+      ],
+      "rotation": 0,
+      "width": 0.4,
+      "depth": 0.4,
+      "height": 4.8,
+      "elevation": 0,
+      "label": "Lichtmast"
+    },
+    {
+      "id": "light-4",
+      "kind": "lightpole",
+      "position": [
+        61,
+        8.2
+      ],
+      "rotation": 0,
+      "width": 0.4,
+      "depth": 0.4,
+      "height": 4.8,
+      "elevation": 0,
+      "label": "Lichtmast"
+    },
+    {
+      "id": "light-5",
+      "kind": "lightpole",
+      "position": [
+        76,
+        8.2
+      ],
+      "rotation": 0,
+      "width": 0.4,
+      "depth": 0.4,
+      "height": 4.8,
+      "elevation": 0,
+      "label": "Lichtmast"
+    },
+    {
+      "id": "light-6",
+      "kind": "lightpole",
+      "position": [
+        90,
+        8.2
+      ],
+      "rotation": 0,
+      "width": 0.4,
+      "depth": 0.4,
+      "height": 4.8,
+      "elevation": 0,
+      "label": "Lichtmast"
+    },
+    {
+      "id": "light-7",
+      "kind": "lightpole",
+      "position": [
+        105,
+        8.2
+      ],
+      "rotation": 0,
+      "width": 0.4,
+      "depth": 0.4,
+      "height": 4.8,
+      "elevation": 0,
+      "label": "Lichtmast"
+    },
+    {
+      "id": "light-8",
+      "kind": "lightpole",
+      "position": [
+        123,
+        8.5
+      ],
+      "rotation": 0,
+      "width": 0.4,
+      "depth": 0.4,
+      "height": 4.8,
+      "elevation": 0,
+      "label": "Lichtmast"
+    },
+    {
+      "id": "light-9",
+      "kind": "lightpole",
+      "position": [
+        138,
+        10.0
+      ],
+      "rotation": 0,
+      "width": 0.4,
+      "depth": 0.4,
+      "height": 4.8,
+      "elevation": 0,
+      "label": "Lichtmast"
+    },
+    {
+      "id": "light-10",
+      "kind": "lightpole",
+      "position": [
+        8.5,
+        22.0
+      ],
+      "rotation": 0,
+      "width": 0.4,
+      "depth": 0.4,
+      "height": 4.8,
+      "elevation": 0,
+      "label": "Lichtmast"
+    },
+    {
+      "id": "light-11",
+      "kind": "lightpole",
+      "position": [
+        8.5,
+        34.5
+      ],
+      "rotation": 0,
+      "width": 0.4,
+      "depth": 0.4,
+      "height": 4.8,
+      "elevation": 0,
+      "label": "Lichtmast"
+    },
+    {
+      "id": "light-12",
+      "kind": "lightpole",
+      "position": [
+        17.0,
+        44.0
+      ],
+      "rotation": 0,
+      "width": 0.4,
+      "depth": 0.4,
+      "height": 4.8,
+      "elevation": 0,
+      "label": "Lichtmast"
+    },
+    {
+      "id": "light-13",
+      "kind": "lightpole",
+      "position": [
+        41.0,
+        44.2
+      ],
+      "rotation": 0,
+      "width": 0.4,
+      "depth": 0.4,
+      "height": 4.8,
+      "elevation": 0,
+      "label": "Lichtmast"
+    },
+    {
+      "id": "light-14",
+      "kind": "lightpole",
+      "position": [
+        66.0,
+        44.2
+      ],
+      "rotation": 0,
+      "width": 0.4,
+      "depth": 0.4,
+      "height": 4.8,
+      "elevation": 0,
+      "label": "Lichtmast"
+    },
+    {
+      "id": "light-15",
+      "kind": "lightpole",
+      "position": [
+        92.0,
+        43.5
+      ],
+      "rotation": 0,
+      "width": 0.4,
+      "depth": 0.4,
+      "height": 4.8,
+      "elevation": 0,
+      "label": "Lichtmast"
+    },
+    {
+      "id": "light-16",
+      "kind": "lightpole",
+      "position": [
+        112.5,
+        45.2
+      ],
+      "rotation": 0,
+      "width": 0.4,
+      "depth": 0.4,
+      "height": 4.8,
+      "elevation": 0,
+      "label": "Lichtmast"
+    },
+    {
+      "id": "light-17",
+      "kind": "lightpole",
+      "position": [
+        141.5,
+        44.0
+      ],
+      "rotation": 0,
+      "width": 0.4,
+      "depth": 0.4,
+      "height": 4.8,
+      "elevation": 0,
+      "label": "Lichtmast"
+    },
+    {
+      "id": "bench-1",
+      "kind": "sofa",
+      "position": [
+        11,
+        14.0
+      ],
+      "rotation": 0,
+      "width": 1.6,
+      "depth": 0.6,
+      "height": 0.7,
+      "elevation": 0,
+      "label": "Bank"
+    },
+    {
+      "id": "bench-2",
+      "kind": "sofa",
+      "position": [
+        13,
+        46.0
+      ],
+      "rotation": 0,
+      "width": 1.6,
+      "depth": 0.6,
+      "height": 0.7,
+      "elevation": 0,
+      "label": "Bank"
+    },
+    {
+      "id": "bench-3",
+      "kind": "sofa",
+      "position": [
+        113,
+        46.0
+      ],
+      "rotation": 0,
+      "width": 1.6,
+      "depth": 0.6,
+      "height": 0.7,
+      "elevation": 0,
+      "label": "Bank"
+    },
+    {
+      "id": "bench-4",
+      "kind": "sofa",
+      "position": [
+        135,
+        46.0
+      ],
+      "rotation": 0,
+      "width": 1.6,
+      "depth": 0.6,
+      "height": 0.7,
+      "elevation": 0,
+      "label": "Bank"
+    },
+    {
+      "id": "sign-futtergasse",
+      "kind": "sign",
+      "position": [
+        73.0,
+        12.2
+      ],
+      "rotation": 0,
+      "width": 8.0,
+      "depth": 0.6,
+      "height": 1.8,
+      "elevation": 0,
+      "label": "Futtergasse"
+    },
+    {
+      "id": "sign-goldgasse",
+      "kind": "sign",
+      "position": [
+        119.3,
+        27.0
+      ],
+      "rotation": 1.5708,
+      "width": 0.6,
+      "depth": 5.0,
+      "height": 1.8,
+      "elevation": 0,
+      "label": "Goldgasse"
+    },
+    {
+      "id": "sign-wintergasse",
+      "kind": "sign",
+      "position": [
+        133.0,
+        28.0
+      ],
+      "rotation": 1.5708,
+      "width": 0.6,
+      "depth": 5.4,
+      "height": 1.8,
+      "elevation": 0,
+      "label": "Wintergasse"
+    }
+  ]
+}

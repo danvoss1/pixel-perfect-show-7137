@@ -23,6 +23,7 @@ import { Route as ScanRouteImport } from './routes/scan'
 import { Route as AdminIndexRouteImport } from './routes/admin.index'
 import { Route as AdminAdventuresRouteImport } from './routes/admin.adventures'
 import { Route as AdminEventsRouteImport } from './routes/admin.events'
+import { Route as AdminHeumarktRouteImport } from './routes/admin.heumarkt'
 import { Route as AdminItemsRouteImport } from './routes/admin.items'
 import { Route as AdminLocationsRouteImport } from './routes/admin.locations'
 import { Route as AdminPlayersRouteImport } from './routes/admin.players'
@@ -105,6 +106,11 @@ const AdminEventsRoute = AdminEventsRouteImport.update({
   path: '/events',
   getParentRoute: () => AdminRoute,
 } as any)
+const AdminHeumarktRoute = AdminHeumarktRouteImport.update({
+  id: '/heumarkt',
+  path: '/heumarkt',
+  getParentRoute: () => AdminRoute,
+} as any)
 const AdminItemsRoute = AdminItemsRouteImport.update({
   id: '/items',
   path: '/items',
@@ -175,6 +181,7 @@ export interface FileRoutesByFullPath {
   '/scan': typeof ScanRoute
   '/admin/adventures': typeof AdminAdventuresRoute
   '/admin/events': typeof AdminEventsRoute
+  '/admin/heumarkt': typeof AdminHeumarktRoute
   '/admin/items': typeof AdminItemsRoute
   '/admin/locations': typeof AdminLocationsRoute
   '/admin/players': typeof AdminPlayersRoute
@@ -201,6 +208,7 @@ export interface FileRoutesByTo {
   '/scan': typeof ScanRoute
   '/admin/adventures': typeof AdminAdventuresRoute
   '/admin/events': typeof AdminEventsRoute
+  '/admin/heumarkt': typeof AdminHeumarktRoute
   '/admin/items': typeof AdminItemsRoute
   '/admin/locations': typeof AdminLocationsRoute
   '/admin/players': typeof AdminPlayersRoute
@@ -229,6 +237,7 @@ export interface FileRoutesById {
   '/scan': typeof ScanRoute
   '/admin/adventures': typeof AdminAdventuresRoute
   '/admin/events': typeof AdminEventsRoute
+  '/admin/heumarkt': typeof AdminHeumarktRoute
   '/admin/items': typeof AdminItemsRoute
   '/admin/locations': typeof AdminLocationsRoute
   '/admin/players': typeof AdminPlayersRoute
@@ -258,6 +267,7 @@ export interface FileRouteTypes {
     | '/scan'
     | '/admin/adventures'
     | '/admin/events'
+    | '/admin/heumarkt'
     | '/admin/items'
     | '/admin/locations'
     | '/admin/players'
@@ -284,6 +294,7 @@ export interface FileRouteTypes {
     | '/scan'
     | '/admin/adventures'
     | '/admin/events'
+    | '/admin/heumarkt'
     | '/admin/items'
     | '/admin/locations'
     | '/admin/players'
@@ -311,6 +322,7 @@ export interface FileRouteTypes {
     | '/scan'
     | '/admin/adventures'
     | '/admin/events'
+    | '/admin/heumarkt'
     | '/admin/items'
     | '/admin/locations'
     | '/admin/players'
@@ -442,6 +454,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminEventsRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/admin/heumarkt': {
+      id: '/admin/heumarkt'
+      path: '/heumarkt'
+      fullPath: '/admin/heumarkt'
+      preLoaderRoute: typeof AdminHeumarktRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/admin/items': {
       id: '/admin/items'
       path: '/items'
@@ -525,6 +544,7 @@ declare module '@tanstack/react-router' {
 interface AdminRouteChildren {
   AdminAdventuresRoute: typeof AdminAdventuresRoute
   AdminEventsRoute: typeof AdminEventsRoute
+  AdminHeumarktRoute: typeof AdminHeumarktRoute
   AdminItemsRoute: typeof AdminItemsRoute
   AdminLocationsRoute: typeof AdminLocationsRoute
   AdminPlayersRoute: typeof AdminPlayersRoute
@@ -539,6 +559,7 @@ interface AdminRouteChildren {
 const AdminRouteChildren: AdminRouteChildren = {
   AdminAdventuresRoute: AdminAdventuresRoute,
   AdminEventsRoute: AdminEventsRoute,
+  AdminHeumarktRoute: AdminHeumarktRoute,
   AdminItemsRoute: AdminItemsRoute,
   AdminLocationsRoute: AdminLocationsRoute,
   AdminPlayersRoute: AdminPlayersRoute,

@@ -7,6 +7,7 @@ const nav = [
   { to: "/admin/stages", label: "Etappen" },
   { to: "/admin/puzzles", label: "Rätsel" },
   { to: "/admin/locations", label: "Orte" },
+  { to: "/admin/heumarkt", label: "Heumarkt 3D" },
   { to: "/admin/items", label: "Gegenstände" },
   { to: "/admin/events", label: "Ereignisse" },
   { to: "/admin/players", label: "Spielende" },

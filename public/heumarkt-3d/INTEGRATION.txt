@@ -1,0 +1,43 @@
+HEUMARKT 3D · HEINZELS WINTERMÄRCHEN 2025
+===========================================
+
+Integration route:
+  /3d -> iframe /heumarkt-3d/index.html
+
+This revision replaces the former office geometry with an editable low-poly
+reconstruction of the Heumarkt portion of Heinzels Wintermärchen.
+
+Primary layout source:
+  Official Marktplan 2025 supplied by the user / published by Heinzels Wintermärchen.
+
+Additional visual references:
+  - user-supplied photos of the rink, Stapelhaus/Zunfthaus, Schmied, market lanes,
+    Christmas tree and entrance portal
+  - official/published aerial imagery used to cross-check the ice-rink topology
+
+Model coverage:
+  - Futtergasse stalls and gates
+  - large open-air ice rink and west/east loops
+  - Reiterdenkmal in the west loop
+  - bridge across the rink
+  - Eisbär, Büble Alpe, Stapelhaus and Zunfthaus lodges
+  - Kinderkarussell, Gondel, main Christmas tree
+  - Goldgasse and Wintergasse stalls
+  - Tor Unter Käster and Antikgasse transition with stalls 49–58 / Heinzelexpress
+  - decorative light masts
+
+Editor functionality retained:
+  - orbit / pan / zoom
+  - camera presets
+  - search and object selection
+  - edit mode with move / rotate / resize / duplicate / delete
+  - add new market objects
+  - save locally, JSON import/export
+  - official market-plan overlay
+
+IMPORTANT ACCURACY NOTE
+-----------------------
+The official market plan is an illustrated visitor plan, not a surveyed construction
+or CAD drawing. Therefore booth sequence, relative placement, named landmarks and
+rink topology are represented as closely as possible from the available sources,
+while exact dimensions and metric coordinates remain approximate.

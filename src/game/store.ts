@@ -21,6 +21,8 @@ interface PlayerState {
   messages: { id: string; text: string; time: string }[];
   activeEventId: string | null;
   seenEvents: string[];
+  heumarktTrianglePoints: string[];
+  heumarktTriangleSolved: boolean;
   startEvent: (id: string) => void;
   dismissEvent: () => void;
   begin: () => void;
@@ -38,6 +40,9 @@ interface PlayerState {
   dismissMessage: (id: string) => void;
   advanceStage: () => void;
   resetPuzzle: (id: string) => void;
+  setHeumarktTrianglePoints: (ids: string[]) => void;
+  solveHeumarktTriangle: () => void;
+  resetHeumarktTriangle: () => void;
 }
 
 const stamp = () =>
@@ -67,6 +72,8 @@ const initial = {
   messages: [] as { id: string; text: string; time: string }[],
   activeEventId: null as string | null,
   seenEvents: [] as string[],
+  heumarktTrianglePoints: [] as string[],
+  heumarktTriangleSolved: false,
 };
 
 export const usePlayer = create<PlayerState>()(
@@ -132,6 +139,22 @@ export const usePlayer = create<PlayerState>()(
             (puzzleId) => puzzleId !== id,
           ),
         })),
+      setHeumarktTrianglePoints: (ids) =>
+        set({ heumarktTrianglePoints: [...ids] }),
+      solveHeumarktTriangle: () =>
+        set((s) =>
+          s.heumarktTriangleSolved
+            ? s
+            : {
+                heumarktTriangleSolved: true,
+                journal: [
+                  entry("HEUMARKT REKONSTRUIERT", "Drei Archivpunkte verbunden. Ziel in die Gegenwart übertragen."),
+                  ...s.journal,
+                ],
+              },
+        ),
+      resetHeumarktTriangle: () =>
+        set({ heumarktTrianglePoints: [], heumarktTriangleSolved: false }),
       visitLocation: (id, name) =>
         set((s) =>
           s.visitedLocations.includes(id)
@@ -255,7 +278,7 @@ export const usePlayer = create<PlayerState>()(
     }),
     {
       name: "hidden-path-progress",
-      version: 2,
+      version: 3,
       migrate: (persistedState) => {
         const state = persistedState as Partial<PlayerState> | undefined;
         return {
@@ -263,6 +286,8 @@ export const usePlayer = create<PlayerState>()(
           ...state,
           unlockedFeatures: state?.unlockedFeatures ?? [],
           unlockedStoryFragments: state?.unlockedStoryFragments ?? [],
+          heumarktTrianglePoints: state?.heumarktTrianglePoints ?? [],
+          heumarktTriangleSolved: state?.heumarktTriangleSolved ?? false,
         };
       },
     },
