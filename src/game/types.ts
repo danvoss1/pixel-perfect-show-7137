@@ -14,7 +14,10 @@ export type PuzzleType =
   | "morse"
   | "minesweeper"
   | "circuit"
-  | "geometry";
+  | "geometry"
+  | "ordering"
+  | "reveal"
+  | "dna";
 
 export type MarkerState =
   | "unknown"
@@ -111,6 +114,38 @@ export interface GeometryConfig {
   archiveReference?: string;
 }
 
+export interface OrderingItem {
+  id: string;
+  text: string;
+  order: number;
+}
+
+export interface OrderingConfig {
+  items: OrderingItem[];
+  extraction?: "first-letter";
+  answer: string;
+  instruction?: string;
+  successTitle?: string;
+  revealText?: string;
+  showExtraction?: boolean;
+}
+
+export interface RevealConfig {
+  eyebrow?: string;
+  body: string[];
+  confirmLabel?: string;
+  successText?: string;
+}
+
+export interface DnaConfig {
+  strand: string;
+  directionTop?: "5to3" | "3to5";
+  prompt?: string;
+  helperText?: string;
+  revealText: string;
+  successTitle?: string;
+}
+
 export interface RouteStep {
   direction: "NORTH" | "EAST" | "SOUTH" | "WEST";
   distance: number;
@@ -162,12 +197,16 @@ export interface Puzzle {
   requiredItemIds?: string[];
   unlockFeatureIds?: string[];
   storyFragmentIds?: string[];
+  completeStageOnSolve?: boolean;
   config:
     | WordleConfig
     | SlidingConfig
     | FlappyConfig
     | CodeConfig
     | GeometryConfig
+    | OrderingConfig
+    | RevealConfig
+    | DnaConfig
     | RouteConfig
     | SymbolsConfig
     | MastermindConfig
@@ -223,7 +262,17 @@ export interface InventoryItem {
   consumable?: boolean;
   requiredLater?: boolean;
   sourceStageId?: string;
+  tags?: string[];
 }
+
+export interface InventoryItemState {
+  used?: boolean;
+  damaged?: boolean;
+  destroyed?: boolean;
+  hiddenDetailUnlocked?: boolean;
+}
+
+export type StageCompletionMode = "manual" | "external";
 
 export interface Stage {
   id: string;
@@ -237,6 +286,14 @@ export interface Stage {
   puzzleId?: string;
   envelopeId?: string;
   rewardItemId?: string;
+  pickupItemId?: string;
+  pickupTitle?: string;
+  pickupDescription?: string;
+  requireLocationVisit?: boolean;
+  specialRoute?: string;
+  specialRouteLabel?: string;
+  completionMode?: StageCompletionMode;
+  hidePuzzleLink?: boolean;
   reward: string;
 }
 
@@ -255,3 +312,11 @@ export interface JournalEntry {
   title: string;
   detail: string;
 }
+
+export type HeumarktFlowPhase =
+  | "triangle"
+  | "target-revealed"
+  | "heart-reached"
+  | "story-revealed"
+  | "location-riddle"
+  | "ai-identified";

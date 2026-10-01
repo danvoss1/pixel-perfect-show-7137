@@ -15,4 +15,7 @@ export const puzzleTypeLabel: Record<PuzzleType, string> = {
   minesweeper: "Minenfeld",
   circuit: "Schaltkreis",
   geometry: "Geometrie",
+  ordering: "Sortierrätsel",
+  reveal: "Archivfund",
+  dna: "DNA-Analyse",
 };

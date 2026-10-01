@@ -22,6 +22,7 @@ export const Route = createFileRoute("/inventory")({
 
 function InventoryPage() {
   const owned = usePlayer((s) => s.inventory);
+  const itemStates = usePlayer((s) => s.itemStates);
 
   return (
     <GameShell>
@@ -52,7 +53,12 @@ function InventoryPage() {
                  <Label>{item.category ?? item.kind} · Nr. {String(item.number).padStart(2, "0")}</Label>
                 <h2 className="mt-3 font-display text-lg font-bold uppercase">{item.name}</h2>
                  <p className="mt-1 text-sm text-muted-foreground">{item.mystery ? "Verwendung unbekannt — weitere Hinweise folgen." : item.description}</p>
-                <p className="mt-4 label-mono">Gefunden · Etappe {String(item.foundAtStage).padStart(2, "0")}</p>
+                <div className="mt-4 flex flex-wrap gap-2">
+                  <span className="label-mono">Gefunden · Etappe {String(item.foundAtStage).padStart(2, "0")}</span>
+                  {itemStates[item.id]?.used ? <span className="label-mono text-success">Benutzt · weiterhin aufbewahren</span> : null}
+                  {itemStates[item.id]?.damaged ? <span className="label-mono text-gold">Beschädigt</span> : null}
+                  {itemStates[item.id]?.destroyed ? <span className="label-mono text-destructive">Geöffnet / zerstört</span> : null}
+                </div>
               </Link>
             </Reveal>
           ))}

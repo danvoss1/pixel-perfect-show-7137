@@ -1,17 +1,11 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import { motion } from "motion/react";
-import { MapPin, Puzzle as PuzzleIcon, Mail } from "lucide-react";
+import { Box, MapPin, PackageCheck, Puzzle as PuzzleIcon } from "lucide-react";
 import { GameShell } from "@/components/game/GameShell";
 import { Label, LockedContent, Panel, Reveal } from "@/components/game/primitives";
 import { PuzzleSuccess } from "@/components/game/PuzzleSuccess";
-import {
-  adventure,
-  envelopeById,
-  itemById,
-  locationById,
-  stageById,
-} from "@/game/data";
+import { adventure, itemById, locationById, stageById } from "@/game/data";
 import { usePlayer } from "@/game/store";
 
 export const Route = createFileRoute("/stage/$id")({
@@ -27,7 +21,8 @@ export const Route = createFileRoute("/stage/$id")({
         { name: "description", content: description },
         { property: "og:title", content: title },
         { property: "og:description", content: description },
-        { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary" },
+        { property: "og:type", content: "website" },
+        { name: "twitter:card", content: "summary" },
       ],
     };
   },
@@ -38,15 +33,12 @@ function StagePage() {
   const { id } = Route.useParams();
   const navigate = useNavigate();
   const stage = stageById(id);
-  const completed = usePlayer((s) => s.completedStages);
-  const currentId = usePlayer((s) => s.currentStageId);
-  const verified = usePlayer((s) => s.verifiedEnvelopes);
-  const verifyEnvelope = usePlayer((s) => s.verifyEnvelope);
-  const completeStage = usePlayer((s) => s.completeStage);
-  const addItem = usePlayer((s) => s.addItem);
-  const solvedPuzzles = usePlayer((s) => s.completedPuzzles);
-  const [code, setCode] = useState("");
-  const [denied, setDenied] = useState(false);
+  const completed = usePlayer((state) => state.completedStages);
+  const currentId = usePlayer((state) => state.currentStageId);
+  const solvedPuzzles = usePlayer((state) => state.completedPuzzles);
+  const inventory = usePlayer((state) => state.inventory);
+  const completeStage = usePlayer((state) => state.completeStage);
+  const addItem = usePlayer((state) => state.addItem);
   const [granted, setGranted] = useState(false);
 
   if (!stage) {
@@ -64,11 +56,11 @@ function StagePage() {
       : "locked";
 
   if (status === "locked") {
-    const prev = adventure.stages.find((s) => s.number === stage.number - 1);
+    const previous = adventure.stages.find((entry) => entry.number === stage.number - 1);
     return (
       <GameShell>
         <LockedContent
-          note={`Von Etappe ${String(prev?.number ?? 1).padStart(2, "0")} fehlt noch etwas.`}
+          note={`Von Etappe ${String(previous?.number ?? 1).padStart(2, "0")} fehlt noch etwas.`}
         />
         <Link to="/adventure" className="mt-6 block text-center label-mono text-primary">
           Zurück zur Etappenübersicht
@@ -78,17 +70,31 @@ function StagePage() {
   }
 
   const location = locationById(stage.locationId);
-  const envelope = envelopeById(stage.envelopeId);
   const reward = stage.rewardItemId ? itemById(stage.rewardItemId) : undefined;
-  const envelopeOk = envelope ? verified.includes(envelope.id) : true;
+  const pickup = stage.pickupItemId ? itemById(stage.pickupItemId) : undefined;
   const puzzleOk = stage.puzzleId ? solvedPuzzles.includes(stage.puzzleId) : true;
-  const canFinish = envelopeOk && puzzleOk && status !== "completed";
+  // Locations are navigation/context only. Progress never depends on browser GPS.
+  const locationOk = true;
+  const pickupOk = !pickup || inventory.includes(pickup.id);
+  const canFinish =
+    puzzleOk &&
+    locationOk &&
+    pickupOk &&
+    status !== "completed" &&
+    stage.completionMode !== "external";
+
+  const collectPickup = () => {
+    if (!pickup) return;
+    addItem(pickup.id, pickup.name);
+  };
 
   const finish = () => {
     if (reward) addItem(reward.id, reward.name);
     completeStage(stage.id);
     setGranted(true);
   };
+
+  const next = adventure.stages.find((entry) => entry.number === stage.number + 1);
 
   return (
     <GameShell>
@@ -116,7 +122,9 @@ function StagePage() {
           </Panel>
           <Panel>
             <Label>Aktueller Status</Label>
-            <p className="mt-2 text-sm capitalize text-primary">{status === "completed" ? "Abgeschlossen" : "Aktiv"}</p>
+            <p className="mt-2 text-sm capitalize text-primary">
+              {status === "completed" ? "Abgeschlossen" : "Aktiv"}
+            </p>
           </Panel>
         </div>
       </Reveal>
@@ -130,7 +138,8 @@ function StagePage() {
             <MapPin className="size-4" /> Karte ansehen
           </Link>
         ) : null}
-        {stage.puzzleId ? (
+
+        {stage.puzzleId && !stage.hidePuzzleLink ? (
           <Link
             to="/puzzle/$id"
             params={{ id: stage.puzzleId }}
@@ -139,64 +148,41 @@ function StagePage() {
             <PuzzleIcon className="size-4" /> Rätsel öffnen
           </Link>
         ) : null}
+
+        {stage.specialRoute ? (
+          <a
+            href={stage.specialRoute}
+            className="flex min-h-[48px] flex-1 items-center justify-center gap-2 rounded-md bg-primary px-5 font-display text-xs font-bold uppercase tracking-[0.18em] text-primary-foreground"
+          >
+            <Box className="size-4" /> {stage.specialRouteLabel ?? "Sonderbereich öffnen"}
+          </a>
+        ) : null}
       </div>
 
-      {envelope ? (
-        <Panel className="mt-6">
-          <div className="flex items-center gap-3">
-            <Mail className="size-5 shrink-0 text-gold" />
-            <div className="min-w-0">
-              <Label>Umschlag Nr. 0{envelope.number}</Label>
-              <p className="mt-1 text-sm">
-                {envelopeOk ? "Bestätigt" : `Erwarteter Ort: ${envelope.expectedLocation}`}
+
+      {pickup ? (
+        <Panel className="mt-6" glow={pickupOk}>
+          <div className="flex items-start gap-3">
+            <PackageCheck className="mt-0.5 size-5 shrink-0 text-gold" />
+            <div>
+              <Label>{stage.pickupTitle ?? "Physischer Fund"}</Label>
+              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                {stage.pickupDescription ?? pickup.description}
               </p>
             </div>
           </div>
 
-          {envelopeOk ? (
-            <p className="mt-4 rounded-md border border-border bg-paper p-4 font-hand text-xl text-paper-foreground">
-              {envelope.contents}
+          {pickupOk ? (
+            <p className="mt-4 font-display text-sm uppercase tracking-[0.16em] text-success">
+              {pickup.name} · im Inventar
             </p>
           ) : (
-            <>
-              <p className="mt-4 text-sm text-muted-foreground">
-                Finde Umschlag Nr. 0{envelope.number} vor dem Fortfahren.
-              </p>
-              <motion.input
-                aria-label="Umschlagcode"
-                value={code}
-                onChange={(e) => setCode(e.target.value)}
-                placeholder="Code aus dem Umschlag eingeben"
-                className={`mt-3 h-14 w-full rounded-md border border-border bg-background/60 px-4 font-display uppercase tracking-[0.2em] outline-none focus:border-primary ${
-                  denied ? "shake" : ""
-                }`}
-              />
-              <div className="mt-3 flex gap-2">
-                <button
-                  onClick={() => {
-                    if (code.trim().toUpperCase() === envelope.code) {
-                      verifyEnvelope(envelope.id, envelope.number);
-                      setDenied(false);
-                    } else {
-                      setDenied(true);
-                      setTimeout(() => setDenied(false), 800);
-                    }
-                  }}
-                  className="min-h-[48px] flex-1 rounded-md bg-primary font-display text-xs font-bold uppercase tracking-[0.2em] text-primary-foreground"
-                >
-                  Bestätigen
-                </button>
-                <Link
-                  to="/scan"
-                  className="grid min-h-[48px] flex-1 place-items-center rounded-md border border-border font-display text-xs font-bold uppercase tracking-[0.2em]"
-                >
-                  QR-Code scannen
-                </Link>
-              </div>
-              {denied ? (
-                <p className="mt-3 text-center text-sm text-destructive">Zugriff verweigert</p>
-              ) : null}
-            </>
+            <button
+              onClick={collectPickup}
+              className="mt-4 min-h-[48px] w-full rounded-md bg-primary px-4 font-display text-xs font-bold uppercase tracking-[0.18em] text-primary-foreground"
+            >
+              Objekt gefunden
+            </button>
           )}
         </Panel>
       ) : null}
@@ -204,7 +190,11 @@ function StagePage() {
       <div className="mt-8">
         {status === "completed" ? (
           <p className="text-center font-display text-sm uppercase tracking-[0.2em] text-success">
-            Etappe abgeschlossen · {stage.reward} gesammelt
+            Etappe abgeschlossen · {stage.reward}
+          </p>
+        ) : stage.completionMode === "external" ? (
+          <p className="text-center text-sm text-muted-foreground">
+            Diese Etappe wird innerhalb des zugehörigen Spiels automatisch abgeschlossen.
           </p>
         ) : (
           <button
@@ -219,13 +209,16 @@ function StagePage() {
 
       <PuzzleSuccess
         show={granted}
-        title="Zugriff gewährt"
-        message={`${stage.reward} wurde deinem Inventar hinzugefügt.`}
+        title="Etappe abgeschlossen"
+        message={`${stage.reward} wurde bestätigt.`}
         continueLabel="Der Spur folgen"
         onContinue={() => {
           setGranted(false);
-          const next = adventure.stages.find((s) => s.number === stage.number + 1);
-          navigate(next ? { to: "/stage/$id", params: { id: next.id } } : { to: "/complete" });
+          navigate(
+            next
+              ? { to: "/stage/$id", params: { id: next.id } }
+              : { to: "/complete" },
+          );
         }}
       />
     </GameShell>

@@ -16,12 +16,18 @@ import { MorseGame } from "@/components/puzzles/MorseGame";
 import { MinesweeperGame } from "@/components/puzzles/MinesweeperGame";
 import { CircuitGame } from "@/components/puzzles/CircuitGame";
 import { GeometryPuzzle } from "@/components/puzzles/GeometryPuzzle";
+import { OrderingPuzzle } from "@/components/puzzles/OrderingPuzzle";
+import { RevealPuzzle } from "@/components/puzzles/RevealPuzzle";
+import { DnaPuzzle } from "@/components/puzzles/DnaPuzzle";
 import { adventure, itemById, puzzleById, stageById } from "@/game/data";
 import { usePlayer } from "@/game/store";
 import { puzzleTypeLabel } from "@/game/labels";
 import type {
   CodeConfig,
   GeometryConfig,
+  OrderingConfig,
+  RevealConfig,
+  DnaConfig,
   FlappyConfig,
   MastermindConfig,
   SimonConfig,
@@ -61,8 +67,10 @@ function PuzzlePage() {
   const addItem = usePlayer((s) => s.addItem);
   const unlockFeature = usePlayer((s) => s.unlockFeature);
   const unlockStoryFragment = usePlayer((s) => s.unlockStoryFragment);
+  const completeStage = usePlayer((s) => s.completeStage);
   const solvedList = usePlayer((s) => s.completedPuzzles);
   const currentStageId = usePlayer((s) => s.currentStageId);
+  const inventory = usePlayer((s) => s.inventory);
   const [celebrate, setCelebrate] = useState(false);
 
   const solved = puzzle ? solvedList.includes(puzzle.id) : false;
@@ -85,8 +93,19 @@ function PuzzlePage() {
       unlockStoryFragment(fragmentId);
     }
 
+    if (puzzle.completeStageOnSolve) {
+      completeStage(puzzle.stageId);
+    }
+
     setCelebrate(true);
-  }, [addItem, puzzle, solvePuzzle, unlockFeature, unlockStoryFragment]);
+  }, [
+    addItem,
+    completeStage,
+    puzzle,
+    solvePuzzle,
+    unlockFeature,
+    unlockStoryFragment,
+  ]);
 
   if (!puzzle) {
     return (
@@ -98,6 +117,16 @@ function PuzzlePage() {
 
   const stage = stageById(puzzle.stageId);
   const currentStage = adventure.stages.find((entry) => entry.id === currentStageId);
+  const missingRequiredItem = (puzzle.requiredItemIds ?? []).find((itemId) => !inventory.includes(itemId));
+  if (missingRequiredItem) {
+    const item = itemById(missingRequiredItem);
+    return (
+      <GameShell>
+        <LockedContent note={`Für dieses Rätsel fehlt noch: ${item?.name ?? "ein benötigter Gegenstand"}.`} />
+        <Link to="/inventory" className="mt-6 block text-center label-mono text-primary">Zum Inventar</Link>
+      </GameShell>
+    );
+  }
   if (stage && currentStage && stage.number > currentStage.number) {
     return <GameShell><LockedContent note="Diese Spur ist noch versiegelt. Folge zuerst der aktuellen Etappe." /><Link to="/adventure" className="mt-6 block text-center label-mono text-primary">Zur Etappenübersicht</Link></GameShell>;
   }
@@ -191,6 +220,30 @@ function PuzzlePage() {
             onSolved={onSolved}
           />
         ) : null}
+
+        {puzzle.type === "ordering" ? (
+          <OrderingPuzzle
+            config={puzzle.config as OrderingConfig}
+            solved={solved}
+            onSolved={onSolved}
+          />
+        ) : null}
+
+        {puzzle.type === "reveal" ? (
+          <RevealPuzzle
+            config={puzzle.config as RevealConfig}
+            solved={solved}
+            onSolved={onSolved}
+          />
+        ) : null}
+
+        {puzzle.type === "dna" ? (
+          <DnaPuzzle
+            config={puzzle.config as DnaConfig}
+            solved={solved}
+            onSolved={onSolved}
+          />
+        ) : null}
       </div>
 
       {solved && puzzle.type === "sliding" ? (
@@ -218,11 +271,35 @@ function PuzzlePage() {
 
       <PuzzleSuccess
         show={celebrate}
-        title={puzzle.type === "wordle" ? "Code entschlüsselt" : "Auftrag abgeschlossen"}
-        message="Die Spur führt weiter."
-        continueLabel={stage ? "Zurück zur Etappe" : "Weiter"}
+        title={
+          puzzle.id === "p-meridiano"
+            ? "Totino identifiziert"
+            : puzzle.type === "dna"
+              ? "Genetische Adresse identifiziert"
+              : puzzle.type === "reveal"
+                ? "Übertragung übernommen"
+                : puzzle.type === "ordering"
+                  ? "Chronologie bestätigt"
+                  : puzzle.type === "wordle"
+                    ? "Code entschlüsselt"
+                    : "Auftrag abgeschlossen"
+        }
+        message={
+          puzzle.id === "p-meridiano"
+            ? "Die nächste Versorgungsstation wurde freigeschaltet."
+            : "Die Spur führt weiter."
+        }
+        continueLabel={puzzle.completeStageOnSolve ? "Zur nächsten Etappe" : stage ? "Zurück zur Etappe" : "Weiter"}
         onContinue={() => {
           setCelebrate(false);
+          if (puzzle.completeStageOnSolve && stage) {
+            const index = adventure.stages.findIndex((entry) => entry.id === stage.id);
+            const next = adventure.stages[index + 1];
+            if (next) {
+              navigate({ to: "/stage/$id", params: { id: next.id } });
+              return;
+            }
+          }
           if (stage) navigate({ to: "/stage/$id", params: { id: stage.id } });
         }}
       />

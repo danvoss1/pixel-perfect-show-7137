@@ -26,7 +26,7 @@ function PuzzleHub() {
   const currentId = usePlayer((s) => s.currentStageId);
   const currentNumber = adventure.stages.find((s) => s.id === currentId)?.number ?? 1;
 
-  const withStatus = puzzles.map((p) => {
+  const withStatus = puzzles.filter((p) => stageById(p.stageId)).map((p) => {
     const stage = stageById(p.stageId);
     const status = solved.includes(p.id)
       ? ("completed" as const)

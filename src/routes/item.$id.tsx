@@ -33,6 +33,7 @@ function ItemPage() {
   const { id } = Route.useParams();
   const item = itemById(id);
   const owned = usePlayer((s) => s.inventory.includes(id));
+  const itemState = usePlayer((s) => s.itemStates[id]);
   const [rotation, setRotation] = useState(0);
   const [zoom, setZoom] = useState(1);
   const [hotspot, setHotspot] = useState(false);
@@ -145,6 +146,18 @@ function ItemPage() {
                 Diesen Gegenstand in der echten Welt aufbewahren und mitnehmen.
                 Gefundene Objekte können in späteren Etappen erneut benötigt werden.
               </p>
+            </Panel>
+          ) : null}
+
+          {itemState?.used || itemState?.damaged || itemState?.destroyed ? (
+            <Panel>
+              <Label>Objektstatus</Label>
+              <div className="mt-2 flex flex-wrap gap-2 text-xs">
+                {itemState.used ? <span className="rounded border border-success/40 px-2 py-1 text-success">Benutzt</span> : null}
+                {itemState.damaged ? <span className="rounded border border-gold/40 px-2 py-1 text-gold">Beschädigt</span> : null}
+                {itemState.destroyed ? <span className="rounded border border-destructive/40 px-2 py-1 text-destructive">Geöffnet / zerstört</span> : null}
+              </div>
+              <p className="mt-2 text-sm text-muted-foreground">Auch benutzte Gegenstände bleiben im Inventar, solange die Expedition sie noch benötigt.</p>
             </Panel>
           ) : null}
 
