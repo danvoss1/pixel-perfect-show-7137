@@ -137,11 +137,57 @@ export interface RevealConfig {
   successText?: string;
 }
 
+export interface DnaLabRead {
+  id: string;
+  label: string;
+  direction: "forward" | "reverse" | "unknown";
+  sequence: string;
+  meanQ: number;
+  ambiguousPercent: number;
+  note?: string;
+}
+
+export interface DnaReverseOption {
+  id: string;
+  label: string;
+  sequence: string;
+}
+
+export interface DnaReference {
+  id: string;
+  name: string;
+  diagnosticBases: Record<string, string>;
+  note?: string;
+}
+
 export interface DnaConfig {
-  strand: string;
-  directionTop?: "5to3" | "3to5";
-  prompt?: string;
-  helperText?: string;
+  caseId: string;
+  marker: string;
+  specimen: string;
+  intro: string;
+  qualityThreshold: {
+    minMeanQ: number;
+    maxAmbiguousPercent: number;
+  };
+  reads: DnaLabRead[];
+  discardReadId: string;
+
+  forwardReadId: string;
+  reverseReadId: string;
+  reverseOptions: DnaReverseOption[];
+  correctReverseOptionId: string;
+
+  overlapOffsets: number[];
+  correctOverlapOffset: number;
+  ambiguousConsensusPosition: number;
+  ambiguousConsensusBase: "A" | "T" | "G" | "C";
+  consensusSequence: string;
+
+  diagnosticPositions: number[];
+  references: DnaReference[];
+  correctReferenceId: string;
+
+  specimenLabel: string;
   revealText: string;
   successTitle?: string;
 }

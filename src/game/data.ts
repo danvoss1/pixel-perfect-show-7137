@@ -120,9 +120,9 @@ export const adventure: Adventure = {
       title: "Zurück zum Ursprung",
       kind: "Biozentrum · Universität zu Köln",
       intro:
-        "Die Übertragung aus Totino verweist zurück dorthin, wo BIO mehr als nur drei Buchstaben war.",
+        "Die Übertragung aus Totino verweist zurück dorthin, wo BIO mehr als nur drei Buchstaben war. Im Archiv wartet kein Schulbuchrätsel, sondern eine unvollständige COI-Barcoding-Auswertung.",
       objective:
-        "Öffnet die Karte zur Biologischen Fakultät und löst dort die DNA-Analyse. Der genetische Befund enthält die nächste Adresse.",
+        "Öffnet die Karte zur Biologischen Fakultät. Prüft die Sequenzqualität, orientiert den Reverse-Read, rekonstruiert den Konsensus und bestimmt die passende Referenzlinie.",
       locationId: "loc-biozentrum",
       puzzleId: "p-dna-bio",
       completionMode: "external",
@@ -543,24 +543,179 @@ export const puzzles: Puzzle[] = [
   {
     id: "p-dna-bio",
     type: "dna",
-    title: "Genetische Probe 07",
-    tagline: "Komplementär heißt nicht identisch.",
+    title: "COI · Probe ZUE-07",
+    tagline: "Ein Read ist kein Befund.",
     stageId: "s8",
     storyFragmentIds: ["story-bio-07"],
     completeStageOnSolve: true,
     hints: [
-      { id: "dna-h1", label: "Hinweis 1", text: "A paart mit T. G paart mit C." },
-      { id: "dna-h2", label: "Hinweis 2", text: "Der Gegenstrang verläuft antiparallel. Achtet auf 5′ und 3′." },
-      { id: "dna-h3", label: "Letzter Hinweis", text: "Ergänzt jede Base mit ihrer Watson-Crick-Partnerbase." },
+      {
+        id: "dna-h1",
+        label: "Hinweis 1 · Qualitätskontrolle",
+        text:
+          "Bewertet jeden Read getrennt gegen beide Grenzwerte. Ein verworfener Read kann gleichzeitig mehr als ein Qualitätsproblem haben.",
+      },
+      {
+        id: "dna-h2",
+        label: "Hinweis 2 · Reverse Read",
+        text:
+          "Für ein direktes Alignment müssen beide Sequenzen in derselben 5′→3′-Orientierung vorliegen. Beim Reverse-Read sind deshalb Reihenfolge und Basenpaarung relevant.",
+      },
+      {
+        id: "dna-h3",
+        label: "Hinweis 3 · Assembly",
+        text:
+          "Verschiebt den Reverse-Read so, dass die längste sinnvolle Überlappung entsteht. Eine ambige Base im Forward-Read darf im finalen Konsensus nicht als N stehen bleiben.",
+      },
+      {
+        id: "dna-h4",
+        label: "Letzter Hinweis · Taxonomie",
+        text:
+          "Die Positionsangaben sind 1-basiert. Extrahiert die sechs Basen aus eurem Konsensus und sucht anschließend die eine Referenzzeile, die an allen sechs Stellen übereinstimmt.",
+      },
     ],
     config: {
-      strand: "AGTCCATGCGAA",
-      directionTop: "5to3",
-      prompt: "Erstellt den komplementären DNA-Strang.",
-      helperText:
-        "Tippt auf die leeren Basenfelder und wählt A, T, G oder C. Die Orientierung ist Teil der Probe.",
+      caseId: "COI-ZUE-07",
+      marker: "mtDNA COI · Barcode-Fragment",
+      specimen: "Arthropoda · unbekannte Laborprobe",
+      intro:
+        "Vier Sequenzreads wurden aus derselben Barcoding-Serie exportiert. Eure Aufgabe ist es, aus den Rohdaten eine belastbare Konsensussequenz zu rekonstruieren und sie anschließend einer Referenzlinie zuzuordnen.",
+      qualityThreshold: {
+        minMeanQ: 25,
+        maxAmbiguousPercent: 5,
+      },
+      reads: [
+        {
+          id: "FWD-01",
+          label: "FWD-01",
+          direction: "forward",
+          sequence: "ATGGCTTTTGGATTTGGTTATGGAGCNGGATT",
+          meanQ: 34,
+          ambiguousPercent: 3.1,
+          note: "Forward read · eine ambige Position im Überlappungsbereich",
+        },
+        {
+          id: "REV-02",
+          label: "REV-02",
+          direction: "reverse",
+          sequence: "TCCAAAAGCTGGAACTAATCCAGCTCCATAAC",
+          meanQ: 32,
+          ambiguousPercent: 0,
+          note: "Reverse read · 5′→3′ wie vom Sequencer exportiert",
+        },
+        {
+          id: "FWD-03",
+          label: "FWD-03",
+          direction: "forward",
+          sequence: "NNNGCTNTTGGANNTGGNTANNGAGCNNNNAT",
+          meanQ: 16,
+          ambiguousPercent: 21.9,
+          note: "Schwaches Signal / Peaküberlagerung",
+        },
+        {
+          id: "FWD-04",
+          label: "FWD-04",
+          direction: "forward",
+          sequence: "ATGGCTTTTGGATTTGGTTATGGAGCTGGATT",
+          meanQ: 29,
+          ambiguousPercent: 0,
+          note: "Technische Wiederholung des Forward-Bereichs",
+        },
+      ],
+      discardReadId: "FWD-03",
+
+      forwardReadId: "FWD-01",
+      reverseReadId: "REV-02",
+      reverseOptions: [
+        {
+          id: "rev-only",
+          label: "Nur Reihenfolge umkehren",
+          sequence: "CAATACCTCGACCTAATCAAGGTCGAAAACCT",
+        },
+        {
+          id: "complement-only",
+          label: "Nur komplementieren",
+          sequence: "AGGTTTTCGACCTTGATTAGGTCGAGGTATTG",
+        },
+        {
+          id: "reverse-complement",
+          label: "Reverse Complement",
+          sequence: "GTTATGGAGCTGGATTAGTTCCAGCTTTTGGA",
+        },
+        {
+          id: "forward-copy",
+          label: "Forward-Sequenz übernehmen",
+          sequence: "ATGGCTTTTGGATTTGGTTATGGAGCTGGATT",
+        },
+      ],
+      correctReverseOptionId: "reverse-complement",
+
+      overlapOffsets: [12, 14, 16, 18],
+      correctOverlapOffset: 16,
+      ambiguousConsensusPosition: 27,
+      ambiguousConsensusBase: "T",
+      consensusSequence: "ATGGCTTTTGGATTTGGTTATGGAGCTGGATTAGTTCCAGCTTTTGGA",
+
+      diagnosticPositions: [10, 18, 24, 31, 40, 45],
+      references: [
+        {
+          id: "ref-a",
+          name: "Morphospezies A",
+          diagnosticBases: {
+            "10": "G",
+            "18": "C",
+            "24": "A",
+            "31": "T",
+            "40": "G",
+            "45": "T",
+          },
+          note: "Referenzcluster A · COI Archiv",
+        },
+        {
+          id: "ref-b",
+          name: "Morphospezies B",
+          diagnosticBases: {
+            "10": "A",
+            "18": "T",
+            "24": "C",
+            "31": "T",
+            "40": "G",
+            "45": "C",
+          },
+          note: "Referenzcluster B · COI Archiv",
+        },
+        {
+          id: "ref-c",
+          name: "Morphospezies C",
+          diagnosticBases: {
+            "10": "G",
+            "18": "T",
+            "24": "A",
+            "31": "T",
+            "40": "G",
+            "45": "T",
+          },
+          note: "Referenzcluster C · COI Archiv",
+        },
+        {
+          id: "ref-d",
+          name: "Morphospezies D",
+          diagnosticBases: {
+            "10": "G",
+            "18": "G",
+            "24": "A",
+            "31": "A",
+            "40": "C",
+            "45": "T",
+          },
+          note: "Referenzcluster D · COI Archiv",
+        },
+      ],
+      correctReferenceId: "ref-c",
+
+      specimenLabel: "ZUE-LP40",
       revealText: "ZÜLPICHER STRASSE 40",
-      successTitle: "Genetische Adresse rekonstruiert",
+      successTitle: "Taxonomische Zuordnung abgeschlossen",
     },
   },
   {
