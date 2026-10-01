@@ -392,8 +392,9 @@ function hitAt(event){getPointer(event);
  const hits=ray.intersectObjects(clickable.filter(o=>o.visible&&o.parent?.visible!==false&&
   (o.userData.selection?.type==='choicepoint'||o.userData.selection?.type!=='wall'||(editMode&&wallGroup.visible))&&
   (o.userData.selection?.type==='choicepoint'||o.userData.selection?.type==='wall'||(o.userData.selection?.type==='room'||entityGroup.visible))),false);
- // Favor an individually editable item over floor patches, as in v0.1.
- return hits.find(hit=>hit.object.userData.selection?.type!=='room')||hits[0]||null;}
+ // Choice points always win so buildings beneath them don't swallow clicks.
+ return hits.find(hit=>hit.object.userData.selection?.type==='choicepoint')
+  ||hits.find(hit=>hit.object.userData.selection?.type!=='room')||hits[0]||null;}
 const plane=new THREE.Plane(new THREE.Vector3(0,1,0),0);
 function floorPoint(event){getPointer(event);const p=new THREE.Vector3();if(!ray.ray.intersectPlane(plane,p))return null;
  if(p.x<0||p.x>W||p.z<0||p.z>D)return null;return p;}
@@ -467,6 +468,11 @@ renderer.domElement.addEventListener('pointerup',event=>{if(!down||transformDrag
  const hit=hitAt(event);
  if(hit?.object.userData.selection?.type==='choicepoint'){
   const data=hit.object.userData.selection;
+  const root=choicePointMeshes.get(data.id);
+  if(root){
+   root.scale.set(1.16,1.16,1.16);
+   window.setTimeout(()=>root.scale.set(1,1,1),130);
+  }
   const payload={version:1,event:'heumarkt-map:choice-point',id:data.id,objectId:data.objectId,label:data.label,position:[data.x,data.z]};
   if(window.parent!==window)window.parent.postMessage(payload,window.location.origin);
   return;
@@ -547,8 +553,8 @@ function clearGameOverlay(){
  }
 }
 function markerAt(x,z,color=0xff7447,size=.75){
- const mesh=new THREE.Mesh(new THREE.SphereGeometry(size,20,14),new THREE.MeshBasicMaterial({color}));
- mesh.position.set(x,.8,z);gameOverlayGroup.add(mesh);return mesh;
+ const mesh=new THREE.Mesh(new THREE.SphereGeometry(size,20,14),new THREE.MeshBasicMaterial({color,depthTest:false}));
+ mesh.position.set(x,5.8,z);mesh.renderOrder=10;gameOverlayGroup.add(mesh);return mesh;
 }
 function choiceLabel(text,color){
  const canvas=document.createElement('canvas');canvas.width=160;canvas.height=160;
@@ -564,25 +570,69 @@ function choiceMarker(point,status='idle'){
  const colors={idle:0xd66f34,selected:0xd4ab5e,correct:0x6eaa75,wrong:0xc8534c,admin:0xd4ab5e};
  const color=colors[status]||colors.idle;
  const root=new THREE.Group();
- const stem=new THREE.Mesh(new THREE.CylinderGeometry(.10,.14,.9,12),new THREE.MeshBasicMaterial({color}));
- stem.position.y=.48;root.add(stem);
- const cap=new THREE.Mesh(new THREE.SphereGeometry(.48,20,14),new THREE.MeshBasicMaterial({color}));
- cap.position.y=1.12;root.add(cap);
- const label=choiceLabel(point.id,color===colors.correct?'#5f9867':color===colors.wrong?'#b94943':color===colors.admin?'#c59b4c':'#c7622f');
- label.position.y=1.95;root.add(label);
- root.position.set(point.x,0,point.z);
- for(const mesh of [stem,cap]){
-  mesh.userData.selection={type:'choicepoint',id:point.id,objectId:point.objectId,label:point.label,x:point.x,z:point.z};
-  clickable.push(mesh);
+ const selection={type:'choicepoint',id:point.id,objectId:point.objectId,label:point.label,x:point.x,z:point.z};
+
+ const stem=new THREE.Mesh(
+  new THREE.CylinderGeometry(.12,.16,1.0,12),
+  new THREE.MeshBasicMaterial({color,depthTest:false})
+ );
+ stem.position.y=.52;
+ stem.renderOrder=10;
+ root.add(stem);
+
+ const cap=new THREE.Mesh(
+  new THREE.SphereGeometry(.56,20,14),
+  new THREE.MeshBasicMaterial({color,depthTest:false})
+ );
+ cap.position.y=1.18;
+ cap.renderOrder=10;
+ root.add(cap);
+
+ const label=choiceLabel(
+  point.id,
+  color===colors.correct?'#5f9867':
+  color===colors.wrong?'#b94943':
+  color===colors.admin?'#c59b4c':
+  status==='selected'?'#c59b4c':'#c7622f'
+ );
+ label.position.y=2.02;
+ label.renderOrder=11;
+ label.userData.selection=selection;
+ root.add(label);
+
+ // Larger invisible hit target so taps/clicks on the visible number badge
+ // or immediately around the pin are reliably detected on desktop and mobile.
+ const hitbox=new THREE.Mesh(
+  new THREE.SphereGeometry(1.15,16,12),
+  new THREE.MeshBasicMaterial({
+   color:0xffffff,
+   transparent:true,
+   opacity:0,
+   depthWrite:false
+  })
+ );
+ hitbox.position.y=1.45;
+ hitbox.renderOrder=10;
+ hitbox.userData.selection=selection;
+ root.add(hitbox);
+
+ root.position.set(point.x,5,point.z);
+
+ for(const target of [stem,cap,label,hitbox]){
+  target.userData.selection=selection;
+  clickable.push(target);
  }
- gameOverlayGroup.add(root);choicePointMeshes.set(point.id,root);return root;
+
+ gameOverlayGroup.add(root);
+ choicePointMeshes.set(point.id,root);
+ return root;
 }
 function addHeartAt(x,z){
  const shape=new THREE.Shape();
  shape.moveTo(0,0.35);shape.bezierCurveTo(0,0.95,-1.1,1.1,-1.1,.25);shape.bezierCurveTo(-1.1,-.45,-.35,-.8,0,-1.25);shape.bezierCurveTo(.35,-.8,1.1,-.45,1.1,.25);shape.bezierCurveTo(1.1,1.1,0,.95,0,.35);
  const geo=new THREE.ExtrudeGeometry(shape,{depth:.16,bevelEnabled:true,bevelSize:.05,bevelThickness:.05,bevelSegments:2});
  const heart=new THREE.Mesh(geo,new THREE.MeshStandardMaterial({color:0xd94f46,emissive:0x5c100d,roughness:.42}));
- heart.rotation.x=-Math.PI/2;heart.scale.set(.75,.75,.75);heart.position.set(x,1.15,z);gameOverlayGroup.add(heart);
+ heart.rotation.x=-Math.PI/2;heart.scale.set(.75,.75,.75);heart.position.set(x,6.15,z);gameOverlayGroup.add(heart);
  return heart;
 }
 function renderChoicePoints(points=[],attemptObjectIds=[],successObjectIds=[],wrongObjectIds=[],solved=false,centerPoint=null,adminPreview=false){
@@ -593,10 +643,12 @@ function renderChoicePoints(points=[],attemptObjectIds=[],successObjectIds=[],wr
   choiceMarker(point,status);
  }
  if(solved&&successObjectIds.length===3){
-  const pts=successObjectIds.map(id=>pointByObject.get(id)).filter(Boolean).map(p=>new THREE.Vector3(p.x,.62,p.z));
+  const pts=successObjectIds.map(id=>pointByObject.get(id)).filter(Boolean).map(p=>new THREE.Vector3(p.x,5.62,p.z));
   if(pts.length===3){
    const closed=[...pts,pts[0]].map(p=>p.clone());
-   const line=new THREE.Line(new THREE.BufferGeometry().setFromPoints(closed),new THREE.LineBasicMaterial({color:0xf1d7a0,transparent:true,opacity:.96}));
+   const lineMat=new THREE.LineBasicMaterial({color:0xf1d7a0,transparent:true,opacity:.96,depthTest:false});
+   const line=new THREE.Line(new THREE.BufferGeometry().setFromPoints(closed),lineMat);
+   line.renderOrder=9;
    gameOverlayGroup.add(line);
    const center=centerPoint&&Number.isFinite(centerPoint.x)&&Number.isFinite(centerPoint.z)
     ?centerPoint:{x:(pts[0].x+pts[1].x+pts[2].x)/3,z:(pts[0].z+pts[1].z+pts[2].z)/3};

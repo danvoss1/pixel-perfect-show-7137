@@ -33,12 +33,13 @@ const tones: Record<MarkerState, string> = {
   unknown: "#A9B2A8", food: "#D6B36A", drink: "#7F9A79", envelope: "#D76A32", puzzle: "#D6B36A", bonus: "#74A678",
 };
 
-export function CologneMap({ selectedId, onSelect, stateOf, editable, onMove }: {
+export function CologneMap({ selectedId, onSelect, stateOf, editable, onMove, heartLocation }: {
   selectedId?: string;
   onSelect?: (id: string) => void;
   stateOf?: (location: GameLocation) => MarkerState;
   editable?: boolean;
   onMove?: (lat: number, lng: number) => void;
+  heartLocation?: { lat: number; lng: number };
 }) {
   const node = useRef<HTMLDivElement>(null);
   const map = useRef<google.maps.Map | null>(null);
@@ -92,6 +93,24 @@ export function CologneMap({ selectedId, onSelect, stateOf, editable, onMove }: 
       });
       return marker;
     });
+    if (heartLocation) {
+      const heart = new google.maps.Marker({
+        map: map.current,
+        position: heartLocation,
+        title: "Herz",
+        icon: {
+          path: "M0,-1 C-0.55,-1.6 -1.2,-0.55 0,0.6 C1.2,-0.55 0.55,-1.6 0,-1 Z",
+          fillColor: "#d94f46",
+          fillOpacity: 1,
+          strokeColor: "#fff",
+          strokeWeight: 2,
+          scale: 12,
+          anchor: new google.maps.Point(0, 0),
+        },
+      });
+      markers.current.push(heart);
+    }
+
     const visited = visible.filter((loc) => stateOf?.(loc) === "completed");
     const target = visible.find((loc) => loc.id === selectedId && stateOf?.(loc) !== "locked");
     const origin = visited.at(-1);
@@ -103,7 +122,7 @@ export function CologneMap({ selectedId, onSelect, stateOf, editable, onMove }: 
         overlays.current.push(renderer);
       });
     }
-  }, [selectedId, stateOf, onSelect, editable, onMove, ready]);
+  }, [selectedId, stateOf, onSelect, editable, onMove, ready, heartLocation?.lat, heartLocation?.lng]);
 
   useEffect(() => {
     const selected = locations.find((loc) => loc.id === selectedId);

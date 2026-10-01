@@ -226,7 +226,7 @@ function HeumarktCalibrationAdmin() {
             <iframe
               ref={iframeRef}
               onLoad={() => window.setTimeout(sendChoicePointsToFrame, 120)}
-              src="/heumarkt-3d/index.html?mode=calibration&rev=12"
+              src="/heumarkt-3d/index.html?mode=calibration&rev=121"
               title="Heumarkt 3D Kalibrierung"
               className="block h-[560px] w-full border-0"
             />

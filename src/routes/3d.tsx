@@ -57,7 +57,8 @@ function ThreeDArchive() {
     .map((id) => objects.find((o) => o.id === id))
     .filter(Boolean)
     .map((o) => ({ x: o!.position[0], z: o!.position[1] }));
-  const center = scenePoints.length === 3 ? triangleCentroid(scenePoints) : undefined;
+  const center = calibration.targetScene
+    ?? (scenePoints.length === 3 ? triangleCentroid(scenePoints) : undefined);
 
   const choicePoints = HEUMARKT_CHOICE_POINTS
     .map((point) => {
@@ -191,14 +192,14 @@ function ThreeDArchive() {
           <div className="grid size-9 shrink-0 place-items-center rounded-md border border-primary/40 bg-primary/5"><Box className="size-5 text-primary" /></div>
           <div className="min-w-0"><p className="label-mono truncate text-primary">3D · Archivszene</p><h1 className="truncate font-display text-sm font-bold uppercase sm:text-base">Heumarkt · Winterrekonstruktion</h1></div>
         </div>
-        <a href="/heumarkt-3d/index.html?mode=game&rev=12" target="_blank" rel="noreferrer" className="inline-flex min-h-10 shrink-0 items-center gap-2 rounded-md border border-border bg-background/60 px-3 text-xs font-semibold uppercase tracking-[0.12em] text-muted-foreground transition-colors hover:bg-accent hover:text-foreground">
+        <a href="/heumarkt-3d/index.html?mode=game&rev=121" target="_blank" rel="noreferrer" className="inline-flex min-h-10 shrink-0 items-center gap-2 rounded-md border border-border bg-background/60 px-3 text-xs font-semibold uppercase tracking-[0.12em] text-muted-foreground transition-colors hover:bg-accent hover:text-foreground">
           <ExternalLink className="size-4" /><span className="hidden sm:inline">Vollbild</span>
         </a>
       </header>
 
       <div className="grid min-h-0 flex-1 xl:grid-cols-[minmax(0,1fr)_360px]">
         <div className="min-h-[65vh] bg-[#101827]">
-          <iframe ref={iframeRef} onLoad={onFrameLoad} src="/heumarkt-3d/index.html?mode=game&rev=12" title="Heumarkt 3D-Rekonstruktion" className="block h-[calc(100dvh-3.5rem)] min-h-[650px] w-full border-0" allow="fullscreen" />
+          <iframe ref={iframeRef} onLoad={onFrameLoad} src="/heumarkt-3d/index.html?mode=game&rev=121" title="Heumarkt 3D-Rekonstruktion" className="block h-[calc(100dvh-3.5rem)] min-h-[650px] w-full border-0" allow="fullscreen" />
         </div>
 
         <aside className="border-l border-border bg-surface p-5">

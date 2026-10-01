@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useCallback, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { ChevronUp, LocateFixed, Footprints } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -8,6 +8,7 @@ import { CologneMap } from "@/components/game/CologneMap";
 import { Label } from "@/components/game/primitives";
 import { adventure, locations } from "@/game/data";
 import { usePlayer } from "@/game/store";
+import { loadHeumarktCalibration } from "@/game/heumarktCalibration";
 import type { GameLocation, MarkerState } from "@/game/types";
 import { GameWorldMap } from "@/components/game/GameWorldMap";
 import type { WorldPoint } from "@/game/worldmap";
@@ -34,6 +35,12 @@ function MapPage() {
   const visited = usePlayer((s) => s.visitedLocations);
   const currentId = usePlayer((s) => s.currentStageId);
   const visitLocation = usePlayer((s) => s.visitLocation);
+  const triangleSolved = usePlayer((s) => s.heumarktTriangleSolved);
+  const heartLocation = useMemo(() => {
+    if (!triangleSolved) return undefined;
+    const cal = loadHeumarktCalibration();
+    return { lat: cal.target.lat, lng: cal.target.lng };
+  }, [triangleSolved]);
   const currentStage = adventure.stages.find((s) => s.id === currentId);
   const [selectedId, setSelectedId] = useState(currentStage?.locationId ?? locations.find((l) => l.stageId === currentId)?.id ?? locations.find((l) => l.kind === "food")?.id ?? locations[0]?.id ?? "");
   const [open, setOpen] = useState(true);
@@ -85,7 +92,7 @@ function MapPage() {
   </div></GameShell>;
   return <GameShell bare><div className="relative h-[calc(100dvh-56px)] min-h-[480px] w-full overflow-hidden lg:h-screen">
     {toggle}
-    <CologneMap selectedId={selectedId} onSelect={choose} stateOf={stateOf} />
+    <CologneMap selectedId={selectedId} onSelect={choose} stateOf={stateOf} {...(heartLocation ? { heartLocation } : {})} />
     <div className="absolute inset-x-0 bottom-0 z-20 p-3 pb-20 sm:p-4 lg:max-w-md lg:pb-4"><div className="field-panel overflow-hidden shadow-lg">
       <Button variant="ghost" onClick={() => setOpen((value) => !value)} aria-expanded={open} className="flex h-auto min-h-[56px] w-full justify-between gap-3 px-5 text-left hover:bg-accent">
         <span className="min-w-0"><Label>{locked ? "Unbekannter Ort" : selected.kind === "food" ? "Versorgungsstation" : selected.kind === "drink" ? "Getränkestation" : "Nächstes Ziel"}</Label>
