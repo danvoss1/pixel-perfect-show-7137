@@ -19,6 +19,7 @@ import { GeometryPuzzle } from "@/components/puzzles/GeometryPuzzle";
 import { OrderingPuzzle } from "@/components/puzzles/OrderingPuzzle";
 import { RevealPuzzle } from "@/components/puzzles/RevealPuzzle";
 import { DnaPuzzle } from "@/components/puzzles/DnaPuzzle";
+import { ArtHistoryPuzzle } from "@/components/puzzles/ArtHistoryPuzzle";
 import { adventure, itemById, puzzleById, stageById } from "@/game/data";
 import { usePlayer } from "@/game/store";
 import { puzzleTypeLabel } from "@/game/labels";
@@ -28,6 +29,7 @@ import type {
   OrderingConfig,
   RevealConfig,
   DnaConfig,
+  ArtHistoryConfig,
   FlappyConfig,
   MastermindConfig,
   SimonConfig,
@@ -244,6 +246,14 @@ function PuzzlePage() {
             onSolved={onSolved}
           />
         ) : null}
+
+        {puzzle.type === "art" ? (
+          <ArtHistoryPuzzle
+            config={puzzle.config as ArtHistoryConfig}
+            solved={solved}
+            onSolved={onSolved}
+          />
+        ) : null}
       </div>
 
       {solved && puzzle.type === "sliding" ? (
@@ -276,7 +286,9 @@ function PuzzlePage() {
             ? "Totino identifiziert"
             : puzzle.type === "dna"
               ? "Genetische Adresse identifiziert"
-              : puzzle.type === "reveal"
+              : puzzle.type === "art"
+                ? "Archivsequenz rekonstruiert"
+                : puzzle.type === "reveal"
                 ? "Übertragung übernommen"
                 : puzzle.type === "ordering"
                   ? "Chronologie bestätigt"

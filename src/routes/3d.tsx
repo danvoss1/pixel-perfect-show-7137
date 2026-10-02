@@ -5,7 +5,6 @@ import {
   Box,
   ExternalLink,
   KeyRound,
-  LocateFixed,
   MapPin,
   RotateCcw,
   Search,
@@ -43,15 +42,6 @@ const normalizeAnswer = (value: string) =>
     .replace(/\s+/g, " ")
     .trim();
 
-function metersBetween(a: { lat: number; lng: number }, b: { lat: number; lng: number }) {
-  const rad = Math.PI / 180;
-  const dLat = (b.lat - a.lat) * rad;
-  const dLng = (b.lng - a.lng) * rad;
-  const h =
-    Math.sin(dLat / 2) ** 2 +
-    Math.cos(a.lat * rad) * Math.cos(b.lat * rad) * Math.sin(dLng / 2) ** 2;
-  return Math.round(6371000 * 2 * Math.atan2(Math.sqrt(h), Math.sqrt(1 - h)));
-}
 
 type SceneObject = { id: string; position: [number, number]; label?: string };
 type SelectionMessage = {
@@ -95,7 +85,6 @@ function ThreeDArchive() {
   const [notice, setNotice] = useState("");
   const [attemptObjectIds, setAttemptObjectIds] = useState<string[]>([]);
   const [failedAttemptIds, setFailedAttemptIds] = useState<string[]>([]);
-  const [gpsMessage, setGpsMessage] = useState("");
   const [locationAnswer, setLocationAnswer] = useState("");
   const [locationDenied, setLocationDenied] = useState(false);
 
@@ -250,29 +239,9 @@ function ThreeDArchive() {
     );
   }
 
-  const verifyHeartLocation = () => {
-    if (!navigator.geolocation) {
-      setGpsMessage("Standort auf diesem Gerät nicht verfügbar.");
-      return;
-    }
-    setGpsMessage("Standort wird ermittelt …");
-    navigator.geolocation.getCurrentPosition(
-      ({ coords }) => {
-        const current = { lat: coords.latitude, lng: coords.longitude };
-        const distance = metersBetween(current, calibration.target);
-        const effectiveRadius = calibration.target.radius + Math.min(coords.accuracy, 12);
-        if (distance <= effectiveRadius) {
-          setGpsMessage("Zielposition erreicht. Sucht jetzt nach dem physischen Zeichen.");
-          setFlowPhase("heart-reached");
-        } else {
-          setGpsMessage(
-            `Noch nicht im Zielbereich · ca. ${distance} m entfernt (GPS ±${Math.round(coords.accuracy)} m).`,
-          );
-        }
-      },
-      () => setGpsMessage("Standort nicht verfügbar. Bitte erlaube den Standortzugriff."),
-      { enableHighAccuracy: true, timeout: 12000 },
-    );
+  const confirmHeartFound = () => {
+    setFlowPhase("heart-reached");
+    setNotice("Das Herz wurde gefunden. Prüft jetzt, welcher bereits geborgene Gegenstand dazu passt.");
   };
 
   const confirmHeartOpened = () => {
@@ -305,7 +274,6 @@ function ThreeDArchive() {
   const resetLocalPuzzle = () => {
     resetTriangle();
     setNotice("");
-    setGpsMessage("");
     setLocationAnswer("");
     setAttemptObjectIds([]);
     setFailedAttemptIds([]);
@@ -422,12 +390,10 @@ function ThreeDArchive() {
                 In die Gegenwart übertragen
               </h2>
               <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
-                Die Szene existiert nicht mehr. Der berechnete Punkt schon.
+                Die Szene existiert nicht mehr. Der berechnete Punkt schon. Nutzt die Karte nur zur Orientierung
+                und sucht dort nach dem physischen Herz. Eine Standortfreigabe ist nicht erforderlich.
               </p>
               <div className="mt-5">{targetMap}</div>
-              <Button className="mt-4 min-h-[48px] w-full gap-2" onClick={verifyHeartLocation}>
-                <LocateFixed className="size-4" /> Zielposition bestätigen
-              </Button>
               <a
                 href={`https://www.google.com/maps/search/?api=1&query=${calibration.target.lat},${calibration.target.lng}`}
                 target="_blank"
@@ -436,23 +402,21 @@ function ThreeDArchive() {
               >
                 Ziel in Google Maps öffnen
               </a>
-              {gpsMessage ? (
-                <p className="mt-3 rounded-md border border-border bg-background/40 p-3 text-sm text-paper">
-                  {gpsMessage}
-                </p>
-              ) : null}
+              <Button className="mt-4 min-h-[48px] w-full gap-2" onClick={confirmHeartFound}>
+                <Search className="size-4" /> Herz gefunden
+              </Button>
             </>
           ) : null}
 
           {flowPhase === "heart-reached" ? (
             <>
-              <p className="label-mono text-gold">Physischer Fund erforderlich</p>
+              <p className="label-mono text-gold">Physischer Fund bestätigt</p>
               <h2 className="mt-2 font-display text-2xl font-bold uppercase">
-                Der berechnete Punkt ist erreicht
+                Das Herz ist gefunden
               </h2>
               <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
-                Sucht an dieser Stelle nach dem Zeichen, das euch bereits früher begegnet ist.
-                Ein Gegenstand aus eurem bisherigen Inventar könnte hier erneut relevant werden.
+                Jetzt fehlt nur noch der passende Gegenstand. Etwas, das ihr bereits früher geborgen habt,
+                könnte dieses Herz öffnen.
               </p>
               <Link
                 to="/inventory"

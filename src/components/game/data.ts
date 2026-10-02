@@ -769,7 +769,7 @@ export const puzzles: Puzzle[] = [
         id: "art-h3",
         label: "Hinweis 3 · Übersetzung",
         text:
-          "Nicht Morse Code oder Blindenschrift. Übersetzt werden muss es trotzdem. Zuerst müsst ihr die sechs kleinen Archivzahlen vom Karton in der richtigen Reihenfolge übertragen.",
+          "Nicht Morse Code oder Blindenschrift. Übersetzt werden muss es trotzdem.",
       },
       {
         id: "art-h4",
@@ -855,9 +855,9 @@ export const puzzles: Puzzle[] = [
       instruction:
         "Auf dem Sixpack-Kunstträger seht ihr sechs Werke ohne Künstlernamen und Jahreszahl. Ordnet jedem Werk den richtigen Künstler und die richtige Entstehungszeit zu. Erst die komplette Katalogisierung wird geprüft.",
       chronologyInstruction:
-        "Alle Datensätze sind identifiziert. Bringt die sechs Werke jetzt vom ältesten zum jüngsten in die richtige Reihenfolge. Die kleinen Archivzahlen auf dem physischen Karton werden erst danach relevant.",
+        "Alle Datensätze sind identifiziert. Bringt die sechs Werke jetzt vom ältesten zum jüngsten in die richtige Reihenfolge. Die kleinen Archivzahlen auf den Bildern werden erst danach relevant.",
       decodeInstruction:
-        "Die Chronologie steht. Übertragt nun selbst die kleinen Archivzahlen von den sechs Kunstwerken in die rekonstruierte Reihenfolge. Erst eine korrekt erfasste Sequenz kann übersetzt werden.",
+        "Lest die Archivzahlen nun in der rekonstruierten zeitlichen Reihenfolge. Die Zahlen bilden keinen Zahlencode, sondern müssen übersetzt werden.",
       decodeHint:
         "Nicht Morse Code oder Blindenschrift. Übersetzt werden muss es trotzdem.",
       decodeAnswer: "WAGNER",
