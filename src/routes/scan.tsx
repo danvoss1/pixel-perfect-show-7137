@@ -5,6 +5,7 @@ import { GameShell } from "@/components/game/GameShell";
 import { usePlayer } from "@/game/store";
 import { qrMarkByToken, type QrMarkDefinition } from "@/game/qrMarks";
 import { Button } from "@/components/ui/button";
+import jsQR from "jsqr";
 
 export const Route = createFileRoute("/scan")({
   head: () => ({
@@ -27,6 +28,7 @@ type BarcodeDetectorLike = {
 function ScanPage() {
   const navigate = useNavigate();
   const videoRef = useRef<HTMLVideoElement>(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
   const streamRef = useRef<MediaStream | null>(null);
   const timerRef = useRef<number | null>(null);
 
@@ -73,48 +75,121 @@ function ScanPage() {
   const startScanner = async () => {
     setError("");
 
-    const Detector = (window as unknown as {
-      BarcodeDetector?: new (options: { formats: string[] }) => BarcodeDetectorLike;
-    }).BarcodeDetector;
-
-    if (!Detector) {
+    if (!window.isSecureContext) {
       setError(
-        "Der Browser stellt keinen direkten QR-Decoder bereit. Nutzt unten den kurzen Ersatzcode, der unter dem QR-Code gedruckt ist.",
+        "Die Kamera ist nur über HTTPS oder localhost verfügbar. Öffnet die VS-Code-Forward-URL über HTTPS oder testet über das spätere Vercel-Deployment.",
       );
       return;
     }
 
+    if (!navigator.mediaDevices?.getUserMedia) {
+      setError(
+        "Dieser Browser stellt keinen Kamerazugriff bereit. Nutzt einen aktuellen Browser oder den Ersatzcode.",
+      );
+      return;
+    }
+
+    const Detector = (window as unknown as {
+      BarcodeDetector?: new (options: { formats: string[] }) => BarcodeDetectorLike;
+    }).BarcodeDetector;
+
     try {
       const stream = await navigator.mediaDevices.getUserMedia({
-        video: { facingMode: { ideal: "environment" } },
+        video: {
+          facingMode: { ideal: "environment" },
+          width: { ideal: 1280 },
+          height: { ideal: 720 },
+        },
         audio: false,
       });
 
       streamRef.current = stream;
-      if (!videoRef.current) return;
+      const video = videoRef.current;
+      if (!video) return;
 
-      videoRef.current.srcObject = stream;
-      await videoRef.current.play();
-
-      const detector = new Detector({ formats: ["qr_code"] });
+      video.srcObject = stream;
+      await video.play();
       setStatus("scanning");
 
+      const nativeDetector = Detector
+        ? new Detector({ formats: ["qr_code"] })
+        : null;
+
       timerRef.current = window.setInterval(async () => {
-        if (!videoRef.current || videoRef.current.readyState < 2) return;
-        try {
-          const results = await detector.detect(videoRef.current);
-          const value = results.find((result) => result.rawValue)?.rawValue;
-          if (value) acceptMark(value);
-        } catch {
-          // A single failed frame is harmless; the next scan cycle retries.
+        const currentVideo = videoRef.current;
+        if (
+          !currentVideo ||
+          currentVideo.readyState < 2 ||
+          currentVideo.videoWidth === 0
+        ) {
+          return;
         }
-      }, 350);
-    } catch {
+
+        try {
+          // First use the browser-native QR decoder when it exists.
+          if (nativeDetector) {
+            const results = await nativeDetector.detect(currentVideo);
+            const value = results.find((result) => result.rawValue)?.rawValue;
+            if (value && acceptMark(value)) return;
+          }
+
+          // Cross-browser fallback: decode the video frame ourselves with jsQR.
+          const canvas = canvasRef.current;
+          if (!canvas) return;
+
+          const maxWidth = 720;
+          const scale = Math.min(1, maxWidth / currentVideo.videoWidth);
+          const width = Math.max(
+            1,
+            Math.round(currentVideo.videoWidth * scale),
+          );
+          const height = Math.max(
+            1,
+            Math.round(currentVideo.videoHeight * scale),
+          );
+
+          canvas.width = width;
+          canvas.height = height;
+
+          const context = canvas.getContext("2d", {
+            willReadFrequently: true,
+          });
+          if (!context) return;
+
+          context.drawImage(currentVideo, 0, 0, width, height);
+          const imageData = context.getImageData(0, 0, width, height);
+
+          const result = jsQR(
+            imageData.data,
+            imageData.width,
+            imageData.height,
+            { inversionAttempts: "attemptBoth" },
+          );
+
+          if (result?.data) {
+            acceptMark(result.data);
+          }
+        } catch {
+          // A single unreadable frame is harmless; retry on the next frame.
+        }
+      }, 300);
+    } catch (cause) {
       stopCamera();
       setStatus("idle");
-      setError(
-        "Die Kamera konnte nicht geöffnet werden. Prüft die Kameraberechtigung oder gebt den Ersatzcode manuell ein.",
-      );
+
+      const errorName = cause instanceof DOMException ? cause.name : "";
+
+      if (errorName === "NotAllowedError") {
+        setError(
+          "Der Kamerazugriff wurde blockiert. Erlaubt der Seite die Kamera in den Browser-Einstellungen und versucht es erneut.",
+        );
+      } else if (errorName === "NotFoundError") {
+        setError("Auf diesem Gerät wurde keine verwendbare Kamera gefunden.");
+      } else {
+        setError(
+          "Die Kamera konnte nicht geöffnet werden. Prüft HTTPS und die Kameraberechtigung oder nutzt den Ersatzcode.",
+        );
+      }
     }
   };
 
@@ -152,7 +227,7 @@ function ScanPage() {
             Markierung scannen
           </h1>
           <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-            Physische QR-Markierungen schalten Hinweise und Rätsel frei. Haltet den Code vollständig in den Suchrahmen.
+            Physische QR-Markierungen schalten Hinweise und Rätsel frei. Falls der Browser keinen eigenen QR-Decoder besitzt, verwendet der Scanner automatisch einen eingebauten Fallback. Haltet den Code vollständig in den Suchrahmen.
           </p>
 
           {status !== "found" ? (
@@ -164,6 +239,7 @@ function ScanPage() {
                   playsInline
                   className={`h-full w-full object-cover ${status === "scanning" ? "opacity-100" : "opacity-25"}`}
                 />
+                <canvas ref={canvasRef} className="hidden" aria-hidden="true" />
 
                 {status !== "scanning" ? (
                   <div className="absolute inset-0 grid place-items-center">
