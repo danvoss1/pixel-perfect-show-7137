@@ -679,6 +679,16 @@ window.addEventListener('message',event=>{
  if(msg.event==='heumarkt-map:clear-triangle')clearGameOverlay();
  if(msg.event==='heumarkt-map:focus-object'&&typeof msg.id==='string')window.OfficeMap?.selectObject?.(msg.id);
 });
+// Tell the parent game route that the Three.js map, message listener and
+// game overlay are ready. This prevents choice-point markers from being lost
+// when the parent's first postMessage happens too early.
+if(window.parent!==window){
+ window.parent.postMessage(
+  {version:1,event:'heumarkt-map:ready'},
+  window.location.origin
+ );
+}
+
 if(APP_MODE!=='editor'){
  const edit=$('editMode');if(edit)edit.hidden=true;
  const editSidebar=$('editSidebar');if(editSidebar)editSidebar.hidden=true;

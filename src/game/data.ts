@@ -360,17 +360,20 @@ export const heumarktLocationHints: Hint[] = [
   {
     id: "ai-h1",
     label: "Hinweis 1",
-    text: "„Belastung“ und „Wiederholungen“ sind wörtlicher gemeint, als es zunächst scheint.",
+    text:
+      "Der Name auf dem Band gehört zur Gegenwart. Das Archiv sucht ausdrücklich eine ältere Kennung desselben Ortes.",
   },
   {
     id: "ai-h2",
     label: "Hinweis 2",
-    text: "WEISS ist kein Zustand. Es ist der Beginn eines Straßennamens.",
+    text:
+      "Lest MOVEMENT und REVISION nicht getrennt: FLEX erhält noch ein zusätzliches X.",
   },
   {
     id: "ai-h3",
     label: "Letzter Hinweis",
-    text: "Gesucht wird ein Fitnessstudio in der Weißhausstraße mit der Hausnummer 20–22.",
+    text:
+      "FLEX + X ergibt FLEXX. Zusammen mit CATEGORY entsteht der frühere Name: FLEXX FITNESS.",
   },
 ];
 
@@ -382,22 +385,16 @@ export const heumarktTransition = {
     title: "Versuch 05 — Belastung",
     protocol: [
       ["SUBJECT", "05"],
-      ["CATEGORY", "LOAD"],
-      ["REPETITIONS", "XII"],
+      ["CARRIER", "ELASTIC"],
+      ["MOVEMENT", "FLEX"],
+      ["REVISION", "+X"],
+      ["CATEGORY", "FITNESS"],
+      ["ARCHIVE STATUS", "LEGACY ID"],
       ["LOCATION", "WEISS"],
       ["UNIT", "20–22"],
     ] as const,
-    prompt: "Welcher Ort ist gemeint?",
-    acceptedAnswers: [
-      "AI FITNESS",
-      "ALL INCLUSIVE FITNESS",
-      "ALL INCLUSIVE FITNESS KOELN",
-      "ALL INCLUSIVE FITNESS KOLN",
-      "ALL INCLUSIVE FITNESS KOELN SUELZ",
-      "ALL INCLUSIVE FITNESS KOLN SULZ",
-      "ALL INCLUSIVE FITNESS KÖLN",
-      "ALL INCLUSIVE FITNESS KÖLN SÜLZ",
-    ],
+    prompt: "Wie lautete die frühere Kennung dieses Ortes?",
+    acceptedAnswers: ["FLEXX FITNESS"],
     destinationStageId: "s5",
     destinationLocationId: "loc-ai-fitness",
   },

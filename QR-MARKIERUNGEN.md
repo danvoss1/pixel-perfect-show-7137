@@ -37,10 +37,12 @@ Position: auf der Rückseite des physischen Herzens.
 
 Funktion:
 - der Scan selbst ist die physische Bestätigung des Herzfunds
-- schließt Etappe 4 sofort ab
 - verlässt die 3D-Heumarkt-Ansicht direkt
-- öffnet anschließend Etappe 5 / AI Fitness
-- keine zusätzliche Bestätigung „Herz eingesammelt“ oder „Herz geöffnet“ mehr
+- öffnet das separate Übergangsrätsel „Versuch 05“
+- beim Herz liegt zusätzlich das reale Fitnessband als Versuchsträger
+- der heutige Aufdruck „AI Fitness“ ist ausdrücklich nicht die Lösung
+- aus FLEX + X + FITNESS sowie der gemeinsamen Erinnerung muss „FLEXX FITNESS“ rekonstruiert werden
+- erst nach korrekter Lösung wird Etappe 4 abgeschlossen und Etappe 5 / AI Fitness geöffnet
 
 ### 07 · Totino · Pizza
 Code: `HP-PIZZA-8T4Q`

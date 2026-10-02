@@ -33,6 +33,7 @@ import { Route as AdminStagesRouteImport } from './routes/admin.stages'
 import { Route as ItemIdRouteImport } from './routes/item.$id'
 import { Route as PuzzleIdRouteImport } from './routes/puzzle.$id'
 import { Route as StageIdRouteImport } from './routes/stage.$id'
+import { Route as TransitionFitnessRouteImport } from './routes/transition.fitness'
 import { Route as AdminAdventureIdRouteImport } from './routes/admin.adventure.$id'
 import { Route as AdminStageIdRouteImport } from './routes/admin.stage.$id'
 
@@ -156,6 +157,11 @@ const StageIdRoute = StageIdRouteImport.update({
   path: '/stage/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
+const TransitionFitnessRoute = TransitionFitnessRouteImport.update({
+  id: '/transition/fitness',
+  path: '/transition/fitness',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AdminAdventureIdRoute = AdminAdventureIdRouteImport.update({
   id: '/adventure/$id',
   path: '/adventure/$id',
@@ -191,6 +197,7 @@ export interface FileRoutesByFullPath {
   '/item/$id': typeof ItemIdRoute
   '/puzzle/$id': typeof PuzzleIdRoute
   '/stage/$id': typeof StageIdRoute
+  '/transition/fitness': typeof TransitionFitnessRoute
   '/admin/': typeof AdminIndexRoute
   '/admin/adventure/$id': typeof AdminAdventureIdRoute
   '/admin/stage/$id': typeof AdminStageIdRoute
@@ -218,6 +225,7 @@ export interface FileRoutesByTo {
   '/item/$id': typeof ItemIdRoute
   '/puzzle/$id': typeof PuzzleIdRoute
   '/stage/$id': typeof StageIdRoute
+  '/transition/fitness': typeof TransitionFitnessRoute
   '/admin': typeof AdminIndexRoute
   '/admin/adventure/$id': typeof AdminAdventureIdRoute
   '/admin/stage/$id': typeof AdminStageIdRoute
@@ -247,6 +255,7 @@ export interface FileRoutesById {
   '/item/$id': typeof ItemIdRoute
   '/puzzle/$id': typeof PuzzleIdRoute
   '/stage/$id': typeof StageIdRoute
+  '/transition/fitness': typeof TransitionFitnessRoute
   '/admin/': typeof AdminIndexRoute
   '/admin/adventure/$id': typeof AdminAdventureIdRoute
   '/admin/stage/$id': typeof AdminStageIdRoute
@@ -277,6 +286,7 @@ export interface FileRouteTypes {
     | '/item/$id'
     | '/puzzle/$id'
     | '/stage/$id'
+    | '/transition/fitness'
     | '/admin/'
     | '/admin/adventure/$id'
     | '/admin/stage/$id'
@@ -304,6 +314,7 @@ export interface FileRouteTypes {
     | '/item/$id'
     | '/puzzle/$id'
     | '/stage/$id'
+    | '/transition/fitness'
     | '/admin'
     | '/admin/adventure/$id'
     | '/admin/stage/$id'
@@ -332,6 +343,7 @@ export interface FileRouteTypes {
     | '/item/$id'
     | '/puzzle/$id'
     | '/stage/$id'
+    | '/transition/fitness'
     | '/admin/'
     | '/admin/adventure/$id'
     | '/admin/stage/$id'
@@ -352,6 +364,7 @@ export interface RootRouteChildren {
   ItemIdRoute: typeof ItemIdRoute
   PuzzleIdRoute: typeof PuzzleIdRoute
   StageIdRoute: typeof StageIdRoute
+  TransitionFitnessRoute: typeof TransitionFitnessRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -524,6 +537,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof StageIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/transition/fitness': {
+      id: '/transition/fitness'
+      path: '/transition/fitness'
+      fullPath: '/transition/fitness'
+      preLoaderRoute: typeof TransitionFitnessRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/admin/adventure/$id': {
       id: '/admin/adventure/$id'
       path: '/adventure/$id'
@@ -588,6 +608,7 @@ const rootRouteChildren: RootRouteChildren = {
   ItemIdRoute: ItemIdRoute,
   PuzzleIdRoute: PuzzleIdRoute,
   StageIdRoute: StageIdRoute,
+  TransitionFitnessRoute: TransitionFitnessRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

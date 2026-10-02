@@ -149,8 +149,22 @@ function ThreeDArchive() {
 
   useEffect(() => {
     const onMessage = (event: MessageEvent<SelectionMessage>) => {
+      if (event.origin !== window.location.origin) {
+        return;
+      }
+
+      if (event.data?.event === "heumarkt-map:ready") {
+        // The iframe can finish initializing after React has already tried to
+        // send the choice points. Re-send them once the 3D scene explicitly
+        // reports that its message listener and overlay group are ready.
+        window.setTimeout(
+          () => renderChoicePoints(attemptObjectIds, failedAttemptIds, solved),
+          40,
+        );
+        return;
+      }
+
       if (
-        event.origin !== window.location.origin ||
         event.data?.event !== "heumarkt-map:choice-point" ||
         !event.data.objectId ||
         solved ||
@@ -207,16 +221,29 @@ function ThreeDArchive() {
   ]);
 
   const onFrameLoad = () => {
-    window.setTimeout(
-      () => renderChoicePoints(attemptObjectIds, failedAttemptIds, solved),
-      120,
-    );
+    // The Three.js scene is initialized inside the iframe. Depending on device
+    // speed, a single postMessage directly after iframe load can arrive before
+    // the game overlay is ready. Retry a few times; the iframe also sends an
+    // explicit ready event below.
+    [120, 450, 1000].forEach((delay) => {
+      window.setTimeout(
+        () => renderChoicePoints(attemptObjectIds, failedAttemptIds, solved),
+        delay,
+      );
+    });
   };
 
   useEffect(() => {
-    if (objects.length === 0) return;
+    if (objects.length === 0 || choicePoints.length === 0) return;
     renderChoicePoints(attemptObjectIds, failedAttemptIds, solved);
-  }, [objects, attemptObjectIds, failedAttemptIds, solved]);
+  }, [
+    objects,
+    choicePoints.length,
+    attemptObjectIds,
+    failedAttemptIds,
+    solved,
+    flowPhase,
+  ]);
 
   if (!unlocked) {
     return (
@@ -339,7 +366,7 @@ function ThreeDArchive() {
           <iframe
             ref={iframeRef}
             onLoad={onFrameLoad}
-            src="/heumarkt-3d/index.html?mode=game&rev=ai-transition-1"
+            src="/heumarkt-3d/index.html?mode=game&rev=choice-points-v24"
             title="Heumarkt 3D-Rekonstruktion"
             className="block h-[calc(100dvh-3.5rem)] min-h-[650px] w-full border-0"
             allow="fullscreen"

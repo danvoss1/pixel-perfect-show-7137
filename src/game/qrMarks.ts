@@ -15,7 +15,7 @@ export interface QrMarkDefinition {
   target:
     | { type: "stage"; stageId: string }
     | { type: "puzzle"; puzzleId: string }
-    | { type: "route"; route: "/3d" };
+    | { type: "route"; route: "/3d" | "/transition/fitness" };
 }
 
 export const qrMarks: QrMarkDefinition[] = [
@@ -45,9 +45,9 @@ export const qrMarks: QrMarkDefinition[] = [
     eyebrow: "Markierung 04 · Herz",
     title: "Das Herz ist gefunden",
     text:
-      "Die berechnete Position war richtig. Mit diesem Scan ist die Heumarkt-Etappe abgeschlossen und die nächste Etappe wird freigeschaltet.",
-    continueLabel: "Weiter zu AI Fitness",
-    target: { type: "stage", stageId: "s5" },
+      "Die berechnete Position war richtig. Am Herz befindet sich zusätzlich ein Versuchsträger. Bevor der nächste Ort freigegeben wird, muss Versuch 05 rekonstruiert werden.",
+    continueLabel: "Versuch 05 öffnen",
+    target: { type: "route", route: "/transition/fitness" },
   },
   {
     id: "totino-pizza",

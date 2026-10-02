@@ -34,7 +34,6 @@ function ScanPage() {
 
   const registerQrMark = usePlayer((state) => state.registerQrMark);
   const setFlowPhase = usePlayer((state) => state.setHeumarktFlowPhase);
-  const completeStage = usePlayer((state) => state.completeStage);
 
   const [status, setStatus] = useState<"idle" | "scanning" | "found">("idle");
   const [manualCode, setManualCode] = useState("");
@@ -64,12 +63,12 @@ function ScanPage() {
     registerQrMark(mark.id);
 
     if (mark.id === "heumarkt-heart") {
-      // The heart QR is the physical confirmation itself.
-      // No second "heart collected/opened" confirmation is needed.
-      setFlowPhase("ai-identified");
-      completeStage("s4");
+      // The QR confirms the physical heart find, but the next location is not
+      // revealed yet. The resistance band found at the heart becomes the key
+      // to the separate Versuch-05 transition puzzle.
+      setFlowPhase("location-riddle");
       setError("");
-      navigate({ to: "/stage/$id", params: { id: "s5" } });
+      navigate({ to: "/transition/fitness" });
       return true;
     }
 
