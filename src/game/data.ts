@@ -106,14 +106,14 @@ export const adventure: Adventure = {
       title: "Versorgungsstation",
       kind: "Checkpoint · Pizzeria Totino",
       intro:
-        "Die Spur führt zu Totino. Diesmal ist die Pause selbst Teil des Spiels: Der nächste Übergang liegt unter der Pizza.",
+        "TOTINO ist entschlüsselt. Mit der Freischaltung ist bereits ein neues Objekt im Inventar erschienen: eure Pizza.",
       objective:
-        "Öffnet die Karte, holt die Pizza ab und scannt anschließend den QR-Code unter dem Karton. Behaltet auch die Rechnung.",
+        "Geht zu Totino, holt die Pizza ab und untersucht anschließend das neue Pizza-Objekt im Inventar. Der QR-Code unter dem Pizzakarton aktiviert die nächste Spur. Behaltet außerdem die physische Rechnung – ihr Zusatz verrät später, welchen Eingang ihr am Biozentrum suchen müsst.",
       locationId: "loc-totino",
       puzzleId: "p-totino-qr",
       hidePuzzleLink: true,
       completionMode: "external",
-      reward: "Archivübertragung 06",
+      reward: "Biozentrum freigeschaltet",
     },
     {
       id: "s8",
@@ -121,7 +121,7 @@ export const adventure: Adventure = {
       title: "Zurück zum Ursprung",
       kind: "Biozentrum · Universität zu Köln",
       intro:
-        "Die Übertragung aus Totino verweist zurück dorthin, wo BIO mehr als nur drei Buchstaben war. Im Archiv wartet kein Schulbuchrätsel, sondern eine unvollständige COI-Barcoding-Auswertung.",
+        "Der QR-Code unter der Pizza verweist direkt auf das Biozentrum. Die physische Rechnung liefert den Zusatz zum Zugang. Am Seiteneingang wartet die nächste Markierung – erst sie aktiviert die genetische Analyse.",
       objective:
         "Geht zum Seiteneingang des Biozentrums und findet dort die physische Markierung. Erst ihr Scan aktiviert die genetische Analyse.",
       locationId: "loc-biozentrum",
@@ -486,6 +486,7 @@ export const puzzles: Puzzle[] = [
     tagline: "L'ordine cambia tutto.",
     stageId: "s6",
     requiredItemIds: ["meridiano-riserva-xii"],
+    rewardItemIds: ["totino-pizza"],
     completeStageOnSolve: true,
     hints: [
       {
@@ -527,6 +528,7 @@ export const puzzles: Puzzle[] = [
     title: "Übertragung 06",
     tagline: "Unter der Pizza beginnt die nächste Spur.",
     stageId: "s7",
+    requiredItemIds: ["totino-pizza"],
     rewardItemIds: ["totino-receipt"],
     storyFragmentIds: ["story-totino-06"],
     completeStageOnSolve: true,
@@ -534,11 +536,11 @@ export const puzzles: Puzzle[] = [
     config: {
       eyebrow: "QR · Übertragung 06",
       body: [
-        "Eine Untersuchung wurde abgeschlossen. An einem anderen Ort wurde darauf angestoßen.",
-        "Die Rechnung trägt den Vermerk: B.Sc. BIO · SUBMISSION COMPLETE.",
-        "Bevor ihr zu diesem Ort zurückkehrt, geht dorthin, wo BIO nicht nur eine Erinnerung, sondern ein ganzes Gebäude ist.",
+        "Die Markierung unter der Pizza bestätigt den nächsten Zielort: BIOZENTRUM · UNIVERSITÄT ZU KÖLN.",
+        "Die physische Rechnung gehört weiterhin zur Spur. Ein Zusatz auf ihr verrät, welchen Zugang ihr am Gebäude suchen müsst.",
+        "Am richtigen Eingang wartet eine weitere Markierung. Erst ihr Scan öffnet die genetische Analyse.",
       ],
-      confirmLabel: "Spur übernehmen",
+      confirmLabel: "Biozentrum übernehmen",
       successText: "Biozentrum als nächste Etappe freigeschaltet.",
     },
   },
@@ -1207,15 +1209,32 @@ export const items: InventoryItem[] = [
     tags: ["physical", "meridian", "xii", "reusable", "bottle"],
   },
   {
-    id: "totino-receipt",
+    id: "totino-pizza",
     number: 23,
+    name: "Totino · Pizza",
+    kind: "Versorgungsobjekt",
+    category: "Quest-Gegenstand",
+    foundAtStage: 7,
+    description:
+      "Die entschlüsselte Versorgungsstation. Unter dem physischen Pizzakarton befindet sich eine Hidden-Path-Markierung.",
+    detail:
+      "TOTINO wurde aus dem Meridiano-Etikett extrahiert. Holt die echte Pizza ab und öffnet dieses Objekt anschließend erneut: Der QR-Code unter dem Karton aktiviert die nächste Etappe.",
+    physical: true,
+    consumable: false,
+    requiredLater: true,
+    sourceStageId: "s7",
+    tags: ["physical", "pizza", "totino", "qr", "reusable"],
+  },
+  {
+    id: "totino-receipt",
+    number: 24,
     name: "Totino · Rechnung",
     kind: "Beleg",
     category: "Dokument",
     foundAtStage: 7,
-    description: "Die Rechnung aus Totino. Ein ungewöhnlicher Vermerk wurde darauf ergänzt.",
+    description: "Die physische Rechnung aus Totino. Ein handschriftlicher Zusatz gehört zur nächsten Spur.",
     detail:
-      "B.Sc. BIO · SUBMISSION COMPLETE. Zusammen mit dem QR-Code verweist der Beleg zurück auf die Biologie.",
+      "B.Sc. BIO · SUBMISSION COMPLETE. Der entscheidende physische Zusatz lautet sinngemäß „SEITENEINGANG“ und hilft euch, am Biozentrum die richtige QR-Markierung zu finden.",
     physical: true,
     consumable: false,
     requiredLater: false,
@@ -1224,7 +1243,7 @@ export const items: InventoryItem[] = [
   },
   {
     id: "kiosk-beer-label",
-    number: 24,
+    number: 25,
     name: "Flasche 07 · Sonderetikett",
     kind: "Getränk mit Sonderetikett",
     category: "Quest-Gegenstand",
@@ -1240,7 +1259,7 @@ export const items: InventoryItem[] = [
   },
   {
     id: "art-sixpack",
-    number: 25,
+    number: 26,
     name: "Sixpack · Kunstarchiv",
     kind: "Bedruckter Sixpack-Träger",
     category: "Quest-Gegenstand",

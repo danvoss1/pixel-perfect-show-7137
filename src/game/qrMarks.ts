@@ -2,6 +2,7 @@ export type QrMarkId =
   | "start-42"
   | "rheinauhafen-window"
   | "heumarkt-heart"
+  | "totino-pizza"
   | "biozentrum-entry";
 
 export interface QrMarkDefinition {
@@ -49,6 +50,16 @@ export const qrMarks: QrMarkDefinition[] = [
     target: { type: "route", route: "/3d" },
   },
   {
+    id: "totino-pizza",
+    token: "HP-PIZZA-8T4Q",
+    eyebrow: "Markierung 07 · Totino",
+    title: "Unter der Pizza",
+    text:
+      "Die Versorgungsstation war nur der Zwischenstopp. Diese Markierung aktiviert die nächste Übertragung. Der Zielort ist das Biozentrum der Universität zu Köln. Nehmt die Rechnung mit – ihr Zusatz verrät, welchen Eingang ihr dort suchen müsst.",
+    continueLabel: "Übertragung öffnen",
+    target: { type: "puzzle", puzzleId: "p-totino-qr" },
+  },
+  {
     id: "biozentrum-entry",
     token: "HP-BIO-6N5R",
     eyebrow: "Markierung 08 · Biozentrum",
@@ -70,5 +81,6 @@ export const qrMarkById = (id: string) =>
 
 export const requiredQrMarkForPuzzle: Record<string, QrMarkId | undefined> = {
   "p-geometry-dodecahedron": "rheinauhafen-window",
+  "p-totino-qr": "totino-pizza",
   "p-dna-bio": "biozentrum-entry",
 };

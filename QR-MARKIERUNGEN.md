@@ -40,6 +40,18 @@ Funktion:
 - setzt den Heumarkt-Ablauf auf `heart-reached`
 - danach wird wieder der früher gefundene Herzschlüssel relevant
 
+### 07 · Totino · Pizza
+Code: `HP-PIZZA-8T4Q`
+
+Position: unter dem physischen Pizzakarton.
+
+Funktion:
+- die Pizza erscheint bereits beim Lösen des Meridiano-Rätsels im digitalen Inventar
+- im Pizza-Inventarobjekt führt ein Button zum zentralen Scanner
+- der Scan aktiviert `p-totino-qr`
+- die Übertragung nennt direkt das Biozentrum als nächsten Zielort
+- die physische Rechnung liefert zusätzlich den Hinweis auf den Seiteneingang
+
 ### 08 · Biozentrum
 Code: `HP-BIO-6N5R`
 

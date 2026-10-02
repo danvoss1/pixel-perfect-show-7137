@@ -275,7 +275,11 @@ function ThreeDArchive() {
 
     setFlowPhase("ai-identified");
     if (!completedStages.includes("s4")) completeStage("s4");
-    setNotice("Ziel identifiziert · AI Fitness · Weißhausstraße 20–22.");
+
+    // The Heumarkt reconstruction ends here. AI Fitness is its own stage,
+    // so leave the 3D screen immediately instead of rendering stage 5
+    // inside the Heumarkt sidebar.
+    navigate({ to: "/stage/$id", params: { id: "s5" } });
   };
 
   const resetLocalPuzzle = () => {
@@ -516,29 +520,6 @@ function ThreeDArchive() {
                   hints={heumarktLocationHints}
                 />
               </div>
-            </>
-          ) : null}
-
-          {flowPhase === "ai-identified" ? (
-            <>
-              <p className="label-mono text-success">Ziel identifiziert</p>
-              <h2 className="mt-2 font-display text-2xl font-bold uppercase">
-                AI Fitness
-              </h2>
-              <div className="mt-5 rounded-md border border-primary/30 bg-primary/5 p-4">
-                <p className="font-display text-lg font-semibold uppercase">
-                  Weißhausstraße 20–22
-                </p>
-                <p className="mt-2 text-sm text-muted-foreground">
-                  Die Archivszene ist abgeschlossen. Ab hier übernimmt wieder die reguläre Expedition.
-                </p>
-              </div>
-              <Button
-                className="mt-5 min-h-[48px] w-full gap-2"
-                onClick={() => navigate({ to: "/stage/$id", params: { id: "s5" } })}
-              >
-                <MapPin className="size-4" /> Zur nächsten Etappe
-              </Button>
             </>
           ) : null}
 

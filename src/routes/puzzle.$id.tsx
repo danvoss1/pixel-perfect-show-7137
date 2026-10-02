@@ -302,7 +302,9 @@ function PuzzlePage() {
         title={
           puzzle.id === "p-meridiano"
             ? "Totino identifiziert"
-            : puzzle.type === "dna"
+            : puzzle.id === "p-totino-qr"
+              ? "Biozentrum identifiziert"
+              : puzzle.type === "dna"
               ? "Genetische Adresse identifiziert"
               : puzzle.type === "art"
                 ? "Archivsequenz rekonstruiert"
@@ -316,8 +318,10 @@ function PuzzlePage() {
         }
         message={
           puzzle.id === "p-meridiano"
-            ? "Die nächste Versorgungsstation wurde freigeschaltet."
-            : "Die Spur führt weiter."
+            ? "Die nächste Versorgungsstation wurde freigeschaltet. Eine Pizza ist im Inventar erschienen."
+            : puzzle.id === "p-totino-qr"
+              ? "Die Markierung unter der Pizza führt zum Biozentrum. Nehmt die physische Rechnung mit – sie verrät den richtigen Zugang."
+              : "Die Spur führt weiter."
         }
         continueLabel={puzzle.completeStageOnSolve ? "Zur nächsten Etappe" : stage ? "Zurück zur Etappe" : "Weiter"}
         onContinue={() => {
