@@ -6,6 +6,7 @@ import { GameShell } from "@/components/game/GameShell";
 import { Label, LockedContent, Panel, Reveal } from "@/components/game/primitives";
 import { PuzzleSuccess } from "@/components/game/PuzzleSuccess";
 import { adventure, itemById, locationById, stageById } from "@/game/data";
+import { requiredQrMarkForPuzzle } from "@/game/qrMarks";
 import { usePlayer } from "@/game/store";
 
 export const Route = createFileRoute("/stage/$id")({
@@ -37,6 +38,7 @@ function StagePage() {
   const currentId = usePlayer((state) => state.currentStageId);
   const solvedPuzzles = usePlayer((state) => state.completedPuzzles);
   const inventory = usePlayer((state) => state.inventory);
+  const scannedQrMarks = usePlayer((state) => state.scannedQrMarks);
   const completeStage = usePlayer((state) => state.completeStage);
   const addItem = usePlayer((state) => state.addItem);
   const [granted, setGranted] = useState(false);
@@ -129,6 +131,23 @@ function StagePage() {
         </div>
       </Reveal>
 
+      {stage.puzzleId &&
+      requiredQrMarkForPuzzle[stage.puzzleId] &&
+      !scannedQrMarks.includes(requiredQrMarkForPuzzle[stage.puzzleId]!) ? (
+        <Panel className="mt-6 border-gold/40 bg-gold/5">
+          <Label>Physische Markierung</Label>
+          <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+            Das zugehörige Rätsel ist noch nicht digital freigeschaltet. Sucht vor Ort nach einem QR-Code und verwendet den zentralen Scanner.
+          </p>
+          <Link
+            to="/scan"
+            className="mt-4 flex min-h-[48px] items-center justify-center rounded-md border border-gold/40 px-4 font-display text-xs font-bold uppercase tracking-[0.18em] text-gold"
+          >
+            Markierung scannen
+          </Link>
+        </Panel>
+      ) : null}
+
       <div className="mt-6 flex flex-wrap gap-2">
         {location ? (
           <Link
@@ -139,7 +158,10 @@ function StagePage() {
           </Link>
         ) : null}
 
-        {stage.puzzleId && !stage.hidePuzzleLink ? (
+        {stage.puzzleId &&
+        (!stage.hidePuzzleLink ||
+          (requiredQrMarkForPuzzle[stage.puzzleId] &&
+            scannedQrMarks.includes(requiredQrMarkForPuzzle[stage.puzzleId]!))) ? (
           <Link
             to="/puzzle/$id"
             params={{ id: stage.puzzleId }}

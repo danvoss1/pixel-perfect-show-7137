@@ -1,7 +1,11 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { adventure, storyFragmentById } from "./data";
-import type { HeumarktFlowPhase, InventoryItemState, JournalEntry } from "./types";
+import type {
+  HeumarktFlowPhase,
+  InventoryItemState,
+  JournalEntry,
+} from "./types";
 import { fieldEvents } from "./events";
 
 interface PlayerState {
@@ -25,6 +29,8 @@ interface PlayerState {
   heumarktTrianglePoints: string[];
   heumarktTriangleSolved: boolean;
   heumarktFlowPhase: HeumarktFlowPhase;
+  scannedQrMarks: string[];
+  registerQrMark: (id: string) => void;
   startEvent: (id: string) => void;
   dismissEvent: () => void;
   begin: () => void;
@@ -49,7 +55,8 @@ interface PlayerState {
   setHeumarktFlowPhase: (phase: HeumarktFlowPhase) => void;
 }
 
-const stamp = () => new Date().toLocaleTimeString("de-DE", { hour: "2-digit", minute: "2-digit" });
+const stamp = () =>
+  new Date().toLocaleTimeString("de-DE", { hour: "2-digit", minute: "2-digit" });
 
 const entry = (title: string, detail: string): JournalEntry => ({
   id: `${Date.now()}-${Math.random().toString(36).slice(2, 7)}`,
@@ -79,6 +86,7 @@ const initial = {
   heumarktTrianglePoints: [] as string[],
   heumarktTriangleSolved: false,
   heumarktFlowPhase: "triangle" as HeumarktFlowPhase,
+  scannedQrMarks: [] as string[],
 };
 
 export const usePlayer = create<PlayerState>()(
@@ -96,6 +104,15 @@ export const usePlayer = create<PlayerState>()(
               },
         ),
       reset: () => set({ ...initial }),
+      registerQrMark: (id) =>
+        set((state) => ({
+          scannedQrMarks: state.scannedQrMarks.includes(id)
+            ? state.scannedQrMarks
+            : [...state.scannedQrMarks, id],
+          journal: state.scannedQrMarks.includes(id)
+            ? state.journal
+            : [entry("MARKIERUNG GESCANNT", id), ...state.journal],
+        })),
       toggleSound: () => set((state) => ({ soundOn: !state.soundOn })),
       startEvent: (id) =>
         set((state) =>
@@ -126,7 +143,9 @@ export const usePlayer = create<PlayerState>()(
         })),
       advanceStage: () =>
         set((state) => {
-          const index = adventure.stages.findIndex((stage) => stage.id === state.currentStageId);
+          const index = adventure.stages.findIndex(
+            (stage) => stage.id === state.currentStageId,
+          );
           const next = adventure.stages[index + 1];
           return next
             ? {
@@ -137,9 +156,12 @@ export const usePlayer = create<PlayerState>()(
         }),
       resetPuzzle: (id) =>
         set((state) => ({
-          completedPuzzles: state.completedPuzzles.filter((puzzleId) => puzzleId !== id),
+          completedPuzzles: state.completedPuzzles.filter(
+            (puzzleId) => puzzleId !== id,
+          ),
         })),
-      setHeumarktTrianglePoints: (ids) => set({ heumarktTrianglePoints: [...ids] }),
+      setHeumarktTrianglePoints: (ids) =>
+        set({ heumarktTrianglePoints: [...ids] }),
       solveHeumarktTriangle: () =>
         set((state) =>
           state.heumarktTriangleSolved
@@ -276,35 +298,19 @@ export const usePlayer = create<PlayerState>()(
         })),
       completeStage: (id) => {
         const state = get();
-
+        if (state.completedStages.includes(id)) return;
         const index = adventure.stages.findIndex((stage) => stage.id === id);
         const stage = adventure.stages[index];
-
         if (!stage) return;
-
         const next = adventure.stages[index + 1];
-        const alreadyCompleted = state.completedStages.includes(id);
-
-        if (alreadyCompleted) {
-          // Wichtig für alte / inkonsistente Spielstände:
-          // Wenn diese Etappe bereits als abgeschlossen gespeichert wurde,
-          // aber noch immer als aktuelle Etappe gesetzt ist,
-          // trotzdem zur nächsten Etappe weitergehen.
-          if (state.currentStageId === id && next) {
-            set({
-              currentStageId: next.id,
-              journal: [entry("ETAPPE FREIGEGEBEN", next.title), ...state.journal],
-            });
-          }
-
-          return;
-        }
-
         set({
           completedStages: [...state.completedStages, id],
           currentStageId: next ? next.id : id,
           journal: [
-            entry(`ETAPPE ${String(stage.number).padStart(2, "0")} ABGESCHLOSSEN`, stage.title),
+            entry(
+              `ETAPPE ${String(stage.number).padStart(2, "0")} ABGESCHLOSSEN`,
+              stage.title,
+            ),
             ...(next ? [entry("ETAPPE FREIGEGEBEN", next.title)] : []),
             ...state.journal,
           ],
@@ -313,7 +319,7 @@ export const usePlayer = create<PlayerState>()(
     }),
     {
       name: "hidden-path-progress",
-      version: 5,
+      version: 4,
       migrate: (persistedState) => {
         const state = persistedState as Partial<PlayerState> | undefined;
         const triangleSolved = state?.heumarktTriangleSolved ?? false;
@@ -326,7 +332,8 @@ export const usePlayer = create<PlayerState>()(
           heumarktTrianglePoints: state?.heumarktTrianglePoints ?? [],
           heumarktTriangleSolved: triangleSolved,
           heumarktFlowPhase:
-            state?.heumarktFlowPhase ?? (triangleSolved ? "target-revealed" : "triangle"),
+            state?.heumarktFlowPhase ??
+            (triangleSolved ? "target-revealed" : "triangle"),
         };
       },
     },

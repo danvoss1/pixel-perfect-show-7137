@@ -71,6 +71,7 @@ function ThreeDArchive() {
   const savedPoints = usePlayer((state) => state.heumarktTrianglePoints);
   const solved = usePlayer((state) => state.heumarktTriangleSolved);
   const flowPhase = usePlayer((state) => state.heumarktFlowPhase);
+  const scannedQrMarks = usePlayer((state) => state.scannedQrMarks);
   const inventory = usePlayer((state) => state.inventory);
   const setSavedPoints = usePlayer((state) => state.setHeumarktTrianglePoints);
   const solveTriangle = usePlayer((state) => state.solveHeumarktTriangle);
@@ -91,6 +92,16 @@ function ThreeDArchive() {
   const calibration = useMemo(() => loadHeumarktCalibration(), []);
   const puzzle = calibration.puzzlePoints;
   const story = storyFragmentById(heumarktTransition.storyFragmentId);
+
+  useEffect(() => {
+    if (
+      scannedQrMarks.includes("heumarkt-heart") &&
+      flowPhase === "target-revealed"
+    ) {
+      setFlowPhase("heart-reached");
+      setNotice("Herz-Markierung bestätigt. Prüft jetzt, welcher bereits geborgene Gegenstand dazu passt.");
+    }
+  }, [flowPhase, scannedQrMarks, setFlowPhase]);
 
   const currentStage = adventure.stages.find((stage) => stage.id === currentStageId);
   const heumarktStage = adventure.stages.find((stage) => stage.id === "s4");
@@ -239,10 +250,6 @@ function ThreeDArchive() {
     );
   }
 
-  const confirmHeartFound = () => {
-    setFlowPhase("heart-reached");
-    setNotice("Das Herz wurde gefunden. Prüft jetzt, welcher bereits geborgene Gegenstand dazu passt.");
-  };
 
   const confirmHeartOpened = () => {
     if (!inventory.includes(heumarktTransition.heartItemId)) {
@@ -402,9 +409,18 @@ function ThreeDArchive() {
               >
                 Ziel in Google Maps öffnen
               </a>
-              <Button className="mt-4 min-h-[48px] w-full gap-2" onClick={confirmHeartFound}>
-                <Search className="size-4" /> Herz gefunden
-              </Button>
+              <div className="mt-4 rounded-md border border-gold/40 bg-gold/10 p-4 text-center">
+                <p className="label-mono text-gold">Physische Markierung erforderlich</p>
+                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                  Wenn ihr das Herz wirklich gefunden habt, dreht es um. Auf der Rückseite befindet sich die nächste Markierung.
+                </p>
+                <Link
+                  to="/scan"
+                  className="mt-4 flex min-h-[48px] w-full items-center justify-center gap-2 rounded-md bg-primary px-4 font-display text-xs font-bold uppercase tracking-[0.18em] text-primary-foreground"
+                >
+                  Markierung scannen
+                </Link>
+              </div>
             </>
           ) : null}
 

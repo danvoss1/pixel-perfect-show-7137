@@ -48,9 +48,10 @@ export const adventure: Adventure = {
       intro:
         "Fünf transparente Fragmente tragen nur einzelne Linien. Erst am Rheinauhafen wird klar, dass sie nicht getrennt gelesen werden sollen.",
       objective:
-        "Öffnet die Karte zur Orientierung, bringt die fünf Folien in Deckung, identifiziert den entstehenden geometrischen Körper und gebt seinen Namen ein.",
+        "Öffnet die Karte zur Orientierung und sucht am Rheinauhafen die physische Markierung. Ihr Scan liefert die letzte Anweisung für die fünf Folien und aktiviert die Eingabe des Körpers.",
       locationId: "loc-rheinauhafen",
       puzzleId: "p-geometry-dodecahedron",
+      hidePuzzleLink: true,
       requireLocationVisit: false,
       reward: "Zugang zur dritten Dimension",
     },
@@ -122,9 +123,10 @@ export const adventure: Adventure = {
       intro:
         "Die Übertragung aus Totino verweist zurück dorthin, wo BIO mehr als nur drei Buchstaben war. Im Archiv wartet kein Schulbuchrätsel, sondern eine unvollständige COI-Barcoding-Auswertung.",
       objective:
-        "Öffnet die Karte zur Biologischen Fakultät. Prüft die Sequenzqualität, orientiert den Reverse-Read, rekonstruiert den Konsensus und bestimmt die passende Referenzlinie.",
+        "Geht zum Seiteneingang des Biozentrums und findet dort die physische Markierung. Erst ihr Scan aktiviert die genetische Analyse.",
       locationId: "loc-biozentrum",
       puzzleId: "p-dna-bio",
+      hidePuzzleLink: true,
       completionMode: "external",
       reward: "Zülpicher Straße 40",
     },

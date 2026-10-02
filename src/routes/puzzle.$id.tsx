@@ -21,6 +21,7 @@ import { RevealPuzzle } from "@/components/puzzles/RevealPuzzle";
 import { DnaPuzzle } from "@/components/puzzles/DnaPuzzle";
 import { ArtHistoryPuzzle } from "@/components/puzzles/ArtHistoryPuzzle";
 import { adventure, itemById, puzzleById, stageById } from "@/game/data";
+import { qrMarkById, requiredQrMarkForPuzzle } from "@/game/qrMarks";
 import { usePlayer } from "@/game/store";
 import { puzzleTypeLabel } from "@/game/labels";
 import type {
@@ -73,6 +74,7 @@ function PuzzlePage() {
   const solvedList = usePlayer((s) => s.completedPuzzles);
   const currentStageId = usePlayer((s) => s.currentStageId);
   const inventory = usePlayer((s) => s.inventory);
+  const scannedQrMarks = usePlayer((s) => s.scannedQrMarks);
   const [celebrate, setCelebrate] = useState(false);
 
   const solved = puzzle ? solvedList.includes(puzzle.id) : false;
@@ -119,6 +121,22 @@ function PuzzlePage() {
 
   const stage = stageById(puzzle.stageId);
   const currentStage = adventure.stages.find((entry) => entry.id === currentStageId);
+
+  const requiredMarkId = requiredQrMarkForPuzzle[puzzle.id];
+  if (requiredMarkId && !scannedQrMarks.includes(requiredMarkId)) {
+    const mark = qrMarkById(requiredMarkId);
+    return (
+      <GameShell>
+        <LockedContent
+          note={`Dieses Rätsel ist noch versiegelt. Findet zuerst die physische Markierung vor Ort und scannt sie über „Markierung scannen“.${mark ? ` (${mark.eyebrow})` : ""}`}
+        />
+        <Link to="/scan" className="mt-6 block text-center label-mono text-primary">
+          Markierung scannen
+        </Link>
+      </GameShell>
+    );
+  }
+
   const missingRequiredItem = (puzzle.requiredItemIds ?? []).find((itemId) => !inventory.includes(itemId));
   if (missingRequiredItem) {
     const item = itemById(missingRequiredItem);
