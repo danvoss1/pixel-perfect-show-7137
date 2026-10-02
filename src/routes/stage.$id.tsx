@@ -132,6 +132,7 @@ function StagePage() {
       </Reveal>
 
       {stage.puzzleId &&
+      stage.puzzleId !== "p-totino-qr" &&
       requiredQrMarkForPuzzle[stage.puzzleId] &&
       !scannedQrMarks.includes(requiredQrMarkForPuzzle[stage.puzzleId]!) ? (
         <Panel className="mt-6 border-gold/40 bg-gold/5">
@@ -159,6 +160,7 @@ function StagePage() {
         ) : null}
 
         {stage.puzzleId &&
+        stage.puzzleId !== "p-totino-qr" &&
         (!stage.hidePuzzleLink ||
           (requiredQrMarkForPuzzle[stage.puzzleId] &&
             scannedQrMarks.includes(requiredQrMarkForPuzzle[stage.puzzleId]!))) ? (

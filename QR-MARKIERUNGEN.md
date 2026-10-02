@@ -36,9 +36,11 @@ Code: `HP-HM-4X8P`
 Position: auf der Rückseite des physischen Herzens.
 
 Funktion:
-- ersetzt vollständig den bisherigen Button „Herz gefunden“
-- setzt den Heumarkt-Ablauf auf `heart-reached`
-- danach wird wieder der früher gefundene Herzschlüssel relevant
+- der Scan selbst ist die physische Bestätigung des Herzfunds
+- schließt Etappe 4 sofort ab
+- verlässt die 3D-Heumarkt-Ansicht direkt
+- öffnet anschließend Etappe 5 / AI Fitness
+- keine zusätzliche Bestätigung „Herz eingesammelt“ oder „Herz geöffnet“ mehr
 
 ### 07 · Totino · Pizza
 Code: `HP-PIZZA-8T4Q`
@@ -47,7 +49,8 @@ Position: unter dem physischen Pizzakarton.
 
 Funktion:
 - die Pizza erscheint bereits beim Lösen des Meridiano-Rätsels im digitalen Inventar
-- im Pizza-Inventarobjekt führt ein Button zum zentralen Scanner
+- die Totino-Etappenseite erwähnt bewusst keinen QR-Code und zeigt auch keinen generischen Scanner-Hinweis
+- nur im Pizza-Inventarobjekt wird der versteckte Scan-Weg angeboten
 - der Scan aktiviert `p-totino-qr`
 - die Übertragung nennt direkt das Biozentrum als nächsten Zielort
 - die physische Rechnung liefert zusätzlich den Hinweis auf den Seiteneingang

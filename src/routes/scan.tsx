@@ -34,6 +34,7 @@ function ScanPage() {
 
   const registerQrMark = usePlayer((state) => state.registerQrMark);
   const setFlowPhase = usePlayer((state) => state.setHeumarktFlowPhase);
+  const completeStage = usePlayer((state) => state.completeStage);
 
   const [status, setStatus] = useState<"idle" | "scanning" | "found">("idle");
   const [manualCode, setManualCode] = useState("");
@@ -63,7 +64,13 @@ function ScanPage() {
     registerQrMark(mark.id);
 
     if (mark.id === "heumarkt-heart") {
-      setFlowPhase("heart-reached");
+      // The heart QR is the physical confirmation itself.
+      // No second "heart collected/opened" confirmation is needed.
+      setFlowPhase("ai-identified");
+      completeStage("s4");
+      setError("");
+      navigate({ to: "/stage/$id", params: { id: "s5" } });
+      return true;
     }
 
     setFound(mark);

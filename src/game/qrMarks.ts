@@ -45,9 +45,9 @@ export const qrMarks: QrMarkDefinition[] = [
     eyebrow: "Markierung 04 · Herz",
     title: "Das Herz ist gefunden",
     text:
-      "Die berechnete Position war richtig. Das physische Herz wurde geborgen. Jetzt fehlt nur noch etwas, das ihr bereits früher gefunden habt und das genau hierzu passen könnte.",
-    continueLabel: "Zum Herz zurück",
-    target: { type: "route", route: "/3d" },
+      "Die berechnete Position war richtig. Mit diesem Scan ist die Heumarkt-Etappe abgeschlossen und die nächste Etappe wird freigeschaltet.",
+    continueLabel: "Weiter zu AI Fitness",
+    target: { type: "stage", stageId: "s5" },
   },
   {
     id: "totino-pizza",

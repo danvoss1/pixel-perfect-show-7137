@@ -106,9 +106,9 @@ export const adventure: Adventure = {
       title: "Versorgungsstation",
       kind: "Checkpoint · Pizzeria Totino",
       intro:
-        "TOTINO ist entschlüsselt. Mit der Freischaltung ist bereits ein neues Objekt im Inventar erschienen: eure Pizza.",
+        "TOTINO ist entschlüsselt. Die nächste Station ist eine echte Pause – aber nicht alles, was dort wichtig ist, steht direkt in der Etappenbeschreibung.",
       objective:
-        "Geht zu Totino, holt die Pizza ab und untersucht anschließend das neue Pizza-Objekt im Inventar. Der QR-Code unter dem Pizzakarton aktiviert die nächste Spur. Behaltet außerdem die physische Rechnung – ihr Zusatz verrät später, welchen Eingang ihr am Biozentrum suchen müsst.",
+        "Geht zu Totino, holt eure Pizza ab und behaltet die physische Rechnung. Falls ihr danach nicht wisst, wie es weitergeht, schaut euch euer Inventar noch einmal genauer an.",
       locationId: "loc-totino",
       puzzleId: "p-totino-qr",
       hidePuzzleLink: true,
@@ -1216,9 +1216,9 @@ export const items: InventoryItem[] = [
     category: "Quest-Gegenstand",
     foundAtStage: 7,
     description:
-      "Die entschlüsselte Versorgungsstation. Unter dem physischen Pizzakarton befindet sich eine Hidden-Path-Markierung.",
+      "Die entschlüsselte Versorgungsstation ist jetzt als Gegenstand im Inventar vermerkt.",
     detail:
-      "TOTINO wurde aus dem Meridiano-Etikett extrahiert. Holt die echte Pizza ab und öffnet dieses Objekt anschließend erneut: Der QR-Code unter dem Karton aktiviert die nächste Etappe.",
+      "Eine Pizza ist selten nur von oben interessant. Wenn ihr die echte Pizza bei Totino habt, untersucht auch den Karton selbst.",
     physical: true,
     consumable: false,
     requiredLater: true,

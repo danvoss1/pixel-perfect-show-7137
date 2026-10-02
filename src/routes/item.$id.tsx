@@ -144,9 +144,9 @@ function ItemPage() {
               <div className="flex items-start gap-3">
                 <QrCode className="mt-0.5 size-5 shrink-0 text-gold" />
                 <div>
-                  <Label>Unterseite prüfen</Label>
+                  <Label>Etwas übersehen?</Label>
                   <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                    Holt zuerst die echte Pizza bei Totino. Unter dem Pizzakarton befindet sich die Hidden-Path-Markierung für den nächsten Übergang.
+                    Ihr habt die Pizza. Aber habt ihr euch wirklich den ganzen Karton angesehen?
                   </p>
                 </div>
               </div>
@@ -154,7 +154,7 @@ function ItemPage() {
                 to="/scan"
                 className="mt-4 flex min-h-[48px] items-center justify-center rounded-md bg-primary px-4 font-display text-xs font-bold uppercase tracking-[0.18em] text-primary-foreground"
               >
-                QR-Code der Pizza scannen
+                Markierung unter der Pizza scannen
               </Link>
             </Panel>
           ) : null}

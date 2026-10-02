@@ -71,7 +71,6 @@ function ThreeDArchive() {
   const savedPoints = usePlayer((state) => state.heumarktTrianglePoints);
   const solved = usePlayer((state) => state.heumarktTriangleSolved);
   const flowPhase = usePlayer((state) => state.heumarktFlowPhase);
-  const scannedQrMarks = usePlayer((state) => state.scannedQrMarks);
   const inventory = usePlayer((state) => state.inventory);
   const setSavedPoints = usePlayer((state) => state.setHeumarktTrianglePoints);
   const solveTriangle = usePlayer((state) => state.solveHeumarktTriangle);
@@ -93,15 +92,6 @@ function ThreeDArchive() {
   const puzzle = calibration.puzzlePoints;
   const story = storyFragmentById(heumarktTransition.storyFragmentId);
 
-  useEffect(() => {
-    if (
-      scannedQrMarks.includes("heumarkt-heart") &&
-      flowPhase === "target-revealed"
-    ) {
-      setFlowPhase("heart-reached");
-      setNotice("Herz-Markierung bestätigt. Prüft jetzt, welcher bereits geborgene Gegenstand dazu passt.");
-    }
-  }, [flowPhase, scannedQrMarks, setFlowPhase]);
 
   const currentStage = adventure.stages.find((stage) => stage.id === currentStageId);
   const heumarktStage = adventure.stages.find((stage) => stage.id === "s4");
@@ -416,7 +406,7 @@ function ThreeDArchive() {
               <div className="mt-4 rounded-md border border-gold/40 bg-gold/10 p-4 text-center">
                 <p className="label-mono text-gold">Physische Markierung erforderlich</p>
                 <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                  Wenn ihr das Herz wirklich gefunden habt, dreht es um. Auf der Rückseite befindet sich die nächste Markierung.
+                  Wenn ihr das Herz gefunden habt, dreht es um. Der QR-Code auf der Rückseite ist die Abschlussmarkierung dieser Etappe und führt euch direkt weiter.
                 </p>
                 <Link
                   to="/scan"
