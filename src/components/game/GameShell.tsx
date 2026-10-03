@@ -9,6 +9,7 @@ import {
   Box,
   Volume2,
   VolumeX,
+  ShieldCheck,
 } from "lucide-react";
 import type { ReactNode } from "react";
 import { usePlayer } from "@/game/store";
@@ -78,6 +79,12 @@ export function GameShell({
           >
             <QrCode className="size-4" /> Markierung scannen
           </Link>
+          <Link
+            to="/admin"
+            className="flex items-center gap-3 rounded-md px-3 py-2.5 text-sm text-muted-foreground transition-colors hover:bg-accent/60"
+          >
+            <ShieldCheck className="size-4" /> Spielleitung
+          </Link>
           <button
             onClick={toggleSound}
             className="flex w-full items-center gap-3 rounded-md px-3 py-2.5 text-sm text-muted-foreground transition-colors hover:bg-accent/60"
@@ -100,6 +107,15 @@ export function GameShell({
           {children}
         </main>
       </div>
+
+      <Link
+        to="/admin"
+        aria-label="Spielleitung öffnen"
+        title="Spielleitung"
+        className="fixed right-3 top-3 z-30 grid size-10 place-items-center rounded-md border border-border bg-surface/90 text-muted-foreground backdrop-blur transition-colors hover:text-foreground lg:hidden"
+      >
+        <ShieldCheck className="size-4" />
+      </Link>
 
       {/* Mobile bottom nav */}
       <nav className="fixed inset-x-0 bottom-0 z-40 border-t border-border bg-surface/95 backdrop-blur lg:hidden">

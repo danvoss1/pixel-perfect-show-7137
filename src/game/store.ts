@@ -219,7 +219,13 @@ export const usePlayer = create<PlayerState>()(
         set((state) =>
           state.unlockedHints.includes(id)
             ? state
-            : { unlockedHints: [...state.unlockedHints, id] },
+            : {
+                unlockedHints: [...state.unlockedHints, id],
+                journal: [
+                  entry("HINWEIS FREIGESCHALTET", id),
+                  ...state.journal,
+                ],
+              },
         ),
       unlockFeature: (id, label) =>
         set((state) =>

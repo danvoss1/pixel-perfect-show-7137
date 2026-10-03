@@ -1,11 +1,13 @@
 import { Link } from "@tanstack/react-router";
+import { LogOut } from "lucide-react";
+import { setAdminSession } from "@/game/adminAuth";
 import type { ReactNode } from "react";
 
 const nav = [
   { to: "/admin", label: "Übersicht" },
   { to: "/admin/adventures", label: "Abenteuer" },
   { to: "/admin/stages", label: "Etappen" },
-  { to: "/admin/puzzles", label: "Rätsel" },
+  { to: "/admin/puzzles", label: "Rätsel / Codes" },
   { to: "/admin/locations", label: "Orte" },
   { to: "/admin/heumarkt", label: "Heumarkt 3D" },
   { to: "/admin/items", label: "Gegenstände" },
@@ -46,9 +48,21 @@ export function AdminShell({
             </Link>
           ))}
         </nav>
-        <Link to="/adventure" className="mt-auto px-3 py-2 text-xs text-muted-foreground hover:text-foreground">
-          ← Spieleransicht
-        </Link>
+        <div className="mt-auto space-y-1 border-t border-border pt-3">
+          <Link to="/adventure" className="block px-3 py-2 text-xs text-muted-foreground hover:text-foreground">
+            ← Spieleransicht
+          </Link>
+          <button
+            type="button"
+            onClick={() => {
+              setAdminSession(false);
+              window.location.href = "/adventure";
+            }}
+            className="flex w-full items-center gap-2 rounded-md px-3 py-2 text-left text-xs text-muted-foreground hover:bg-accent/60 hover:text-foreground"
+          >
+            <LogOut className="size-3.5" /> Admin abmelden
+          </button>
+        </div>
       </aside>
 
       <div className="md:pl-52">

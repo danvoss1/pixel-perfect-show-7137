@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { AdminShell, AdminTable } from "@/components/admin/AdminShell";
 import { adventure, locations, puzzles } from "@/game/data";
@@ -35,7 +35,18 @@ function AdminOverview() {
   ];
 
   return (
-    <AdminShell title="Spielleitung" lead="Steuerung des aktuellen lokalen Testspielstands. Andere Geräte sind nicht verbunden.">
+    <AdminShell
+      title="Spielleitung"
+      lead="Live-Steuerung dieses Browser-Spielstands. Hinweis-Codes sind geräteunabhängig; Live-Nachrichten verwenden aktuell weiterhin den lokalen Spielstand."
+      action={
+        <Link
+          to="/admin/puzzles"
+          className="rounded-md border border-gold/40 px-3 py-2 text-xs font-semibold uppercase tracking-wider text-gold"
+        >
+          Hinweiscodes
+        </Link>
+      }
+    >
       <div className="grid grid-cols-2 gap-3 sm:grid-cols-5">
         {stats.map(([k, v]) => (
           <div key={k} className="rounded-lg border border-border bg-surface p-4">
