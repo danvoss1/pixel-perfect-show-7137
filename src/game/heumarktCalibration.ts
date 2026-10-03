@@ -84,7 +84,7 @@ export const DEFAULT_HEUMARKT_CALIBRATION: HeumarktCalibrationState = {
     {
       id: "C",
       objectId: "stall-left-23",
-      clue: "Eine Zahl begleitet euch seit dem Beginn der Expedition. Findet sie auch in dieser vergangenen Welt.",
+      clue: "Eine einzelne Zahl aus eurem ersten Rätsel taucht hier wieder auf. Sie liegt genau zwischen 6 und 8.",
     },
   ],
 };

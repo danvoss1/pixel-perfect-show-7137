@@ -23,11 +23,12 @@ Funktion:
 ### 03 · Rheinauhafen
 Code: `HP-RH-9Q2M`
 
-Position: anstelle des bisherigen Zettels/Fensterhinweises.
+Position: beim Umschlag am Spielort / anstelle des bisherigen Fensterhinweises.
 
 Funktion:
-- zeigt: „Fünf Fragmente. Eine Form.“
-- erklärt, dass die transparenten Folien übereinandergelegt werden müssen
+- die Etappenseite erwähnt vorab nur den Umschlag, nicht die transparenten Fragmente
+- erst nach dem Scan soll der Umschlag geöffnet werden
+- der QR erklärt dann, dass die fünf transparenten Fragmente übereinandergelegt werden müssen
 - schaltet erst danach die Eingabe des geometrischen Körpers frei
 - `p-geometry-dodecahedron` ist vorher auch über Direkt-URL gesperrt
 

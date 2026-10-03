@@ -25,7 +25,7 @@ export const qrMarks: QrMarkDefinition[] = [
     eyebrow: "Markierung 01 · 42",
     title: "Nicht alles wird gelesen",
     text:
-      "Die verbliebenen Werte gehören nicht nebeneinander. Behandelt sie eher wie Faktoren eines gemeinsamen Ergebnisses. Was übrig bleibt, soll zusammenwirken — nicht einfach hintereinanderstehen.",
+      "Die verbliebenen Werte gehören nicht nebeneinander. Denkt an mehrere Faktoren, die erst gemeinsam einen Zugangswert ergeben. Was übrig bleibt, soll zusammenwirken — nicht einfach hintereinanderstehen.",
     continueLabel: "Zurück zu den Zahlen",
     target: { type: "stage", stageId: "s1" },
   },
@@ -35,7 +35,7 @@ export const qrMarks: QrMarkDefinition[] = [
     eyebrow: "Markierung 03 · Rheinauhafen",
     title: "Fünf Fragmente. Eine Form.",
     text:
-      "Legt die fünf transparenten Fragmente exakt übereinander. Getrennt sind es nur Linien. Gemeinsam entsteht kein Bild, sondern ein geometrischer Körper. Wenn ihr glaubt, ihn erkannt zu haben, gebt seinen Namen digital ein.",
+      "Öffnet jetzt den Umschlag. Legt die fünf transparenten Fragmente exakt übereinander. Getrennt sind es nur Linien. Gemeinsam entsteht kein Bild, sondern ein geometrischer Körper. Wenn ihr glaubt, ihn erkannt zu haben, gebt seinen Namen digital ein.",
     continueLabel: "Körper eingeben",
     target: { type: "puzzle", puzzleId: "p-geometry-dodecahedron" },
   },

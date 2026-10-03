@@ -34,7 +34,7 @@ export const adventure: Adventure = {
       title: "Der Schlüssel",
       kind: "Physischer Fund · Pantaleonswall",
       intro:
-        "Nur knapp ein Jahr dort, aber viele Erlebnisse. Vom verklebten Tisch bis hin zu Chipstüten, die auf dem Boden verteilt lagen. Findet den Ort, an dem Strohhalme regiert haben – den aber noch nicht alle eurer jetzigen Mitspieler gesehen haben. Dort wartet kein digitales Rätsel, sondern ein physischer Gegenstand.",
+        "Nur knapp ein Jahr dort, aber viele Erlebnisse. Vom verklebten Tisch bis hin zu Chipstüten, die auf dem Boden verteilt lagen. Findet den Ort, an dem Strohhalme regiert haben – den aber noch nicht alle eurer jetzigen Mitspieler gesehen haben. Schaut euch dort genau um; vielleicht liegt die Spur nicht im offensichtlichen Bereich, sondern etwas versteckter im Hinterhof. Dort wartet kein digitales Rätsel, sondern ein physischer Gegenstand.",
       objective:
         "Findet den relevanten Gegenstand und merkt euch genau, worin ihr ihn gefunden habt. Beides müsst ihr anschließend bestätigen.",
       rewardItemId: "heart-key",
@@ -44,11 +44,11 @@ export const adventure: Adventure = {
       id: "s3",
       number: 3,
       title: "Die dritte Dimension",
-      kind: "Physisches Geometrierätsel · Rheinauhafen",
+      kind: "Physischer Fund · Rheinauhafen",
       intro:
-        "Fünf transparente Fragmente tragen nur einzelne Linien. Erst am Rheinauhafen wird klar, dass sie nicht getrennt gelesen werden sollen.",
+        "Am nächsten Spielort wartet ein Umschlag, dessen Inhalt erst dort geöffnet werden soll.",
       objective:
-        "Öffnet die Karte zur Orientierung und sucht am Rheinauhafen die physische Markierung. Ihr Scan liefert die letzte Anweisung für die fünf Folien und aktiviert die Eingabe des Körpers.",
+        "Öffnet die Karte zur Orientierung, findet am Spielort den Umschlag und anschließend die physische Markierung. Erst ihr Scan verrät euch, was mit dem Inhalt zu tun ist.",
       locationId: "loc-rheinauhafen",
       puzzleId: "p-geometry-dodecahedron",
       hidePuzzleLink: true,
@@ -59,7 +59,7 @@ export const adventure: Adventure = {
       id: "s4",
       number: 4,
       title: "Die Archivszene",
-      kind: "3D-Rekonstruktion · Heumarkt",
+      kind: "3D-Rekonstruktion · Archivszene",
       intro:
         "Die dritte Dimension ist freigeschaltet. Zehn Positionen wurden in einer vergangenen Winterwelt markiert. Nur drei davon gehören zur Spur.",
       objective:
@@ -463,7 +463,7 @@ export const puzzles: Puzzle[] = [
       {
         id: "geo-h3",
         label: "Letzter Hinweis",
-        text: "Der gesuchte Körper besitzt zwölf fünfeckige Flächen.",
+        text: "Der gesuchte Körper heißt Dodekaeder.",
       },
     ],
     config: {

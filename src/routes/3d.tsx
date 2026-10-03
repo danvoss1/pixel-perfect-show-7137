@@ -346,7 +346,7 @@ function ThreeDArchive() {
           <div className="min-w-0">
             <p className="label-mono truncate text-primary">3D · Archivszene</p>
             <h1 className="truncate font-display text-sm font-bold uppercase sm:text-base">
-              Heumarkt · Winterrekonstruktion
+              Winterrekonstruktion
             </h1>
           </div>
         </div>
@@ -367,7 +367,7 @@ function ThreeDArchive() {
             ref={iframeRef}
             onLoad={onFrameLoad}
             src="/heumarkt-3d/index.html?mode=game&rev=choice-points-v24"
-            title="Heumarkt 3D-Rekonstruktion"
+            title="3D-Winterrekonstruktion"
             className="block h-[calc(100dvh-3.5rem)] min-h-[650px] w-full border-0"
             allow="fullscreen"
           />
@@ -554,7 +554,7 @@ function ThreeDArchive() {
             className="mt-6 w-full gap-2 text-xs text-muted-foreground"
             onClick={resetLocalPuzzle}
           >
-            <RotateCcw className="size-3.5" /> Heumarkt-Spiel zurücksetzen
+            <RotateCcw className="size-3.5" /> 3D-Spiel zurücksetzen
           </Button>
         </aside>
       </div>
