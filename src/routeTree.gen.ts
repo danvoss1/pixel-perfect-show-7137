@@ -13,6 +13,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as R3dRouteImport } from './routes/3d'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as AdventureRouteImport } from './routes/adventure'
+import { Route as ArchiveRouteImport } from './routes/archive'
 import { Route as CompleteRouteImport } from './routes/complete'
 import { Route as InventoryRouteImport } from './routes/inventory'
 import { Route as JournalRouteImport } from './routes/journal'
@@ -55,6 +56,11 @@ const AdminRoute = AdminRouteImport.update({
 const AdventureRoute = AdventureRouteImport.update({
   id: '/adventure',
   path: '/adventure',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ArchiveRoute = ArchiveRouteImport.update({
+  id: '/archive',
+  path: '/archive',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CompleteRoute = CompleteRouteImport.update({
@@ -178,6 +184,7 @@ export interface FileRoutesByFullPath {
   '/3d': typeof R3dRoute
   '/admin': typeof AdminRouteWithChildren
   '/adventure': typeof AdventureRoute
+  '/archive': typeof ArchiveRoute
   '/complete': typeof CompleteRoute
   '/inventory': typeof InventoryRoute
   '/journal': typeof JournalRoute
@@ -206,6 +213,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/3d': typeof R3dRoute
   '/adventure': typeof AdventureRoute
+  '/archive': typeof ArchiveRoute
   '/complete': typeof CompleteRoute
   '/inventory': typeof InventoryRoute
   '/journal': typeof JournalRoute
@@ -236,6 +244,7 @@ export interface FileRoutesById {
   '/3d': typeof R3dRoute
   '/admin': typeof AdminRouteWithChildren
   '/adventure': typeof AdventureRoute
+  '/archive': typeof ArchiveRoute
   '/complete': typeof CompleteRoute
   '/inventory': typeof InventoryRoute
   '/journal': typeof JournalRoute
@@ -267,6 +276,7 @@ export interface FileRouteTypes {
     | '/3d'
     | '/admin'
     | '/adventure'
+    | '/archive'
     | '/complete'
     | '/inventory'
     | '/journal'
@@ -295,6 +305,7 @@ export interface FileRouteTypes {
     | '/'
     | '/3d'
     | '/adventure'
+    | '/archive'
     | '/complete'
     | '/inventory'
     | '/journal'
@@ -324,6 +335,7 @@ export interface FileRouteTypes {
     | '/3d'
     | '/admin'
     | '/adventure'
+    | '/archive'
     | '/complete'
     | '/inventory'
     | '/journal'
@@ -354,6 +366,7 @@ export interface RootRouteChildren {
   R3dRoute: typeof R3dRoute
   AdminRoute: typeof AdminRouteWithChildren
   AdventureRoute: typeof AdventureRoute
+  ArchiveRoute: typeof ArchiveRoute
   CompleteRoute: typeof CompleteRoute
   InventoryRoute: typeof InventoryRoute
   JournalRoute: typeof JournalRoute
@@ -395,6 +408,13 @@ declare module '@tanstack/react-router' {
       path: '/adventure'
       fullPath: '/adventure'
       preLoaderRoute: typeof AdventureRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/archive': {
+      id: '/archive'
+      path: '/archive'
+      fullPath: '/archive'
+      preLoaderRoute: typeof ArchiveRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/complete': {
@@ -598,6 +618,7 @@ const rootRouteChildren: RootRouteChildren = {
   R3dRoute: R3dRoute,
   AdminRoute: AdminRouteWithChildren,
   AdventureRoute: AdventureRoute,
+  ArchiveRoute: ArchiveRoute,
   CompleteRoute: CompleteRoute,
   InventoryRoute: InventoryRoute,
   JournalRoute: JournalRoute,

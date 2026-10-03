@@ -34,6 +34,7 @@ function ScanPage() {
 
   const registerQrMark = usePlayer((state) => state.registerQrMark);
   const setFlowPhase = usePlayer((state) => state.setHeumarktFlowPhase);
+  const unlockStoryFragment = usePlayer((state) => state.unlockStoryFragment);
 
   const [status, setStatus] = useState<"idle" | "scanning" | "found">("idle");
   const [manualCode, setManualCode] = useState("");
@@ -63,12 +64,12 @@ function ScanPage() {
     registerQrMark(mark.id);
 
     if (mark.id === "heumarkt-heart") {
-      // The QR confirms the physical heart find, but the next location is not
-      // revealed yet. The resistance band found at the heart becomes the key
-      // to the separate Versuch-05 transition puzzle.
-      setFlowPhase("location-riddle");
+      // The QR confirms the physical heart find. Before the next location
+      // puzzle starts, reveal M.'s handwritten Heumarkt note again.
+      unlockStoryFragment("story-heumarkt-04");
+      setFlowPhase("story-revealed");
       setError("");
-      navigate({ to: "/transition/fitness" });
+      navigate({ to: "/3d" });
       return true;
     }
 

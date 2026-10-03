@@ -24,7 +24,7 @@ export const adventure: Adventure = {
       intro:
         "Fünf Zahlen wurden in diesem Raum zurückgelassen. Die sechste gehört zum Ort, an dem die Expedition begonnen hat. Findet alle sechs und achtet auf alles, was ihnen beigefügt wurde.",
       objective:
-        "Findet die Zahlen 4, 8, 15, 16, 23 und 42. Untersucht jeden Fund vollständig und ermittelt daraus den Zugangswert.",
+        "Findet insgesamt sechs Zahlen. Untersucht jeden Fund vollständig und ermittelt daraus den Zugangswert.",
       puzzleId: "p-code-1",
       reward: "Zahlensatz",
     },
@@ -34,11 +34,11 @@ export const adventure: Adventure = {
       title: "Der Schlüssel",
       kind: "Physischer Fund · Pantaleonswall",
       intro:
-        "Eine Tüte Tortilla-Chips enthält diesmal keine Chips. Zwischen zahlreichen nutzlosen Schlüsseln befindet sich ein einzelner markierter Schlüssel.",
+        "Nur knapp ein Jahr dort, aber viele Erlebnisse. Vom verklebten Tisch bis hin zu Chipstüten, die auf dem Boden verteilt lagen. Findet den Ort, an dem Strohhalme regiert haben – den aber noch nicht alle eurer jetzigen Mitspieler gesehen haben. Dort wartet kein digitales Rätsel, sondern ein physischer Gegenstand.",
       objective:
-        "Findet den Schlüssel mit der Herzmarkierung und bewahrt ihn auf. Alles, was ihr findet, kann später erneut relevant werden.",
+        "Findet den relevanten Gegenstand und merkt euch genau, worin ihr ihn gefunden habt. Beides müsst ihr anschließend bestätigen.",
       rewardItemId: "heart-key",
-      reward: "Herzschlüssel",
+      reward: "Schlüssel",
     },
     {
       id: "s3",
@@ -367,13 +367,13 @@ export const heumarktLocationHints: Hint[] = [
     id: "ai-h2",
     label: "Hinweis 2",
     text:
-      "Lest MOVEMENT und REVISION nicht getrennt: FLEX erhält noch ein zusätzliches X.",
+      "Zu jedem Stundenschlag spielte motivierende Musik mit eigener Marke.",
   },
   {
     id: "ai-h3",
     label: "Letzter Hinweis",
     text:
-      "FLEX + X ergibt FLEXX. Zusammen mit CATEGORY entsteht der frühere Name: FLEXX FITNESS.",
+      "Gesucht ist der frühere Name des Studios, unter dem ihr selbst dort wart. Der erste Teil beginnt mit F und endet nach der Revision mit zwei X.",
   },
 ];
 
@@ -386,8 +386,9 @@ export const heumarktTransition = {
     protocol: [
       ["SUBJECT", "05"],
       ["CARRIER", "ELASTIC"],
-      ["MOVEMENT", "FLEX"],
-      ["REVISION", "+X"],
+      ["ACTION", "POSE"],
+      ["LOAD", "RESISTANCE"],
+      ["REVISION", "DOUBLE FINAL"],
       ["CATEGORY", "FITNESS"],
       ["ARCHIVE STATUS", "LEGACY ID"],
       ["LOCATION", "WEISS"],
@@ -407,12 +408,14 @@ export const puzzles: Puzzle[] = [
     title: "Die versiegelte Anweisung",
     tagline: "Sechs Zahlen. Zwei physische Hinweise. Ein Zugangswert.",
     stageId: "s1",
+    storyFragmentIds: ["story-01"],
     rewardItemIds: ["i1", "num-4", "num-8", "num-15", "num-16", "num-23", "num-42"],
     hints: [
       {
         id: "h1",
         label: "Hinweis 1",
-        text: "Habt ihr wirklich alle sechs Zahlen gefunden und jeden Fund vollständig untersucht?",
+        text:
+          "Habt ihr wirklich alle sechs Zahlen gefunden? Falls euch diese Zahlenfolge seltsam vertraut vorkommt: Auf einer gewissen Insel war sie schon einmal alles andere als zufällig.",
       },
       {
         id: "h2",
@@ -482,6 +485,7 @@ export const puzzles: Puzzle[] = [
     title: "Meridiano · Riserva XII",
     tagline: "L'ordine cambia tutto.",
     stageId: "s6",
+    storyFragmentIds: ["story-meridiano-05"],
     requiredItemIds: ["meridiano-riserva-xii"],
     rewardItemIds: ["totino-pizza"],
     completeStageOnSolve: true,
@@ -489,17 +493,20 @@ export const puzzles: Puzzle[] = [
       {
         id: "mer-h1",
         label: "Hinweis 1",
-        text: "Die Wörter selbst müssen nicht übersetzt werden.",
+        text:
+          "Die Website gibt euch die Zutaten absichtlich nicht vor. Alle sechs gesuchten Begriffe stehen auf dem physischen Rücketikett der Flasche.",
       },
       {
         id: "mer-h2",
         label: "Hinweis 2",
-        text: "Die kleinen Zahlen geben eine Reihenfolge vor.",
+        text:
+          "Übertragt jeden Begriff genau einmal. Erst danach beginnt das eigentliche Sortieren.",
       },
       {
         id: "mer-h3",
         label: "Letzter Hinweis",
-        text: "Sortiert von ① bis ⑥ und lest anschließend die Anfangsbuchstaben.",
+        text:
+          "Wenn die sechs Begriffe richtig angeordnet sind, ergeben ihre Anfangsbuchstaben den Namen des nächsten Ortes.",
       },
     ],
     config: {
@@ -513,8 +520,11 @@ export const puzzles: Puzzle[] = [
       ],
       extraction: "first-letter",
       answer: "TOTINO",
+      manualEntry: true,
+      entryInstruction:
+        "Untersucht die Flasche. Übertragt die sechs ungewöhnlichen Zutaten vom Rücketikett selbst in die Felder. Reihenfolge ist in diesem Schritt noch egal.",
       instruction:
-        "Bringt die sechs Einträge in die durch das Etikett vorgegebene Reihenfolge. Wenn die Ordnung stimmt, entsteht eine zweite Information.",
+        "Alle sechs Zutaten wurden erfasst. Ordnet sie nun selbst so an, dass aus ihren Anfangsbuchstaben eine sinnvolle nächste Station entsteht.",
       successTitle: "Versorgungsstation identifiziert",
     },
   },
@@ -725,6 +735,7 @@ export const puzzles: Puzzle[] = [
     title: "Etikett der Erinnerung",
     tagline: "Wo Geschichte geschrieben und Arme zerstört wurden.",
     stageId: "s10",
+    storyFragmentIds: ["story-kiosk-08"],
     requiredItemIds: ["kiosk-beer-label"],
     completeStageOnSolve: true,
     hints: [
@@ -1006,10 +1017,28 @@ export const puzzles: Puzzle[] = [
 
 export const storyFragments: StoryFragment[] = [
   {
+    id: "story-01",
+    title: "Archivstart 01",
+    text:
+      "Wenn ihr das hier lesen könnt, ist der Pfad aktiv.\n\nIch bin M. Ich habe vor euch versucht, dieses Archiv zu rekonstruieren. Die Dateien nennen es nur LPDP. Ich weiß nicht, wer es begonnen hat — nur, dass es Orte kennt, die für eure Gruppe eine Bedeutung haben sollten.\n\nMeine Aufzeichnungen brechen später ab. Folgt ihnen weiter als ich. Findet heraus, was LPDP ist, warum es euch kennt und wer mit „wir“ gemeint ist.\n\nErste Regel: Nichts wegwerfen. Nichts für Dekoration halten. Orte, Gegenstände und Erinnerungen können später erneut relevant werden.",
+    author: "LPDP // Quelle unbekannt",
+    archiveCode: "LPDP-01",
+    stageId: "s1",
+  },
+  {
+    id: "story-02",
+    title: "Fundprotokoll 02",
+    text:
+      "Der markierte Schlüssel wurde wiedergefunden.\n\nGut.\n\nDamals wurde zu viel aufgehoben und zu wenig beschriftet. Vielleicht war genau das der Anfang dieses Archivs. Bewahrt den Schlüssel auf. Seine Funktion liegt noch vor euch.",
+    author: "M.",
+    archiveCode: "KEY-02",
+    stageId: "s2",
+  },
+  {
     id: "story-03",
     title: "Notiz 03",
     text:
-      "Dasselbe Symbol taucht in den Unterlagen immer wieder auf. Zwölf Flächen. Zwölf Positionen. Zwölf Personen? Ich glaube inzwischen nicht mehr, dass ich nach einer einzelnen Person suche.",
+      "Dasselbe Symbol taucht in den Unterlagen immer wieder auf. Zwölf Flächen. Zwölf Positionen. XII.\n\nIch dachte zuerst, es markiert Orte. Inzwischen glaube ich, es markiert Erinnerungen — Dinge, die nur dann vollständig werden, wenn mehrere Fragmente übereinanderliegen.",
     author: "M.",
     archiveCode: "XII",
     stageId: "s3",
@@ -1018,46 +1047,73 @@ export const storyFragments: StoryFragment[] = [
     id: "story-heumarkt-04",
     title: "Notiz 04",
     text:
-      "Ich kenne jetzt ihren Namen.\n\nLAS PAJITAS DEL PIJAMA\n\nXII war kein Zufall. Der Dodekaeder war ihre Signatur. Aber ich weiß noch immer nicht, was sie mit dem Meridian meinen.",
+      "Ich kenne jetzt ihren Namen.\n\nLAS PAJITAS DEL PIJAMA\n\nXII war kein Zufall. Der Dodekaeder war ihre Signatur.\n\nWenn ihr das hier gefunden habt, seid ihr weiter gekommen als wir damals.\n\nUnd genau dieses „wir“ macht mir inzwischen mehr Sorgen als der Meridian.",
     author: "M.",
-    archiveCode: "XII",
+    archiveCode: "LPDP-XII",
     stageId: "s4",
+  },
+  {
+    id: "story-meridiano-05",
+    title: "Versuchsnotiz 05",
+    text:
+      "Das Archiv kennt Orte nicht so, wie sie heute heißen.\n\nEs speichert sie so, wie wir sie kannten.\n\nNamen ändern sich. Schilder werden ersetzt. Erinnerungen sind hartnäckiger. Wenn ein aktueller Name nicht passt, sucht nach seiner älteren Kennung.",
+    author: "M.",
+    archiveCode: "LEGACY-05",
+    stageId: "s6",
   },
   {
     id: "story-totino-06",
     title: "Übertragung 06",
     text:
-      "M. war ebenfalls hier. Eine abgeschlossene Arbeit, ein kurzer Moment der Erleichterung und ein Ort, an dem darauf angestoßen wurde. Bevor die Spur dorthin zurückkehrt, führt sie zum Ursprung der Arbeit selbst.",
+      "Manche Koordinaten verschwinden. Manche Namen ändern sich. Geschmack ist erstaunlich zuverlässig.\n\nTOTINO war nie nur Versorgung. Es war ein Übergang zwischen zwei Versionen derselben Geschichte: der abgeschlossenen Arbeit und dem Ort, an dem sie begonnen hatte.",
     author: "M.",
-    archiveCode: "BIO",
+    archiveCode: "BIO-06",
     stageId: "s7",
   },
   {
     id: "story-bio-07",
     title: "Notiz 07",
     text:
-      "Die Probe war kein biologisches Ziel, sondern eine Adresse. Manche Erinnerungen werden nicht archiviert — sie werden wiederholt.",
+      "SUBJECT GROUP: LPDP\nIDENTITY: UNRESOLVED\n\nIdentität ließ sich nicht aus Namen rekonstruieren. Nur aus Spuren.\n\nVielleicht ist das der Fehler, den ich die ganze Zeit mache: Ich suche nach dem Autor, obwohl das Archiv selbst immer wieder auf eine Gruppe zeigt.",
     author: "M.",
     archiveCode: "SEQ-07",
     stageId: "s8",
   },
   {
-    id: "story-uni-08",
-    title: "Notiz 08",
+    id: "story-kiosk-08",
+    title: "Erinnerungsrest 08",
     text:
-      "Ihre Spur ist älter als gedacht. Bilder, Namen und Epochen tauchen dort auf, wo eine gewöhnliche Erinnerung an einen Nachmittag im Park reichen müsste.",
+      "2020.\n\nEin Etikett, ein Morgen danach und ein Ort, an dem Geschichten größer wurden, je öfter man sie erzählt hat.\n\nAb hier hört das Archiv auf, neutral zu wirken. Diese Daten wurden nicht gesammelt, weil sie wichtig waren. Sie wurden gesammelt, weil sie euch gehören.",
     author: "M.",
-    archiveCode: "ARC-08",
+    archiveCode: "MEM-08",
+    stageId: "s10",
+  },
+  {
+    id: "story-uni-08",
+    title: "Archivnotiz 09",
+    text:
+      "Sechs Werke. Sechs Zeiten.\n\nIhr habt sie nach ihrer Entstehung geordnet. Menschen funktionieren leider nicht so sauber.\n\nErinnerungen haben keine Chronologie. Sie haben Orte. Vielleicht ist deshalb jede Datei dieses Archivs an eine Straße, einen Tisch, eine Wiese oder einen Abend gebunden.",
+    author: "M.",
+    archiveCode: "ARC-09",
     stageId: "s12",
   },
   {
     id: "story-richard-09",
-    title: "Notiz 09",
+    title: "Notiz 10",
     text:
-      "Es bleibt nur noch ein Wurf. Danach endet die Karte und die letzte Erklärung beginnt.",
+      "Es bleibt nur noch ein Wurf.\n\nIhr sucht immer noch danach, wer das alles hinterlassen hat. Vielleicht ist das inzwischen die falsche Frage.\n\nDanach endet die Karte. Und die letzte Erklärung beginnt.",
     author: "M.",
-    archiveCode: "FINAL",
+    archiveCode: "FINAL-10",
     stageId: "s14",
+  },
+  {
+    id: "story-final-11",
+    title: "Archivende 11",
+    text:
+      "LAS PAJITAS DEL PIJAMA war nie eine Organisation, die euch verfolgt hat.\n\nEs war der Name für das Archiv, das aus euren eigenen Orten, Gegenständen, schlechten Entscheidungen, guten Abenden und Geschichten gebaut wurde.\n\nWenn ihr wissen wollt, wer dahintersteckt, sucht nicht nach einer letzten Person.\n\nSchaut um den Tisch.",
+    author: "LPDP",
+    archiveCode: "RECOVERED",
+    stageId: "s15",
   },
 ];
 
@@ -1160,13 +1216,13 @@ export const items: InventoryItem[] = [
   {
     id: "heart-key",
     number: 19,
-    name: "Herzschlüssel",
+    name: "Schlüssel",
     kind: "Schlüssel",
     category: "Schlüssel",
     foundAtStage: 2,
-    description: "Ein einzelner Schlüssel mit einer kleinen Herzmarkierung.",
+    description: "Ein einzelner Schlüssel aus dem Fund am Pantaleonswall.",
     detail:
-      "Er wurde am Pantaleonswall zwischen zahlreichen anderen Schlüsseln gefunden. Die Markierung wirkt absichtlich.",
+      "Bewahrt ihn auf. Seine eigentliche Funktion wird erst in einer späteren Etappe klar.",
     physical: true,
     consumable: false,
     requiredLater: true,

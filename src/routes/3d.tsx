@@ -473,7 +473,7 @@ function ThreeDArchive() {
               <h2 className="mt-2 font-display text-2xl font-bold uppercase">
                 {story?.title ?? "Notiz 04"}
               </h2>
-              <div className="mt-5 rounded-md border border-gold/35 bg-paper p-5 text-paper-foreground">
+              <div className="mt-6 rotate-[-1deg] rounded-sm border border-[#d8c85a] bg-[#f3e88a] p-5 text-[#342f18] shadow-[0_12px_30px_rgba(0,0,0,0.25)]">
                 <p className="whitespace-pre-line font-hand text-2xl leading-snug">
                   {story?.text}
                 </p>
@@ -483,9 +483,9 @@ function ThreeDArchive() {
               </div>
               <Button
                 className="mt-5 min-h-[48px] w-full gap-2"
-                onClick={() => setFlowPhase("location-riddle")}
+                onClick={() => navigate({ to: "/transition/fitness" })}
               >
-                <BookOpen className="size-4" /> Nächste Spur lesen
+                <BookOpen className="size-4" /> Versuch 05 öffnen
               </Button>
             </>
           ) : null}

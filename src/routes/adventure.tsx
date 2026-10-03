@@ -1,7 +1,8 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { MapPin, ArrowRight } from "lucide-react";
+import { MapPin, ArrowRight, FileWarning, UserRoundSearch } from "lucide-react";
 import { GameShell } from "@/components/game/GameShell";
 import { Label, Panel, ProgressRing, Reveal, StatusChip } from "@/components/game/primitives";
+import { Button } from "@/components/ui/button";
 import { adventure, locationById } from "@/game/data";
 import { usePlayer } from "@/game/store";
 
@@ -23,12 +24,79 @@ export const Route = createFileRoute("/adventure")({
 
 function AdventureHome() {
   const completed = usePlayer((s) => s.completedStages);
+  const storyIntroSeen = usePlayer((s) => s.storyIntroSeen);
+  const acknowledgeStoryIntro = usePlayer((s) => s.acknowledgeStoryIntro);
   const currentId = usePlayer((s) => s.currentStageId);
   const current = adventure.stages.find((s) => s.id === currentId) ?? adventure.stages[0]!;
   const location = locationById(current.locationId);
 
   return (
     <GameShell>
+      {!storyIntroSeen ? (
+        <div
+          className="fixed inset-0 z-50 grid place-items-center bg-background/95 p-4 backdrop-blur-sm"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Szenario"
+        >
+          <div className="field-panel max-h-[90vh] w-full max-w-2xl overflow-y-auto p-6 sm:p-8">
+            <div className="flex items-start gap-4">
+              <div className="grid size-12 shrink-0 place-items-center rounded-md border border-gold/40 bg-gold/10">
+                <FileWarning className="size-6 text-gold" />
+              </div>
+              <div>
+                <Label>LPDP // Akte 00</Label>
+                <h1 className="mt-2 font-display text-3xl font-bold uppercase">
+                  Szenario
+                </h1>
+              </div>
+            </div>
+
+            <div className="mt-6 space-y-4 text-sm leading-relaxed text-paper sm:text-base">
+              <p>
+                Vor euch hat bereits jemand versucht, eine Reihe miteinander
+                verbundener Dateien und Orte in Köln zu rekonstruieren. In den
+                Notizen nennt er sich nur <strong>M.</strong>
+              </p>
+              <p>
+                M. bezeichnet das System als <strong>LPDP</strong>. Er wusste
+                weder, wer es ursprünglich angelegt hatte, noch warum darin
+                ausgerechnet Orte auftauchten, die mit eurer Gruppe verbunden
+                sind. Seine eigenen Aufzeichnungen brechen ab, bevor er eine
+                Antwort findet.
+              </p>
+              <p>
+                Ihr folgt jetzt seiner Spur. Ihr seid nicht auf der Suche nach
+                einem Schatz, sondern nach einer Erklärung:
+              </p>
+            </div>
+
+            <div className="mt-5 rounded-md border border-gold/30 bg-gold/5 p-4">
+              <div className="flex items-start gap-3">
+                <UserRoundSearch className="mt-0.5 size-5 shrink-0 text-gold" />
+                <div className="space-y-2 text-sm">
+                  <p><strong>Was ist LPDP?</strong></p>
+                  <p><strong>Wer hat das Archiv begonnen?</strong></p>
+                  <p><strong>Warum kennt es eure Orte und Erinnerungen?</strong></p>
+                  <p><strong>Und wer ist das „wir“, von dem M. später schreibt?</strong></p>
+                </div>
+              </div>
+            </div>
+
+            <p className="mt-5 font-hand text-xl leading-relaxed text-muted-foreground">
+              „Wenn ihr meinen Aufzeichnungen folgt, behaltet alles. Manche
+              Gegenstände ergeben erst viel später Sinn.“ — M.
+            </p>
+
+            <Button
+              className="mt-6 min-h-[52px] w-full"
+              onClick={acknowledgeStoryIntro}
+            >
+              Akte 00 übernehmen
+            </Button>
+          </div>
+        </div>
+      ) : null}
       <Reveal>
         <div className="flex items-start justify-between gap-4">
           <div className="min-w-0">

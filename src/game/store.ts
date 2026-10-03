@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import { adventure, storyFragmentById } from "./data";
+import { adventure, storyFragmentById, storyFragments } from "./data";
 import type {
   HeumarktFlowPhase,
   InventoryItemState,
@@ -29,6 +29,8 @@ interface PlayerState {
   heumarktTrianglePoints: string[];
   heumarktTriangleSolved: boolean;
   heumarktFlowPhase: HeumarktFlowPhase;
+  storyIntroSeen: boolean;
+  acknowledgeStoryIntro: () => void;
   scannedQrMarks: string[];
   registerQrMark: (id: string) => void;
   startEvent: (id: string) => void;
@@ -86,6 +88,7 @@ const initial = {
   heumarktTrianglePoints: [] as string[],
   heumarktTriangleSolved: false,
   heumarktFlowPhase: "triangle" as HeumarktFlowPhase,
+  storyIntroSeen: false,
   scannedQrMarks: [] as string[],
 };
 
@@ -104,6 +107,7 @@ export const usePlayer = create<PlayerState>()(
               },
         ),
       reset: () => set({ ...initial }),
+      acknowledgeStoryIntro: () => set({ storyIntroSeen: true }),
       registerQrMark: (id) =>
         set((state) => ({
           scannedQrMarks: state.scannedQrMarks.includes(id)
@@ -309,10 +313,26 @@ export const usePlayer = create<PlayerState>()(
         const stage = adventure.stages[index];
         if (!stage) return;
         const next = adventure.stages[index + 1];
+        const recoveredFragments = storyFragments.filter(
+          (fragment) =>
+            fragment.stageId === id &&
+            !state.unlockedStoryFragments.includes(fragment.id),
+        );
+
         set({
           completedStages: [...state.completedStages, id],
           currentStageId: next ? next.id : id,
+          unlockedStoryFragments: [
+            ...state.unlockedStoryFragments,
+            ...recoveredFragments.map((fragment) => fragment.id),
+          ],
           journal: [
+            ...recoveredFragments.map((fragment) =>
+              entry(
+                fragment.title.toUpperCase(),
+                `${fragment.archiveCode ?? "ARCHIV"} · Archivfragment wiederhergestellt.`,
+              ),
+            ),
             entry(
               `ETAPPE ${String(stage.number).padStart(2, "0")} ABGESCHLOSSEN`,
               stage.title,

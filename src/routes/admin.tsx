@@ -1,31 +1,18 @@
 import { createFileRoute, Outlet } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { LockKeyhole, ShieldCheck } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import {
-  hasAdminSession,
-  setAdminSession,
-  verifyAdminPassword,
-} from "@/game/adminAuth";
+import { verifyAdminPassword } from "@/game/adminAuth";
 
 export const Route = createFileRoute("/admin")({
   component: AdminGate,
 });
 
 function AdminGate() {
-  const [checked, setChecked] = useState(false);
   const [authorized, setAuthorized] = useState(false);
   const [password, setPassword] = useState("");
   const [denied, setDenied] = useState(false);
 
-  useEffect(() => {
-    setAuthorized(hasAdminSession());
-    setChecked(true);
-  }, []);
-
-  if (!checked) {
-    return <div className="min-h-screen bg-background" />;
-  }
 
   if (authorized) {
     return <Outlet />;
@@ -38,7 +25,6 @@ function AdminGate() {
       return;
     }
 
-    setAdminSession(true);
     setAuthorized(true);
     setDenied(false);
   };
@@ -54,7 +40,8 @@ function AdminGate() {
           Adminzugang
         </h1>
         <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-          Dieser Bereich ist für die Spielleitung reserviert.
+          Dieser Bereich ist für die Spielleitung reserviert. Das Passwort wird
+          bei jedem neuen Öffnen der Spielleitung erneut verlangt.
         </p>
 
         <label className="mt-6 block">

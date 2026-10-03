@@ -129,6 +129,8 @@ export interface OrderingConfig {
   successTitle?: string;
   revealText?: string;
   showExtraction?: boolean;
+  manualEntry?: boolean;
+  entryInstruction?: string;
 }
 
 export interface ArtWorkConfig {

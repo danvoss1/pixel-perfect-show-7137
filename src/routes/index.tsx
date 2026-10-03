@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { motion } from "motion/react";
 import { usePlayer } from "@/game/store";
-import { adventure } from "@/game/data";
+import { adventure, envelopes } from "@/game/data";
 import hero from "@/assets/hero-path.jpg";
 
 export const Route = createFileRoute("/")({
@@ -11,12 +11,12 @@ export const Route = createFileRoute("/")({
       {
         name: "description",
         content:
-          "Eine Schnitzeljagd durch Köln mit versteckten Umschlägen, geheimnisvollen Orten und Rätseln in acht Etappen.",
+          "Eine Stadtexpedition durch Köln mit realen Fundstücken, QR-Markierungen, persönlichen Erinnerungen und einem fragmentierten Archiv.",
       },
       { property: "og:title", content: "Der verborgene Pfad — Eine Stadtexpedition" },
       {
         property: "og:description",
-        content: "Acht Etappen, versteckte Umschläge und Rätsel in Köln. Das Abenteuer beginnt jenseits des Bildschirms.",
+        content: "Eine Spur durch Köln aus Rätseln, realen Gegenständen und Fragmenten eines geheimnisvollen Archivs.",
       },
       { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary" },
     ],
@@ -49,7 +49,7 @@ function Landing() {
 
       <div className="relative z-10 mx-auto flex min-h-screen max-w-3xl flex-col justify-between px-5 py-8 sm:px-8">
         <header className="flex items-center justify-between">
-          <span className="label-mono">50.9375 N / 6.9603 E</span>
+          <span className="label-mono">43°57&apos;07.3&quot;N / 69°20&apos;43.2&quot;W</span>
           <Link to="/admin" className="label-mono hover:text-foreground">
             Spielleitung
           </Link>
@@ -68,8 +68,10 @@ function Landing() {
             Pfad
           </h1>
           <p className="mt-5 max-w-md text-base text-muted-foreground">
-            Ein Abenteuer wartet jenseits des Bildschirms. Acht Etappen, echte Umschläge in der
-            Stadt und ein Wort, das den Wasserschaden überstanden hat.
+            Folgt den abgebrochenen Aufzeichnungen von M. durch Köln. Reale
+            Fundstücke, QR-Markierungen und persönliche Erinnerungen führen
+            tiefer in ein Archiv, das eure Gruppe offenbar besser kennt, als
+            es sollte.
           </p>
 
           <div className="mt-9 flex flex-col gap-3 sm:flex-row">
@@ -93,9 +95,9 @@ function Landing() {
 
         <footer className="grid grid-cols-3 gap-4 border-t border-border pt-5">
           {[
-            ["Etappen", "08"],
-            ["Umschläge", "02"],
-            ["Dauer", "~3 Std."],
+            ["Etappen", String(adventure.stages.length).padStart(2, "0")],
+            ["Umschläge", String(envelopes.length).padStart(2, "0")],
+            ["Dauer", "~3–4 Std."],
           ].map(([k, v]) => (
             <div key={k}>
               <span className="label-mono">{k}</span>

@@ -20,7 +20,7 @@ import { OrderingPuzzle } from "@/components/puzzles/OrderingPuzzle";
 import { RevealPuzzle } from "@/components/puzzles/RevealPuzzle";
 import { DnaPuzzle } from "@/components/puzzles/DnaPuzzle";
 import { ArtHistoryPuzzle } from "@/components/puzzles/ArtHistoryPuzzle";
-import { adventure, itemById, puzzleById, stageById } from "@/game/data";
+import { adventure, itemById, puzzleById, stageById, storyFragmentById } from "@/game/data";
 import { qrMarkById, requiredQrMarkForPuzzle } from "@/game/qrMarks";
 import { usePlayer } from "@/game/store";
 import { puzzleTypeLabel } from "@/game/labels";
@@ -121,6 +121,9 @@ function PuzzlePage() {
 
   const stage = stageById(puzzle.stageId);
   const currentStage = adventure.stages.find((entry) => entry.id === currentStageId);
+  const predecessorNote = puzzle.storyFragmentIds?.[0]
+    ? storyFragmentById(puzzle.storyFragmentIds[0])
+    : undefined;
 
   const requiredMarkId = requiredQrMarkForPuzzle[puzzle.id];
   if (requiredMarkId && !scannedQrMarks.includes(requiredMarkId)) {
@@ -323,6 +326,10 @@ function PuzzlePage() {
               ? "Die Markierung unter der Pizza führt zum Biozentrum. Nehmt die physische Rechnung mit – sie verrät den richtigen Zugang."
               : "Die Spur führt weiter."
         }
+        storyTitle={predecessorNote?.title}
+        storyText={predecessorNote?.text}
+        storyAuthor={predecessorNote?.author}
+        storyCode={predecessorNote?.archiveCode}
         continueLabel={puzzle.completeStageOnSolve ? "Zur nächsten Etappe" : stage ? "Zurück zur Etappe" : "Weiter"}
         onContinue={() => {
           setCelebrate(false);

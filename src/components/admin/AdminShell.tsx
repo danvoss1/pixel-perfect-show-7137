@@ -1,6 +1,5 @@
 import { Link } from "@tanstack/react-router";
 import { LogOut } from "lucide-react";
-import { setAdminSession } from "@/game/adminAuth";
 import type { ReactNode } from "react";
 
 const nav = [
@@ -55,7 +54,6 @@ export function AdminShell({
           <button
             type="button"
             onClick={() => {
-              setAdminSession(false);
               window.location.href = "/adventure";
             }}
             className="flex w-full items-center gap-2 rounded-md px-3 py-2 text-left text-xs text-muted-foreground hover:bg-accent/60 hover:text-foreground"

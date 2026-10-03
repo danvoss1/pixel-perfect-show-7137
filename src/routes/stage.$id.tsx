@@ -42,6 +42,9 @@ function StagePage() {
   const completeStage = usePlayer((state) => state.completeStage);
   const addItem = usePlayer((state) => state.addItem);
   const [granted, setGranted] = useState(false);
+  const [foundObject, setFoundObject] = useState("");
+  const [foundContainer, setFoundContainer] = useState("");
+  const [findCheckFailed, setFindCheckFailed] = useState(false);
 
   if (!stage) {
     return (
@@ -88,6 +91,46 @@ function StagePage() {
   const collectPickup = () => {
     if (!pickup) return;
     addItem(pickup.id, pickup.name);
+  };
+
+  const normalizeFindAnswer = (value: string) =>
+    value
+      .trim()
+      .toLocaleLowerCase("de-DE")
+      .replace(/ä/g, "ae")
+      .replace(/ö/g, "oe")
+      .replace(/ü/g, "ue")
+      .replace(/ß/g, "ss")
+      .replace(/[^a-z0-9]/g, "");
+
+  const verifyStageTwoFind = () => {
+    const object = normalizeFindAnswer(foundObject);
+    const container = normalizeFindAnswer(foundContainer);
+
+    const objectOk = ["schluessel", "schlussel"].includes(object);
+    const containerOk = [
+      "chips",
+      "chipstuete",
+      "chipstute",
+      "chipstuete",
+      "chipstuete",
+      "chipstuete",
+      "chipspackung",
+      "chipstortilla",
+      "tortillachips",
+      "tortillachipstuete",
+      "tortillachipstute",
+    ].includes(container);
+
+    if (!objectOk || !containerOk) {
+      setFindCheckFailed(true);
+      window.setTimeout(() => setFindCheckFailed(false), 900);
+      return;
+    }
+
+    if (reward) addItem(reward.id, reward.name);
+    completeStage(stage.id);
+    setGranted(true);
   };
 
   const finish = () => {
@@ -216,6 +259,72 @@ function StagePage() {
           <p className="text-center font-display text-sm uppercase tracking-[0.2em] text-success">
             Etappe abgeschlossen · {stage.reward}
           </p>
+        ) : stage.id === "s2" ? (
+          <Panel className="border-gold/35 bg-gold/5">
+            <Label>Fund bestätigen</Label>
+            <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+              Keine Auswahlknöpfe: Beschreibt den Fund selbst.
+            </p>
+
+            <div className="mt-4 grid gap-3 sm:grid-cols-2">
+              <label>
+                <span className="label-mono">Was hast du gefunden?</span>
+                <input
+                  value={foundObject}
+                  onChange={(event) => {
+                    setFoundObject(event.target.value);
+                    setFindCheckFailed(false);
+                  }}
+                  autoComplete="off"
+                  spellCheck={false}
+                  placeholder="Antwort eingeben"
+                  className={`mt-2 h-12 w-full rounded-md border bg-background/60 px-3 outline-none focus:border-primary ${
+                    findCheckFailed ? "border-destructive" : "border-border"
+                  }`}
+                />
+              </label>
+
+              <label>
+                <span className="label-mono">Wo hast du das gefunden?</span>
+                <input
+                  value={foundContainer}
+                  onChange={(event) => {
+                    setFoundContainer(event.target.value);
+                    setFindCheckFailed(false);
+                  }}
+                  onKeyDown={(event) => {
+                    if (
+                      event.key === "Enter" &&
+                      foundObject.trim() &&
+                      foundContainer.trim()
+                    ) {
+                      verifyStageTwoFind();
+                    }
+                  }}
+                  autoComplete="off"
+                  spellCheck={false}
+                  placeholder="Antwort eingeben"
+                  className={`mt-2 h-12 w-full rounded-md border bg-background/60 px-3 outline-none focus:border-primary ${
+                    findCheckFailed ? "border-destructive" : "border-border"
+                  }`}
+                />
+              </label>
+            </div>
+
+            <button
+              disabled={!foundObject.trim() || !foundContainer.trim()}
+              onClick={verifyStageTwoFind}
+              className="mt-4 min-h-[56px] w-full rounded-md bg-primary font-display text-sm font-bold uppercase tracking-[0.2em] text-primary-foreground disabled:cursor-not-allowed disabled:bg-muted disabled:text-muted-foreground"
+            >
+              Fund prüfen
+            </button>
+
+            {findCheckFailed ? (
+              <p className="mt-3 text-center text-sm text-destructive">
+                Mindestens eine der beiden Angaben passt noch nicht zum Fund.
+              </p>
+            ) : null}
+          </Panel>
         ) : stage.completionMode === "external" ? (
           <p className="text-center text-sm text-muted-foreground">
             Diese Etappe wird innerhalb des zugehörigen Spiels automatisch abgeschlossen.

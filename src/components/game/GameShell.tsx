@@ -10,6 +10,7 @@ import {
   Volume2,
   VolumeX,
   ShieldCheck,
+  Archive,
 } from "lucide-react";
 import type { ReactNode } from "react";
 import { usePlayer } from "@/game/store";
@@ -42,6 +43,16 @@ export function GameShell({
   const messages = usePlayer((s) => s.messages);
   const dismissMessage = usePlayer((s) => s.dismissMessage);
   const latestMessage = messages?.[0];
+  const archiveMessage = latestMessage?.text.startsWith("[LPDP]");
+  const systemMessage = latestMessage?.text.startsWith("[SYSTEM]");
+  const latestMessageText = latestMessage?.text
+    .replace(/^\[LPDP\]\s*/, "")
+    .replace(/^\[SYSTEM\]\s*/, "");
+  const latestMessageLabel = archiveMessage
+    ? "UNBEKANNTE QUELLE"
+    : systemMessage
+      ? "SYSTEM"
+      : "Neue Nachricht";
   const eventId = usePlayer((s) => s.activeEventId);
   const dismissEvent = usePlayer((s) => s.dismissEvent);
   const activeEvent = fieldEvents.find((event) => event.id === eventId);
@@ -51,7 +62,7 @@ export function GameShell({
       {/* Desktop sidebar */}
       <aside className="fixed inset-y-0 left-0 z-30 hidden w-56 flex-col border-r border-border bg-surface/70 px-4 py-6 backdrop-blur lg:flex">
         <Link to="/" className="mb-8 block">
-          <span className="label-mono">50.9375 N / 6.9603 E</span>
+          <span className="label-mono">43°57&apos;07.3&quot;N / 69°20&apos;43.2&quot;W</span>
           <span className="mt-1 block font-display text-lg font-bold uppercase leading-tight">
             Der verborgene
             <br />
@@ -73,6 +84,12 @@ export function GameShell({
           ))}
         </nav>
         <div className="space-y-1 border-t border-border pt-4">
+          <Link
+            to="/archive"
+            className="flex items-center gap-3 rounded-md px-3 py-2.5 text-sm text-muted-foreground transition-colors hover:bg-accent/60"
+          >
+            <Archive className="size-4" /> Archiv
+          </Link>
           <Link
             to="/scan"
             className="flex items-center gap-3 rounded-md px-3 py-2.5 text-sm text-muted-foreground transition-colors hover:bg-accent/60"
@@ -97,7 +114,7 @@ export function GameShell({
 
       <div className="lg:pl-56">
         {activeEvent && <div className="fixed inset-0 z-50 grid place-items-center bg-background/90 p-4" role="dialog" aria-modal="true" aria-label="Ereigniskarte"><div className="field-panel w-full max-w-md border border-gold p-6 shadow-xl"><span className="label-mono text-gold">{eventCategoryLabel[activeEvent.category]}</span><h2 className="mt-3 font-display text-2xl font-bold uppercase">{activeEvent.title}</h2><p className="mt-4 text-sm leading-relaxed text-paper">{activeEvent.description}</p><p className="mt-4 text-xs text-muted-foreground">Konsequenz: {activeEvent.consequence}. Jede Aufgabe ist freiwillig; ein alkoholfreies Getränk ist immer gleichwertig.</p><Button className="mt-6 min-h-[44px] w-full" onClick={dismissEvent}>Verstanden · weiter</Button></div></div>}
-        {latestMessage && <div className="relative z-20 mx-auto flex max-w-5xl items-center justify-between gap-3 border-b border-gold bg-panel px-4 py-3" role="status"><div><span className="label-mono text-gold">Neue Nachricht · {latestMessage.time}</span><p className="text-sm">{latestMessage.text}</p></div><Button variant="ghost" size="icon" title="Nachricht schließen" aria-label="Nachricht schließen" onClick={() => dismissMessage(latestMessage.id)}><X className="size-4" /></Button></div>}
+        {latestMessage && <div className={`relative z-20 mx-auto flex max-w-5xl items-center justify-between gap-3 border-b px-4 py-3 ${archiveMessage ? "border-gold bg-gold/10" : systemMessage ? "border-primary bg-primary/10" : "border-gold bg-panel"}`} role="status"><div><span className={`label-mono ${archiveMessage ? "text-gold" : systemMessage ? "text-primary" : "text-gold"}`}>{latestMessageLabel} · {latestMessage.time}</span><p className="text-sm">{latestMessageText}</p></div><Button variant="ghost" size="icon" title="Nachricht schließen" aria-label="Nachricht schließen" onClick={() => dismissMessage(latestMessage.id)}><X className="size-4" /></Button></div>}
         <main
           className={cn(
             "relative z-10 mx-auto w-full pb-28 lg:pb-10",
@@ -107,6 +124,15 @@ export function GameShell({
           {children}
         </main>
       </div>
+
+      <Link
+        to="/archive"
+        aria-label="Archiv öffnen"
+        title="Archiv"
+        className="fixed left-3 top-3 z-30 grid size-10 place-items-center rounded-md border border-border bg-surface/90 text-muted-foreground backdrop-blur transition-colors hover:text-foreground lg:hidden"
+      >
+        <Archive className="size-4" />
+      </Link>
 
       <Link
         to="/admin"

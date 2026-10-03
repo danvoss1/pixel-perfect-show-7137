@@ -15,9 +15,10 @@ Code: `HP-M42-7F3K`
 Position: neben der physischen/örtlichen 42.
 
 Funktion:
-- zeigt den Hinweis auf Daniels alte Adresse / Pantaleonswall
-- verrät, dass dort der Beutel mit den Schlüsseln wartet
-- schaltet keinen Rätselinhalt automatisch ab; es ist ein physischer Zusatzhinweis
+- hängt direkt neben der Zahl 42
+- gibt einen subtilen Rechenhinweis: Die verbliebenen Werte sollen wie Faktoren zusammenwirken
+- verwendet bewusst weder das Wort „multiplizieren“ noch die fertige Rechnung
+- der physische Zettel bei der Kalender-/42-Spur bleibt weiterhin der separate Hinweis zum Finden der Zahl
 
 ### 03 · Rheinauhafen
 Code: `HP-RH-9Q2M`

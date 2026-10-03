@@ -23,10 +23,10 @@ export const qrMarks: QrMarkDefinition[] = [
     id: "start-42",
     token: "HP-M42-7F3K",
     eyebrow: "Markierung 01 · 42",
-    title: "Die Zahl gehört zum Ort",
+    title: "Nicht alles wird gelesen",
     text:
-      "42 war nie nur eine Zahl aus dem Satz. Wenn ihr den Zugangswert geknackt habt, führt die nächste Spur dorthin, wo Daniel früher gewohnt hat: zum Pantaleonswall. Dort wartet kein weiterer Zahlencode, sondern ein Beutel voller Schlüssel.",
-    continueLabel: "Zur aktuellen Etappe",
+      "Die verbliebenen Werte gehören nicht nebeneinander. Behandelt sie eher wie Faktoren eines gemeinsamen Ergebnisses. Was übrig bleibt, soll zusammenwirken — nicht einfach hintereinanderstehen.",
+    continueLabel: "Zurück zu den Zahlen",
     target: { type: "stage", stageId: "s1" },
   },
   {
